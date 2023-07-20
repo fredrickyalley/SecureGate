@@ -25,27 +25,25 @@ export class AuthService {
   private readonly emailTransporterConfig: AuthConfigure['emailTransporter'];
   private transporter: nodemailer.Transporter;
 
-
   constructor( 
     private prisma: PrismaService, 
-    // private readonly configService: ConfigService<AuthConfigure>, 
-    // private readonly jwtService: JwtService,
+    private readonly configService: ConfigService<AuthConfigure>, 
+    private readonly jwtService: JwtService,
     ) {
     // this.forgotPasswordConfig = this.configService.get('forgotPassword');
     // this.emailConfig = this.configService.get('email');
-    // this.emailTransporterConfig = this.configService.get('emailTransporter');
+    this.emailTransporterConfig = this.configService.get('emailTransporter');
     // this.transporter = this.createTransporter();
-
   }
 
   // private createTransporter(): nodemailer.Transporter {
   //   const { host, port, secure, auth } = this.emailTransporterConfig;
 
   //   return nodemailer.createTransport({
-  //     host,
-  //     port,
-  //     secure,
-  //     auth,
+  //     host: host,
+  //     port: port,
+  //     secure: secure,
+  //     auth: auth,
   //   });
   // }
 
@@ -55,8 +53,6 @@ export class AuthService {
     // This could involve querying a user repository or data source.
     
     const user = await this.prisma.user.findUnique({where: {id: payload.sub}});
-    // const user = await this.findById(payload.sub)
-
     if (!user) {
       throw new UnauthorizedException('Invalid token');
     }
@@ -72,14 +68,13 @@ export class AuthService {
       id: profile.id,
       username: profile.username,
       password: '',
-      role: 'user',
+      roles: ['user'],
       // Add any additional properties based on the OAuth provider's profile
     };
 
     return user;
   }
 
-  // Other authentication-related methods can be added here
   async login(loginDto: LoginDto): Promise<{ access_token: string }> {
     const { username, password } = loginDto;
     const user = await this.prisma.user.findFirst({ where: { username: username } });
@@ -94,9 +89,9 @@ export class AuthService {
     }
   
     const payload = { username: user.username, sub: user.id };
-    // const access_token = this.jwtService.sign(payload);
+    const access_token = this.jwtService.sign(payload);
   
-    return { access_token: "" };
+    return { access_token};
   }
   
 
@@ -113,7 +108,7 @@ export class AuthService {
       data: {
         username: username,
         password: hashedPassword,
-        role: 'user', 
+        roles: ['user'], 
       },
     });
 

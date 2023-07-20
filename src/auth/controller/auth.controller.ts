@@ -8,6 +8,8 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 import { JwtAuthGuard } from '../guards/jwt.guard';
+import { GetUser } from '../decorators/get-user.decorator';
+import { User } from '@prisma/client';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -30,14 +32,16 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto) {
+  async signup( @Body() createUserDto: CreateUserDto) {
     const { username, password } = createUserDto;
     return this.authService.signup(username, password);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Auth('user', "admin")
   @Patch('reset-password')
-  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+  @UseGuards(JwtAuthGuard)
+  async resetPassword(@GetUser() user: User, @Body() resetPasswordDto: ResetPasswordDto) {
+    console.log(resetPasswordDto)
     const { username, newPassword } = resetPasswordDto;
     return this.authService.resetPassword(username, newPassword);
   }

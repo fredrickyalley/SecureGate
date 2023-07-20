@@ -11,6 +11,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    console.log(roles)
     if (!roles) {
       return super.canActivate(context);
     }
@@ -18,10 +19,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
     // Assuming the user object contains a `roles` property representing the user's roles
-
-    // Check if the user's roles include any of the allowed roles
-    const hasRole = roles.some((role) => user.roles.includes(role));
-
+    const hasRole = roles.some((role) => {if(user.roles.includes(role)) return true});
+    
     return hasRole && super.canActivate(context);
   }
+
+
+  
 }
