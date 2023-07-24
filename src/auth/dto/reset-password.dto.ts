@@ -8,7 +8,7 @@ export class ResetPasswordDto {
   })
   @IsNotEmpty()
   @IsString()
-  username: string;
+  email: string;
 
   @ApiProperty({
     description: 'The new password for the user',

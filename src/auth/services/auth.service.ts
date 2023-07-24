@@ -60,7 +60,7 @@ export class AuthService {
     return user;
   }
 
-  async findOrCreateUserFromOAuthProfile(profile: OAuthProfile): Promise<User> {
+  async findOrCreateUserFromOAuthProfile(profile: OAuthProfile) {
 
     // Find the user by the unique identifier (e.g., 'id') in the database
     const existingUser = await this.prisma.user.findUnique({
@@ -76,27 +76,27 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto): Promise<{ access_token: string }> {
-    const { username, password } = loginDto;
-    const user = await this.prisma.user.findFirst({ where: { username: username } });
+    const { email, password } = loginDto;
+    const user = await this.prisma.user.findFirst({ where: { email: email } });
   
     if (!user) {
-      throw new UnauthorizedException('Invalid username or password');
+      throw new UnauthorizedException('Invalid email or password');
     }
   
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid username or password');
+      throw new UnauthorizedException('Invalid email or password');
     }
   
-    const payload = { username: user.username, sub: user.id };
+    const payload = { email: user.email, sub: user.id };
     const access_token = this.jwtService.sign(payload);
   
     return { access_token};
   }
   
 
-  async signup(username: string, password: string): Promise<User> {
-    const existingUser = await this.prisma.user.findUnique({ where: { username } });
+  async signup(email: string, password: string): Promise<User> {
+    const existingUser = await this.prisma.user.findUnique({ where: { email } });
 
     if (existingUser) {
       throw new UnauthorizedException('Username already exists');
@@ -106,17 +106,23 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const newUser = await this.prisma.user.create({
       data: {
-        username: username,
+        email: email,
         password: hashedPassword,
-        roles: ['user'], 
+        // roles: ['user'], 
+      },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        roles: true
       },
     });
 
     return newUser;
   }
 
-  async resetPassword(username: string, newPassword: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { username } });
+  async resetPassword(email: string, newPassword: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -128,6 +134,12 @@ export class AuthService {
     const updatedUser = await this.prisma.user.update({
       where: { id: user.id },
       data: { password: hashedPassword },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        roles: true
+      },
     });
 
     return updatedUser;
@@ -153,7 +165,7 @@ export class AuthService {
     // Store the reset token and expiration in your database or temporary storage
     // Example code using a database query or an ORM (e.g., Prisma):
     await this.prisma.user.update({
-      where: { username: email },
+      where: { email: email },
       data: { resetToken, resetTokenExpiration: new Date(expiration) },
     });
   }

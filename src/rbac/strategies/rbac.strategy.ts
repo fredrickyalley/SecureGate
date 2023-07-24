@@ -1,0 +1,37 @@
+import { Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Reflector } from '@nestjs/core';
+import { User } from '@prisma/client';
+import { RbacService } from '../service/service.service';
+
+@Injectable()
+export class RbacStrategy extends AuthGuard('jwt') {
+  constructor(private readonly rbacService: RbacService, private readonly reflector: Reflector) {
+    super();
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    // Run the JWT authentication using the AuthGuard
+    const canActivate = await super.canActivate(context);
+    if (!canActivate) {
+      return false;
+    }
+
+    // Get the user object from the request
+    const request = context.switchToHttp().getRequest();
+    const user: User = request.user;
+    // Get the required roles and permissions from the route metadata
+    const requiredRoles = this.reflector.get<string[]>('roles', context.getHandler()) || [];
+    const requiredPermissions = this.reflector.get<string[]>('permissions', context.getHandler()) || [];
+    // Check if the user has the required roles
+    const hasRoles = requiredRoles.every(async (role) => await this.rbacService.hasRole(user.id, role));
+    // Check if the user has the required permissions
+    const hasPermissions = requiredPermissions.every(async (permission) => await this.rbacService.hasPermission(user.id, permission));
+
+    if (!hasRoles || !hasPermissions) {
+      throw new UnauthorizedException('You do not have permission to access this resource.');
+    }
+
+    return true;
+  }
+}

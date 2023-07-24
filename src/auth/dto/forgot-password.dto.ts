@@ -8,6 +8,6 @@ export class ForgotPasswordDto {
   })
   @IsNotEmpty()
   @IsString()
-  username: string;
+  email: string;
 
 }

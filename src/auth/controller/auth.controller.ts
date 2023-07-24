@@ -8,9 +8,11 @@ import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 import { JwtAuthGuard } from '../guards/jwt.guard';
-import { GetUser } from '../decorators/get-user.decorator';
 import { User } from '@prisma/client';
 import { ForgotPasswordDto } from '../dto/forgot-password.dto';
+import { RbacStrategy } from 'src/rbac/strategies/rbac.strategy';
+import { Roles } from 'src/rbac/decorator/role.decorator';
+import { Permissions } from 'src/rbac/decorator/permission.decorator';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -21,8 +23,8 @@ export class AuthController {
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
     try {
-      const { username, password } = loginDto;
-      return this.authService.login({username, password});
+      const { email, password } = loginDto;
+      return this.authService.login({email, password});
     }catch (error) {
       throw new HttpException(error.message, 500);
     }
@@ -39,8 +41,8 @@ export class AuthController {
   @Post('signup')
   async signup( @Body() createUserDto: CreateUserDto) {
     try {
-      const { username, password } = createUserDto;
-      return this.authService.signup(username, password);
+      const { email, password } = createUserDto;
+      return this.authService.signup(email, password);
     }catch (error) {
       throw new HttpException(error.message, 500);
     }
@@ -51,8 +53,8 @@ export class AuthController {
   @Patch('reset-password')
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
    try {
-    const { username, newPassword } = resetPasswordDto;
-    return this.authService.resetPassword(username, newPassword);
+    const { email, newPassword } = resetPasswordDto;
+    return this.authService.resetPassword(email, newPassword);
    }catch (error) {
       throw new HttpException(error.message, 500);
    }
@@ -61,10 +63,18 @@ export class AuthController {
   @Post('forgot-password')
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     try {
-      const {username} = forgotPasswordDto;
-      return this.authService.forgotPassword(username);
+      const {email} = forgotPasswordDto;
+      return this.authService.forgotPassword(email);
     }catch (error) {
       throw new HttpException(error.message, 500)
     }
+  }
+
+  @Get()
+  @UseGuards(RbacStrategy)
+  @Roles('admin') 
+  @Permissions('write') 
+  async exampleRoute() {
+    return "hello world"
   }
 }
