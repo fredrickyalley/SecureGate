@@ -8,6 +8,7 @@ import configuration from './config/auth.config'
 import { MailModule } from 'src/mailer/mail.module';
 
 
+
 @Module({
   imports: [MailModule],
   controllers: [AuthController],
