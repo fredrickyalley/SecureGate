@@ -1,23 +1,23 @@
 import { ConfigService } from "@nestjs/config";
 
-export default (config: ConfigService) => ({
+export default () => ({
     // Other authentication-related configuration...
   
     forgotPassword: {
-      resetPasswordUrl: config.get('RESET_PASSWORD_URL'), // Provide the actual URL here
-      resetPasswordExpiration: parseInt(config.get("RESET_PASSWORD_EXPIRATION"), 10), // Provide the expiration time here
+      resetPasswordUrl: process.env.RESET_PASSWORD_URL, // Provide the actual URL here
+      resetPasswordExpiration: parseInt(process.env.RESET_PASSWORD_EXPIRATION, 10), // Provide the expiration time here
       // Other configuration options as needed...
     },
 
     emailTransporter: {
-      host: config.get("EMAIL_HOST"),
-      port: parseInt(config.get("EMAIL_PORT"), 10),
-      secure: config.get("EMAIL_SECURE") === 'true',
+      host: process.env.EMAIL_HOST,
+      port: parseInt(process.env.EMAIL_PORT),
+      secure: process.env.EMAIL_SECURE === 'false',
       auth: {
-        user: config.get("EMAIL_USERNAME"),
-        pass: config.get("EMAIL_PASSWORD"),
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
       },
-      sender: config.get("EMAIL_SENDER"),
+      sender: process.env.EMAIL_SENDER,
     },
 
     jwt: {

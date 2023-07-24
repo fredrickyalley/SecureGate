@@ -2,13 +2,14 @@ import { Module, DynamicModule } from '@nestjs/common';
 import { JwtModule, JwtModuleOptions, JwtService } from '@nestjs/jwt';
 import { AuthController } from './controller/auth.controller';
 import { AuthService } from './services/auth.service';
-import { PrismaService } from './prisma/prisma.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthConfig } from './interfaces/auth.interface';
-import { DatabaseModule } from 'src/database/database.module';
-
+import configuration from './config/auth.config'
+import { MailModule } from 'src/mailer/mail.module';
 @Module({
+  imports: [MailModule],
   controllers: [AuthController],
+  providers: [AuthService]
 })
 export class AuthModule {
   static forRoot(options?: AuthConfig): DynamicModule {
@@ -31,7 +32,7 @@ export class AuthModule {
       imports: [
         jwtModule,
         ConfigModule.forRoot({
-          load: [],
+          load: [configuration],
         }),
       ],
       controllers: [AuthController],

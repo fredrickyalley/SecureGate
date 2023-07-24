@@ -1,22 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { AuthConfigure } from '../interfaces/auth.interface';
-import { User } from '../interfaces/user.interface';
+import { AuthConfigure, TokenPayload } from '../interfaces/auth.interface';
+import { OAuthProfile, User } from '../interfaces/user.interface';
 import { LoginDto } from '../dto/login.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
-import { EmailService, NodemailerEmailService } from './nodeMailer.service';
+import {MailService} from 'src/mailer/mail.service';
 import * as nodemailer from 'nodemailer';
-import { PrismaClient } from '@prisma/client';
 
-
-interface TokenPayload {
-    username: string;
-    sub: number;
-    // Add any additional properties you expect in the payload
-    // For example: roles: string[];
-  }
 
 @Injectable()
 export class AuthService {
@@ -29,23 +21,31 @@ export class AuthService {
     private prisma: PrismaService, 
     private readonly configService: ConfigService<AuthConfigure>, 
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
     ) {
-    // this.forgotPasswordConfig = this.configService.get('forgotPassword');
+    this.forgotPasswordConfig = this.configService.get('forgotPassword');
     // this.emailConfig = this.configService.get('email');
     this.emailTransporterConfig = this.configService.get('emailTransporter');
-    // this.transporter = this.createTransporter();
+    this.transporter = this.createTransporter();
   }
 
-  // private createTransporter(): nodemailer.Transporter {
-  //   const { host, port, secure, auth } = this.emailTransporterConfig;
+  private createTransporter(): nodemailer.Transporter {
+    const { host, port, secure, auth } = this.emailTransporterConfig;
 
-  //   return nodemailer.createTransport({
-  //     host: host,
-  //     port: port,
-  //     secure: secure,
-  //     auth: auth,
-  //   });
-  // }
+    return nodemailer.createTransport({
+      host: host,
+      port: port,
+      secure: secure,
+      auth: auth,
+      tls: {
+        // Here you can specify advanced TLS options if needed
+        ciphers: 'SSLv3', // Specify the TLS cipher to use (example: 'SSLv3' or 'TLSv1')
+        rejectUnauthorized: false, // Set to false to allow self-signed or invalid certificates
+        // Other TLS options if required
+      },
+    });
+
+  }
 
 
   async validateTokenPayload(payload: TokenPayload): Promise<{}> {
@@ -60,19 +60,19 @@ export class AuthService {
     return user;
   }
 
-  async validateOAuthUser(profile: any): Promise<User> {
-    // Implement your logic to validate and retrieve the user from the OAuth provider
-    // This could involve querying the user repository or creating a new user if it doesn't exist
-    // You can also map the relevant properties from the OAuth provider's profile to your user interface
-    const user: User = {
-      id: profile.id,
-      username: profile.username,
-      password: '',
-      roles: ['user'],
-      // Add any additional properties based on the OAuth provider's profile
-    };
+  async findOrCreateUserFromOAuthProfile(profile: OAuthProfile): Promise<User> {
 
-    return user;
+    // Find the user by the unique identifier (e.g., 'id') in the database
+    const existingUser = await this.prisma.user.findUnique({
+      where: { id: profile.id },
+    });
+
+    if (!existingUser) {
+      // If the user is not found, deny access
+      throw new NotFoundException('User not found');
+    }
+
+    return existingUser;
   }
 
   async login(loginDto: LoginDto): Promise<{ access_token: string }> {
@@ -133,20 +133,21 @@ export class AuthService {
     return updatedUser;
   }
 
-  // async forgotPassword(email: string): Promise<void> {
-  //   // Generate a unique reset token
-  //   const resetToken = this.generateRandomString(32);
+  async forgotPassword(email: string): Promise<void> {
+    // Generate a unique reset token
+    const resetToken = this.generateRandomString(32);
 
-  //   // Store the reset token in your database or temporary storage with an expiration time
-  //   const resetTokenExpiration = Date.now() + this.forgotPasswordConfig.resetPasswordExpiration;
-  //   await this.storeResetToken(email, resetToken, resetTokenExpiration);
+    // Store the reset token in your database or temporary storage with an expiration time
+    const resetTokenExpiration = Date.now() + this.forgotPasswordConfig.resetPasswordExpiration;
+    await this.storeResetToken(email, resetToken, resetTokenExpiration);
 
-  //   // Compose the reset URL with the reset token and expiration time
-  //   const resetUrl = `${this.forgotPasswordConfig.resetPasswordUrl}?token=${resetToken}`;
-
-  //   // Send the password reset email to the user with the reset URL
-  //   await this.sendResetPasswordEmail(email, resetUrl);
-  // }
+    // Compose the reset URL with the reset token and expiration time
+    const resetUrl = `${this.forgotPasswordConfig.resetPasswordUrl}?token=${resetToken}`;
+    console.log(resetUrl);
+    // Send the password reset email to the user with the reset URL
+    await this.sendResetPasswordEmail(email, resetUrl)
+    .catch(error => {throw new HttpException(error.message, 500)});
+  }
 
   async storeResetToken(email: string, resetToken: string, expiration: number): Promise<void> {
     // Store the reset token and expiration in your database or temporary storage
@@ -166,34 +167,43 @@ export class AuthService {
     return result;
   }
 
-  // async sendResetPasswordEmail(email: string, resetUrl: string): Promise<void> {
-  //   const { sender } = this.emailTransporterConfig;
-  //   const subject = 'Password Reset';
-  //   const body = `Click on the following link to reset your password: ${resetUrl}`;
+  async sendResetPasswordEmail(email: string, resetUrl: string): Promise<void> {
+    const { sender } = this.emailTransporterConfig;
+    const subject = 'Password Reset';
+    const body = `Click on the following link to reset your password: ${resetUrl}`;
+    const temp: string = '../templates/reset';
 
-  //   // Use the configured transporter to send the email
-  //   const mailOptions = {
-  //     from: sender,
-  //     to: email,
-  //     subject,
-  //     text: body,
-  //   };
+    // Use the configured transporter to send the email
+    const context = {
+      url: resetUrl,
+    };
 
-  //   await this.transporter.sendMail(mailOptions);
+    await this.mailService.sendEmail(email, subject, temp, context);
+  }
+
+  // private getEmailService(provider: string): EmailService {
+  //   // Implement logic to get the appropriate email service based on the provider
+  //   // This could involve using conditional statements or a factory pattern
+
+  //   // Example: Using Nodemailer as the email service
+  //   if (provider === 'nodemailer') {
+  //     return new NodemailerEmailService();
+  //   }
+
+  //   // Add other email service providers as needed
+
+  //   throw new Error(`Unsupported email service provider: ${provider}`);
   // }
 
-  private getEmailService(provider: string): EmailService {
-    // Implement logic to get the appropriate email service based on the provider
-    // This could involve using conditional statements or a factory pattern
+  private isPasswordStrong(password: string): boolean {
+    // Password strength requirements
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasLowercase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialCharacter = /[!@#$%^&*()_+{}\[\]:;<>,.?~`]/.test(password);
+    const isLengthValid = password.length >= 8;
 
-    // Example: Using Nodemailer as the email service
-    if (provider === 'nodemailer') {
-      return new NodemailerEmailService();
-    }
-
-    // Add other email service providers as needed
-
-    throw new Error(`Unsupported email service provider: ${provider}`);
+    return hasUppercase && hasLowercase && hasNumber && hasSpecialCharacter && isLengthValid;
   }
 
 }

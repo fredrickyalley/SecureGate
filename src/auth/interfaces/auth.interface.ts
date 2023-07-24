@@ -38,5 +38,12 @@ export interface AuthConfigure {
 
 export interface AuthConfig {
   jwt: JwtConfig;
+
+ 
   // Add any other configuration properties as needed
+}
+
+export interface TokenPayload {
+  username: string;
+  sub: number;
 }

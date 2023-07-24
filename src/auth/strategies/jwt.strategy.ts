@@ -7,14 +7,14 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(private readonly authService: AuthService, config: ConfigService) {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: config.get('JWT_SECRET'),
-    });
-  }
+  // constructor(private readonly authService: AuthService, config: ConfigService) {
+  //   super({
+  //     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  //     secretOrKey: config.get('JWT_SECRET'),
+  //   });
+  // }
 
-  async validate(payload: any) {
-    return this.authService.validateTokenPayload(payload);
-  }
+  // async validate(payload: any) {
+  //   return this.authService.validateTokenPayload(payload);
+  // }
 }

@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { Prisma } from '@prisma/client';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { JwtService } from '@nestjs/jwt';
+import { MailModule } from './mailer/mail.module';
 
 @Module({
   imports: [
@@ -30,10 +31,13 @@ import { JwtService } from '@nestjs/jwt';
       jwt: {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN,
-      },
+      }
       // Add any other configuration properties as needed
     }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -42,6 +46,11 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL }); // Apply the middleware to all routes
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.POST },
+        { path: 'auth/signup', method: RequestMethod.POST }, 
+        { path: 'auth/forgot-password', method: RequestMethod.POST }, 
+        )
+      .forRoutes({ path: '*', method: RequestMethod.ALL }); // Apply the middleware to all other routes
   }
 }
