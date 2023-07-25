@@ -3,8 +3,8 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty({
-    description: 'The username of the user',
-    example: 'john_doe',
+    description: 'The email of the user',
+    example: 'john_doe@gmail.com',
   })
   @IsNotEmpty()
   @IsString()

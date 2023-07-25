@@ -2,7 +2,7 @@ import { Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/com
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 import { User } from '@prisma/client';
-import { RbacService } from '../service/service.service';
+import { RbacService } from '../service/rbac.service';
 
 @Injectable()
 export class RbacStrategy extends AuthGuard('jwt') {
@@ -24,10 +24,15 @@ export class RbacStrategy extends AuthGuard('jwt') {
     const requiredRoles = this.reflector.get<string[]>('roles', context.getHandler()) || [];
     const requiredPermissions = this.reflector.get<string[]>('permissions', context.getHandler()) || [];
     // Check if the user has the required roles
-    const hasRoles = requiredRoles.every(async (role) => await this.rbacService.hasRole(user.id, role));
+    
+    const hasRoles = await this.rbacService.hasRoles(user.id, requiredRoles);
+    // const hasRoles = requiredRoles.every( async (role) =>  await this.rbacService.hasRole(user.id) );
+    console.log(hasRoles)
     // Check if the user has the required permissions
-    const hasPermissions = requiredPermissions.every(async (permission) => await this.rbacService.hasPermission(user.id, permission));
-
+    const hasPermissions = await this.rbacService.hasPermission(user.id, requiredPermissions);
+        // const hasPermissions = requiredPermissions.every(async (permission) => await this.rbacService.hasPermission(user.id, permission));
+    // const hasPermissions = requiredPermissions.every(async (permission) => await this.rbacService.hasPermission(user.id, permission));
+    console.log(hasPermissions)
     if (!hasRoles || !hasPermissions) {
       throw new UnauthorizedException('You do not have permission to access this resource.');
     }

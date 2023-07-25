@@ -5,7 +5,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { Auth } from '../decorators/auth.decorator';
 import { RolesGuard } from '../guards/roles.guard';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { CreateUserDto } from '../dto/create-user.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 import { JwtAuthGuard } from '../guards/jwt.guard';
 import { User } from '@prisma/client';
@@ -13,11 +12,19 @@ import { ForgotPasswordDto } from '../dto/forgot-password.dto';
 import { RbacStrategy } from 'src/rbac/strategies/rbac.strategy';
 import { Roles } from 'src/rbac/decorator/role.decorator';
 import { Permissions } from 'src/rbac/decorator/permission.decorator';
+import { UserService } from 'src/user/service/user.service';
+import { RbacService } from 'src/rbac/service/rbac.service';
+// import { CreateUserDto } from '../dto/create-user.dto';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService, 
+    private userService: UserService, 
+    private rbacService: RbacService
+    ) {}
 
   @ApiBearerAuth()
   @Post('login')
@@ -72,9 +79,9 @@ export class AuthController {
 
   @Get()
   @UseGuards(RbacStrategy)
-  @Roles('admin') 
+  @Roles('user') 
   @Permissions('write') 
-  async exampleRoute() {
-    return "hello world"
+  async exampleRoute(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(createUserDto);
   }
 }

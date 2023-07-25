@@ -2,7 +2,8 @@ import { Injectable, UnauthorizedException, HttpException, NotFoundException } f
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AuthConfigure, TokenPayload } from '../interfaces/auth.interface';
-import { OAuthProfile, User } from '../interfaces/user.interface';
+import { OAuthProfile } from '../interfaces/user.interface';
+import { User } from '@prisma/client';
 import { LoginDto } from '../dto/login.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
@@ -77,7 +78,7 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<{ access_token: string }> {
     const { email, password } = loginDto;
-    const user = await this.prisma.user.findFirst({ where: { email: email } });
+    const user = await this.prisma.user.findFirst({ where: { email: email, deletedAt: null } });
   
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
@@ -96,7 +97,7 @@ export class AuthService {
   
 
   async signup(email: string, password: string): Promise<User> {
-    const existingUser = await this.prisma.user.findUnique({ where: { email } });
+    const existingUser = await this.prisma.user.findFirst({ where: { email, deletedAt: null } });
 
     if (existingUser) {
       throw new UnauthorizedException('Username already exists');
@@ -109,20 +110,14 @@ export class AuthService {
         email: email,
         password: hashedPassword,
         // roles: ['user'], 
-      },
-      select: {
-        id: true,
-        email: true,
-        password: true,
-        roles: true
-      },
+      }
     });
 
     return newUser;
   }
 
   async resetPassword(email: string, newPassword: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prisma.user.findFirst({ where: { email, deletedAt: null } });
 
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -133,13 +128,7 @@ export class AuthService {
 
     const updatedUser = await this.prisma.user.update({
       where: { id: user.id },
-      data: { password: hashedPassword },
-      select: {
-        id: true,
-        email: true,
-        password: true,
-        roles: true
-      },
+      data: { password: hashedPassword},
     });
 
     return updatedUser;

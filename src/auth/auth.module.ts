@@ -6,13 +6,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthConfig } from './interfaces/auth.interface';
 import configuration from './config/auth.config'
 import { MailModule } from 'src/mailer/mail.module';
+import { UserService } from 'src/user/service/user.service';
+import { RbacService } from 'src/rbac/service/rbac.service';
 
 
 
 @Module({
   imports: [MailModule],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService, UserService, RbacService]
 })
 export class AuthModule {
   static forRoot(options?: AuthConfig): DynamicModule {
