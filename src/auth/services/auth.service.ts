@@ -12,7 +12,7 @@ import * as nodemailer from 'nodemailer';
 
 
 @Injectable()
-export class AuthService {
+export class SecureAuthService {
   private readonly forgotPasswordConfig: AuthConfigure['forgotPassword'];
   private readonly emailConfig: AuthConfigure['email'];
   private readonly emailTransporterConfig: AuthConfigure['emailTransporter'];

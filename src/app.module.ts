@@ -1,9 +1,8 @@
 import { Module, MiddlewareConsumer, RequestMethod} from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
+import { SecureAuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { Prisma } from '@prisma/client';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
 import { JwtService } from '@nestjs/jwt';
@@ -26,7 +25,7 @@ import { MailModule } from './mailer/mail.module';
       //   },
       // },
     } as Prisma.PrismaClientOptions),
-    AuthModule.forRoot({
+    SecureAuthModule.forRoot({
       // Configure the authentication options here based on user-defined settings
       jwt: {
         secret: process.env.JWT_SECRET,
@@ -39,10 +38,9 @@ import { MailModule } from './mailer/mail.module';
     }),
     MailModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+
 })
-export class AppModule {
+export class SecureGateModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)

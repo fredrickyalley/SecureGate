@@ -3,11 +3,11 @@ import { Request, Response, NextFunction } from 'express';
 import * as passport from 'passport';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import { Strategy as OAuth2Strategy } from 'passport-oauth2';
-import { AuthService } from '../services/auth.service';
+import { SecureAuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  constructor(private readonly authService: AuthService) {
+  constructor(private readonly authService: SecureAuthService) {
     // Define the options for the JWT strategy
     const jwtOptions = {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

@@ -6,7 +6,7 @@ import { PrismaService } from 'src/auth/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class UserService {
+export class SecureUserService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getUsers(): Promise<User[]> {

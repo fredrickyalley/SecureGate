@@ -1,22 +1,22 @@
 import { Module, DynamicModule } from '@nestjs/common';
 import { JwtModule, JwtModuleOptions, JwtService } from '@nestjs/jwt';
 import { AuthController } from './controller/auth.controller';
-import { AuthService } from './services/auth.service';
+import { SecureAuthService } from './services/auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthConfig } from './interfaces/auth.interface';
 import configuration from './config/auth.config'
 import { MailModule } from 'src/mailer/mail.module';
-import { UserService } from 'src/user/service/user.service';
-import { RbacService } from 'src/rbac/service/rbac.service';
+import { SecureUserService } from 'src/user/service/user.service';
+import { SecureRbacService } from 'src/rbac/service/rbac.service';
 
 
 
 @Module({
   imports: [MailModule],
   controllers: [AuthController],
-  providers: [AuthService, UserService, RbacService]
+  providers: [SecureAuthService, SecureUserService, SecureRbacService]
 })
-export class AuthModule {
+export class SecureAuthModule {
   static forRoot(options?: AuthConfig): DynamicModule {
     const jwtModuleOptions: JwtModuleOptions = {
       secret: options.jwt.secret,
@@ -33,7 +33,7 @@ export class AuthModule {
     };
 
     return {
-      module: AuthModule,
+      module: SecureAuthModule,
       imports: [
         jwtModule,
         ConfigModule.forRoot({
@@ -42,14 +42,14 @@ export class AuthModule {
       ],
       controllers: [AuthController],
       providers: [
-        AuthService,
+        SecureAuthService,
         authConfigProvider,
         {
           provide: ConfigService,
           useClass: ConfigService,
         },
       ],
-      exports: [AuthService],
+      exports: [SecureAuthService],
     };
   }
 }

@@ -1,0 +1,29 @@
+# Exclude development and testing files
+__tests__
+test/
+tests/
+*.test.ts
+*.spec.ts
+jest.config.js
+
+# Exclude source files and TypeScript
+src/
+*.ts
+*.tsx
+tsconfig.json
+.env
+tsconfig.build.json
+.gitignore
+yarn.lock
+# Exclude build artifacts and output directories
+prisma
+build/
+node_modules/
+
+# Exclude version control files and editor-specific files
+.git/
+.svn/
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace

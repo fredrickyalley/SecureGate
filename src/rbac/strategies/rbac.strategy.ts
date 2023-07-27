@@ -2,11 +2,11 @@ import { Injectable, ExecutionContext, UnauthorizedException } from '@nestjs/com
 import { AuthGuard } from '@nestjs/passport';
 import { Reflector } from '@nestjs/core';
 import { User } from '@prisma/client';
-import { RbacService } from '../service/rbac.service';
+import { SecureRbacService } from '../service/rbac.service';
 
 @Injectable()
 export class RbacStrategy extends AuthGuard('jwt') {
-  constructor(private readonly rbacService: RbacService, private readonly reflector: Reflector) {
+  constructor(private readonly rbacService: SecureRbacService, private readonly reflector: Reflector) {
     super();
   }
 

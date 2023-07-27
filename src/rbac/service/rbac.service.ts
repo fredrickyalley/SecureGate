@@ -11,7 +11,7 @@ import { CreatePermissionDto } from '../dto/create-permission.dto';
 import { UpdatePermissionDto } from '../dto/update-permission.dto';
 
 @Injectable()
-export class RbacService {
+export class SecureRbacService {
   constructor(private readonly prisma: PrismaService) {}
 
   /**

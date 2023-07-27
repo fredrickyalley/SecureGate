@@ -13,7 +13,7 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
+import { SecureAuthService } from '../services/auth.service';
 import { LoginDto } from '../dto/login.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Auth } from '../decorators/auth.decorator';
@@ -26,8 +26,8 @@ import { ForgotPasswordDto } from '../dto/forgot-password.dto';
 import { RbacStrategy } from 'src/rbac/strategies/rbac.strategy';
 import { Roles } from 'src/rbac/decorator/role.decorator';
 import { Permissions } from 'src/rbac/decorator/permission.decorator';
-import { UserService } from 'src/user/service/user.service';
-import { RbacService } from 'src/rbac/service/rbac.service';
+import { SecureUserService } from 'src/user/service/user.service';
+import { SecureRbacService } from 'src/rbac/service/rbac.service';
 // import { CreateUserDto } from '../dto/create-user.dto';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { CreateRoleDto } from 'src/rbac/dto/create-role.dto';
@@ -43,9 +43,9 @@ import { CreatePermissionDto } from 'src/rbac/dto/create-permission.dto';
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
-    private userService: UserService,
-    private rbacService: RbacService,
+    private readonly authService: SecureAuthService,
+    private userService: SecureUserService,
+    private rbacService: SecureRbacService,
   ) {}
 
   @Post('login')
