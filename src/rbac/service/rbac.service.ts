@@ -1,14 +1,8 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { Role, Permission} from '@prisma/client';
 import { PrismaService } from '../../auth/prismaService/prisma.service';
-import { CreateRoleDto } from '../dto/permission-role.dto';
-import {
-  AssignRoleToUserDto,
-  RevokeRoleOfUserDto,
-} from '../dto/assign-role.dto';
-import { UpdateRoleDto } from '../dto/update-role.dto';
-import { CreatePermissionDto } from '../dto/create-permission.dto';
-import { UpdatePermissionDto } from '../dto/update-permission.dto';
+import { CreateRoleDto, UpdatePermissionDto, UpdateRoleDto, RevokeRoleOfUserDto, AssignRoleToUserDto, CreatePermissionDto } from '../dto/permission-role.dto';
+
 
 @Injectable()
 export class SecureRbacService {
