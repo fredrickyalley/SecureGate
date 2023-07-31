@@ -1,7 +1,7 @@
 import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
-import { Role, Permission, User } from '@prisma/client';
-import { PrismaService } from 'src/auth/prisma/prisma.service';
-import { CreateRoleDto } from '../dto/create-role.dto';
+import { Role, Permission} from '@prisma/client';
+import { PrismaService } from '../../auth/prismaService/prisma.service';
+import { CreateRoleDto } from '../dto/permission-role.dto';
 import {
   AssignRoleToUserDto,
   RevokeRoleOfUserDto,

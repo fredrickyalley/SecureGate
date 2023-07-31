@@ -13,12 +13,6 @@ export interface AuthConfigure {
     // Other configuration options as needed...
   };
 
-  email: {
-    sender: string; // Email address of the sender
-    provider: string; // Name or type of the email service provider
-    // Other email configuration options...
-  };
-
   emailTransporter: {
     host: string;
     port: number;
@@ -31,16 +25,14 @@ export interface AuthConfigure {
   }
 
 
-  // jwt: {
-  //   jwt: JwtConfig;
-  // }
+  jwt: {
+    jwt: JwtConfig;
+  }
 }
 
 export interface AuthConfig {
   jwt: JwtConfig;
-
  
-  // Add any other configuration properties as needed
 }
 
 export interface TokenPayload {

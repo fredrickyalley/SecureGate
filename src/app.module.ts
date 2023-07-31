@@ -1,12 +1,11 @@
 import { Module, MiddlewareConsumer, RequestMethod} from '@nestjs/common';
 import { SecureAuthModule } from './auth/auth.module';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './auth/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 
 import { Prisma } from '@prisma/client';
 import { AuthMiddleware } from './auth/middleware/auth.middleware';
-import { JwtService } from '@nestjs/jwt';
-import { MailModule } from './mailer/mail.module';
+import { MailModule } from './auth/mailer/mail.module';
 
 @Module({
   imports: [
@@ -29,7 +28,7 @@ import { MailModule } from './mailer/mail.module';
       // Configure the authentication options here based on user-defined settings
       jwt: {
         secret: process.env.JWT_SECRET,
-        expiresIn: process.env.JWT_EXPIRES_IN,
+        expiresIn: process.env.JWT_EXPIRES_IN
       }
       // Add any other configuration properties as needed
     }),

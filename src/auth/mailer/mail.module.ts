@@ -1,10 +1,10 @@
 // mailer.module.ts
 
 import { Module } from '@nestjs/common';
-import { MailerModule, MailerService } from '@nestjs-modules/mailer';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigService } from '@nestjs/config';
-import { AuthConfigure } from 'src/auth/interfaces/auth.interface';
+import { AuthConfigure } from 'auth/interfaces/auth.interface';
 import { MailService } from './mail.service';
 
 @Module({
@@ -23,7 +23,7 @@ import { MailService } from './mail.service';
             
           },
           defaults: {
-            from: '"No Reply" <noreply@example.com>',
+            from: config.get('emailTransporter').sender,
           },
           template: {
             dir: __dirname + '/templates',

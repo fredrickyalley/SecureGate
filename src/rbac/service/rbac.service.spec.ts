@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RbacService } from './rbac.service';
+import { SecureRbacService } from './rbac.service';
 
 describe('ServiceService', () => {
-  let service: RbacService;
+  let service: SecureRbacService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RbacService],
+      providers: [SecureRbacService],
     }).compile();
 
-    service = module.get<RbacService>(RbacService);
+    service = module.get<SecureRbacService>(SecureRbacService);
   });
 
   it('should be defined', () => {

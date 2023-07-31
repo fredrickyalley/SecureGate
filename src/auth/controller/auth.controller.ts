@@ -14,30 +14,18 @@ import {
   Put,
 } from '@nestjs/common';
 import { SecureAuthService } from '../services/auth.service';
-import { LoginDto } from '../dto/login.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { LoginDto, ResetPasswordDto, ForgotPasswordDto } from '../dto/user.dto';
 import { Auth } from '../decorators/auth.decorator';
-import { RolesGuard } from '../guards/roles.guard';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { ResetPasswordDto } from '../dto/reset-password.dto';
 import { JwtAuthGuard } from '../guards/jwt.guard';
-import { User } from '@prisma/client';
-import { ForgotPasswordDto } from '../dto/forgot-password.dto';
-import { RbacStrategy } from 'src/rbac/strategies/rbac.strategy';
-import { Roles } from 'src/rbac/decorator/role.decorator';
-import { Permissions } from 'src/rbac/decorator/permission.decorator';
-import { SecureUserService } from 'src/user/service/user.service';
-import { SecureRbacService } from 'src/rbac/service/rbac.service';
-// import { CreateUserDto } from '../dto/create-user.dto';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { CreateRoleDto } from 'src/rbac/dto/create-role.dto';
-import {
-  AssignRoleToUserDto,
-  RevokeRoleOfUserDto,
-} from 'src/rbac/dto/assign-role.dto';
-import { UpdateUserDto } from 'src/user/dto/update-user.dto';
-import { UpdateRoleDto } from 'src/rbac/dto/update-role.dto';
-import { CreatePermissionDto } from 'src/rbac/dto/create-permission.dto';
+import { RbacAuthGuard } from 'rbac/guard/rbac.guard';
+import { Roles } from 'rbac/decorator/role.decorator';
+import { Permissions } from 'rbac/decorator/permission.decorator';
+import { SecureUserService } from 'user/service/user.service';
+import { SecureRbacService } from 'rbac/service/rbac.service';
+import { CreateUserDto, UpdateUserDto } from 'user/dto/user.dto';
+import { CreateRoleDto, CreatePermissionDto, UpdatePermissionDto, UpdateRoleDto, AssignRoleToUserDto, RevokeRoleOfUserDto } from 'rbac/dto/permission-role.dto';
+
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -52,7 +40,7 @@ export class AuthController {
   async login(@Body() loginDto: LoginDto) {
     try {
       const { email, password } = loginDto;
-      return this.authService.login({ email, password });
+      return this.authService.login(email, password);
     } catch (error) {
       throw new HttpException(error.message, 500);
     }
@@ -104,7 +92,7 @@ export class AuthController {
   */
 
   @Get('users')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async getUsers() {
@@ -116,7 +104,7 @@ export class AuthController {
   }
 
   @Post('create-user')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async createUser(@Body() createUserDto: CreateUserDto) {
@@ -128,7 +116,7 @@ export class AuthController {
   }
 
   @Get('user-email')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async findUserByEmail(@Query('email') email: string) {
@@ -140,7 +128,7 @@ export class AuthController {
   }
 
   // @Get(':id')
-  // @UseGuards(RbacStrategy)
+  // @UseGuards(RbacAuthGuard)
   // @Roles('admin')
   // @Permissions('write')
   // async getUserById(@Param('id', ParseIntPipe) id: number) {
@@ -152,7 +140,7 @@ export class AuthController {
   // }
 
   // @Patch(':id')
-  // @UseGuards(RbacStrategy)
+  // @UseGuards(RbacAuthGuard)
   // @Roles('admin')
   // @Permissions('write')
   // async updateUser(@Body() UpdateUserDto: UpdateUserDto, @Param('id', ParseIntPipe) id: number) {
@@ -164,7 +152,7 @@ export class AuthController {
   // }
 
   // @Delete(':id')
-  // @UseGuards(RbacStrategy)
+  // @UseGuards(RbacAuthGuard)
   // @Roles('admin')
   // @Permissions('write')
   // async deactivateUser(@Param('id', ParseIntPipe) id: number) {
@@ -176,7 +164,7 @@ export class AuthController {
   // }
 
   @Post()
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async reactivateUser(@Query('id', ParseIntPipe) id: number) {
@@ -194,7 +182,7 @@ export class AuthController {
   @Post('roles')
   @Roles('admin')
   @Permissions('write')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   async createRoles(@Body() createRoleDto: CreateRoleDto) {
     try {
       return this.rbacService.createRole(createRoleDto);
@@ -204,7 +192,7 @@ export class AuthController {
   }
 
   @Put(':id')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async updateRole(
@@ -219,7 +207,7 @@ export class AuthController {
   }
 
   @Delete(':id')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async deleteRole(@Param('id', ParseIntPipe) roleId: number) {
@@ -231,7 +219,7 @@ export class AuthController {
   }
 
   @Post('assign-role')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async assignRoleToUser(@Body() assignRoleToUserDto: AssignRoleToUserDto) {
@@ -243,7 +231,7 @@ export class AuthController {
   }
 
   @Post('revoke-role')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async revokeRoleOfUser(@Body() revokeRoleOfUser: RevokeRoleOfUserDto) {
@@ -255,7 +243,7 @@ export class AuthController {
   }
 
   @Post('reassign-role')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async reassignRoleOfUser(@Body() assignRoleToUserDto: AssignRoleToUserDto) {
@@ -267,7 +255,7 @@ export class AuthController {
   }
 
   @Get('roles')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async getRoles() {
@@ -279,7 +267,7 @@ export class AuthController {
   }
 
   // @Get(':id')
-  // @UseGuards(RbacStrategy)
+  // @UseGuards(RbacAuthGuard)
   // @Roles('admin')
   // @Permissions('write')
   // async getRoleById(@Param('id', ParseIntPipe) roleId: number) {
@@ -295,7 +283,7 @@ export class AuthController {
   */
 
   @Get()
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async getPermissions() {
@@ -307,7 +295,7 @@ export class AuthController {
   }
 
   @Get(':id')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async getPermissionById(@Param('id', ParseIntPipe) permissionId: number) {
@@ -319,7 +307,7 @@ export class AuthController {
   }
 
   @Post('create-permission')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async createPermission(@Body() createPermissionDto: CreatePermissionDto) {
@@ -331,7 +319,7 @@ export class AuthController {
   }
 
   @Patch(':id')
-  @UseGuards(RbacStrategy)
+  @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
   async updatePermission(

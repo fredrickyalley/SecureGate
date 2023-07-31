@@ -5,7 +5,7 @@ import { User } from '@prisma/client';
 import { SecureRbacService } from '../service/rbac.service';
 
 @Injectable()
-export class RbacStrategy extends AuthGuard('jwt') {
+export class RbacAuthGuard extends AuthGuard('jwt') {
   constructor(private readonly rbacService: SecureRbacService, private readonly reflector: Reflector) {
     super();
   }
@@ -26,13 +26,9 @@ export class RbacStrategy extends AuthGuard('jwt') {
     // Check if the user has the required roles
     
     const hasRoles = await this.rbacService.hasRoles(user.id, requiredRoles);
-    // const hasRoles = requiredRoles.every( async (role) =>  await this.rbacService.hasRole(user.id) );
-    console.log(hasRoles)
+  
     // Check if the user has the required permissions
     const hasPermissions = await this.rbacService.hasPermission(user.id, requiredPermissions);
-        // const hasPermissions = requiredPermissions.every(async (permission) => await this.rbacService.hasPermission(user.id, permission));
-    // const hasPermissions = requiredPermissions.every(async (permission) => await this.rbacService.hasPermission(user.id, permission));
-    console.log(hasPermissions)
     if (!hasRoles || !hasPermissions) {
       throw new UnauthorizedException('You do not have permission to access this resource.');
     }

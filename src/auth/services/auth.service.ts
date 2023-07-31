@@ -4,10 +4,9 @@ import * as bcrypt from 'bcrypt';
 import { AuthConfigure, TokenPayload } from '../interfaces/auth.interface';
 import { OAuthProfile } from '../interfaces/user.interface';
 import { User } from '@prisma/client';
-import { LoginDto } from '../dto/login.dto';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prismaService/prisma.service';
 import { ConfigService } from '@nestjs/config';
-import {MailService} from 'src/mailer/mail.service';
+import {MailService} from '../mailer/mail.service';
 import * as nodemailer from 'nodemailer';
 
 
@@ -25,7 +24,6 @@ export class SecureAuthService {
     private readonly mailService: MailService,
     ) {
     this.forgotPasswordConfig = this.configService.get('forgotPassword');
-    // this.emailConfig = this.configService.get('email');
     this.emailTransporterConfig = this.configService.get('emailTransporter');
     this.transporter = this.createTransporter();
   }
@@ -76,8 +74,7 @@ export class SecureAuthService {
     return existingUser;
   }
 
-  async login(loginDto: LoginDto): Promise<{ access_token: string }> {
-    const { email, password } = loginDto;
+  async login( email: string, password: string): Promise<{ access_token: string }> {
     const user = await this.prisma.user.findFirst({ where: { email: email, deletedAt: null } });
   
     if (!user) {
