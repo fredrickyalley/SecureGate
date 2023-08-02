@@ -4,19 +4,31 @@ import { PrismaService } from '../../auth/prismaService/prisma.service';
 import { CreateRoleDto, UpdatePermissionDto, UpdateRoleDto, RevokeRoleOfUserDto, AssignRoleToUserDto, CreatePermissionDto } from '../dto/permission-role.dto';
 
 
+/**
+ * Service class responsible for handling Role-Based Access Control (RBAC) operations.
+ *
+ * @class
+ */
 @Injectable()
 export class SecureRbacService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * PERMISSIONS SERVICE
-   * @returns
+ /**
+   * Retrieves a list of all permissions.
+   *
+   * @returns {Promise<Permission[]>} A promise that resolves to an array of Permission objects.
    */
-
   async getPermissions(): Promise<Permission[]> {
     return this.prisma.permission.findMany({ where: { deletedAt: null } });
   }
 
+  /**
+   * Creates a new permission.
+   *
+   * @param {CreatePermissionDto} createPermissionDto - The data for creating the new permission.
+   * @returns {Promise<Permission>} A promise that resolves to the created Permission object.
+   * @throws {HttpException} If the permission with the same name already exists.
+   */
   async createPermission(
     createPermissionDto: CreatePermissionDto,
   ): Promise<Permission> {
@@ -29,6 +41,13 @@ export class SecureRbacService {
     return this.prisma.permission.create({ data: { name } });
   }
 
+  /**
+   * Retrieves a permission by its ID.
+   *
+   * @param {number} id - The ID of the permission to retrieve.
+   * @returns {Promise<Permission>} A promise that resolves to the Permission object with the given ID.
+   * @throws {NotFoundException} If the permission with the specified ID is not found.
+   */
   async getPermissionById(id: number): Promise<Permission> {
     const permission = await this.prisma.permission.findFirst({
       where: { id, deletedAt: null },
@@ -37,6 +56,14 @@ export class SecureRbacService {
     return permission;
   }
 
+  /**
+   * Updates a permission by its ID.
+   *
+   * @param {number} id - The ID of the permission to update.
+   * @param {UpdatePermissionDto} updatePermissionDto - The data for updating the permission.
+   * @returns {Promise<Permission>} A promise that resolves to the updated Permission object.
+   * @throws {NotFoundException} If the permission with the specified ID is not found.
+   */
   async updatePermission(
     id: number,
     updatePermissionDto: UpdatePermissionDto,
@@ -57,10 +84,23 @@ export class SecureRbacService {
    * @returns
    */
 
+
+   /**
+   * Retrieves a list of all roles.
+   *
+   * @returns {Promise<Role[]>} A promise that resolves to an array of Role objects.
+   */
   async getRoles(): Promise<Role[]> {
     return this.prisma.role.findMany({ where: { deletedAt: null } });
   }
 
+  /**
+   * Retrieves a role by its ID.
+   *
+   * @param {number} roleId - The ID of the role to retrieve.
+   * @returns {Promise<Role>} A promise that resolves to the Role object with the given ID.
+   * @throws {NotFoundException} If the role with the specified ID is not found.
+   */
   async getRoleById(roleId: number): Promise<Role> {
     const role = await this.prisma.role.findFirst({
       where: { id: roleId, deletedAt: null },
@@ -71,6 +111,13 @@ export class SecureRbacService {
     return role;
   }
 
+  /**
+   * Creates a new role.
+   *
+   * @param {CreateRoleDto} createRoleDto - The data for creating the new role.
+   * @returns {Promise<Role>} A promise that resolves to the created Role object.
+   * @throws {HttpException} If the role with the same name already exists.
+   */
   async createRole(createRoleDto: CreateRoleDto): Promise<Role> {
     const { name, permissionId } = createRoleDto;
 
@@ -100,6 +147,14 @@ export class SecureRbacService {
     }
   }
 
+  /**
+   * Updates a role by its ID.
+   *
+   * @param {number} roleId - The ID of the role to update.
+   * @param {UpdateRoleDto} updateRoleDto - The data for updating the role.
+   * @returns {Promise<Role>} A promise that resolves to the updated Role object.
+   * @throws {NotFoundException} If the role with the specified ID is not found.
+   */
   async updateRole(
     roleId: number,
     updateRoleDto: UpdateRoleDto,
@@ -150,6 +205,14 @@ export class SecureRbacService {
     }
   }
 
+  /**
+   * Deletes a role by its ID.
+   *
+   * @param {number} roleId - The ID of the role to delete.
+   * @returns {Promise<void>} A promise that resolves when the role is deleted successfully.
+   * @throws {NotFoundException} If the role with the specified ID is not found.
+   * @throws {HttpException} If the role has already been deleted.
+   */
   async deleteRole(roleId: number): Promise<void> {
     const role = await this.prisma.role.findFirst({ where: { id: roleId } });
 
@@ -166,6 +229,14 @@ export class SecureRbacService {
     }
   }
 
+   /**
+   * Assigns a role to a user.
+   *
+   * @param {AssignRoleToUserDto} assignRoleToUser - The data for assigning the role to the user.
+   * @returns {Promise<void>} A promise that resolves when the role is assigned to the user successfully.
+   * @throws {NotFoundException} If the user or role with the specified ID is not found.
+   * @throws {HttpException} If the user already has the specified role.
+   */
   async assignRoleToUser(assignRoleToUser: AssignRoleToUserDto): Promise<void> {
     const { userId, roleId } = assignRoleToUser;
 
@@ -207,6 +278,14 @@ export class SecureRbacService {
     });
   }
 
+  /**
+   * Revokes a role from a user.
+   *
+   * @param {RevokeRoleOfUserDto} revokeRoleOfUser - The data for revoking the role from the user.
+   * @returns {Promise<void>} A promise that resolves when the role is revoked from the user successfully.
+   * @throws {NotFoundException} If the user or role with the specified ID is not found.
+   * @throws {HttpException} If the user role has already been revoked or the role is already deleted.
+   */
   async revokeRoleOfUser(revokeRoleOfUser: RevokeRoleOfUserDto): Promise<void> {
     const { userId, roleId } = revokeRoleOfUser;
 
@@ -232,6 +311,14 @@ export class SecureRbacService {
     }
   }
 
+  /**
+   * Reassigns a revoked role to a user.
+   *
+   * @param {AssignRoleToUserDto} assignRoleToUserDto - The data for reassigning the role to the user.
+   * @returns {Promise<void>} A promise that resolves when the role is reassigned to the user successfully.
+   * @throws {NotFoundException} If the user role with the specified ID is not found.
+   * @throws {HttpException} If the user role has not been revoked.
+   */
   async reassignRoleOfUser(
     assignRoleToUserDto: AssignRoleToUserDto,
   ): Promise<void> {
@@ -256,6 +343,12 @@ export class SecureRbacService {
     }
   }
 
+  /**
+   * Retrieves a list of permissions assigned to a user.
+   *
+   * @param {number} userId - The ID of the user.
+   * @returns {Promise<Permission[]>} A promise that resolves to an array of Permission objects.
+   */
   async getPermissionsForUser(userId: number): Promise<Permission[]> {
     const userWithRoles = await this.prisma.user.findFirst({
       where: { id: userId, deletedAt: null },
@@ -276,6 +369,13 @@ export class SecureRbacService {
     return allPermissions;
   }
 
+  /**
+   * Checks if a user has specific roles.
+   *
+   * @param {number} userId - The ID of the user.
+   * @param {string[]} requiredRoles - An array of role names required for access.
+   * @returns {Promise<boolean>} A promise that resolves to true if the user has all the required roles; otherwise, false.
+   */
   async hasRoles(userId: any, requiredRoles: string[]): Promise<boolean> {
     const user = await this.prisma.user.findFirst({
       where: { id: userId, deletedAt: null },
@@ -297,6 +397,13 @@ export class SecureRbacService {
     return false;
   }
 
+  /**
+   * Checks if a user has specific permissions.
+   *
+   * @param {number} userId - The ID of the user.
+   * @param {string[]} requiredPermissions - An array of permission names required for access.
+   * @returns {Promise<boolean>} A promise that resolves to true if the user has all the required permissions; otherwise, false.
+   */
   async hasPermission(
     userId: number,
     requiredPermissions: string[],

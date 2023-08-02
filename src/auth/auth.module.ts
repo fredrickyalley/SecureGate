@@ -10,14 +10,28 @@ import { SecureUserService } from '../user/service/user.service';
 import { SecureRbacService } from '../rbac/service/rbac.service';
 
 
-
+/**
+ * NestJS module for secure authentication and authorization.
+ *
+ * @class
+ * @exports
+ */
 @Module({
   imports: [MailModule],
   controllers: [AuthController],
-  providers: [SecureAuthService, SecureUserService, SecureRbacService]
+  providers: [SecureAuthService, SecureUserService, SecureRbacService],
+  exports: [SecureAuthService]
 })
 export class SecureAuthModule {
+  /**
+   * Registers the `SecureAuthModule` with optional configuration options for JWT and other authentication-related settings.
+   *
+   * @static
+   * @param {AuthConfig} options - Configuration options for authentication.
+   * @returns {DynamicModule} - The registered `SecureAuthModule` with the provided options.
+   */
   static forRoot(options?: AuthConfig): DynamicModule {
+    // Configure JWT module options based on provided options
     const jwtModuleOptions: JwtModuleOptions = {
       secret: options.jwt.secret,
       signOptions: {
@@ -25,13 +39,16 @@ export class SecureAuthModule {
       },
     };
 
+    // Register JWT module
     const jwtModule = JwtModule.register(jwtModuleOptions);
 
+    // Define the provider for the authentication configuration
     const authConfigProvider = {
       provide: 'AUTH_CONFIG',
       useValue: options,
     };
 
+    // Assemble the dynamic module
     return {
       module: SecureAuthModule,
       imports: [

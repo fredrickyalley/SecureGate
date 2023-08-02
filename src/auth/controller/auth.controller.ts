@@ -70,8 +70,8 @@ export class AuthController {
   @Patch('reset-password')
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     try {
-      const { email, newPassword } = resetPasswordDto;
-      return this.authService.resetPassword(email, newPassword);
+      const { userId, oldPassword, newPassword } = resetPasswordDto;
+      return this.authService.resetPassword(userId, oldPassword, newPassword);
     } catch (error) {
       throw new HttpException(error.message, 500);
     }

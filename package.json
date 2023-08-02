@@ -1,12 +1,15 @@
 {
   "name": "securegates",
-  "version": "0.1.7",
+  "version": "0.2.4",
   "description": "An authentication and authorization mechanism for secure gateway authentication and authorization for applications",
   "author": "Fredrick Yalley",
   "private": false,
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

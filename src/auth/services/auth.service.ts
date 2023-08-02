@@ -9,13 +9,42 @@ import { ConfigService } from '@nestjs/config';
 import {MailService} from '../mailer/mail.service';
 import * as nodemailer from 'nodemailer';
 
-
+/**
+ * Injectable service that provides authentication-related functionalities, such as login, signup,
+ * password reset, and token validation.
+ *
+ * @class
+ * @name SecureAuthService
+ */
 @Injectable()
 export class SecureAuthService {
+   /**
+   * Configuration object for the "Forgot Password" functionality.
+   * @private
+   */
   private readonly forgotPasswordConfig: AuthConfigure['forgotPassword'];
+
+  /**
+   * Configuration object for the email transporter used for sending emails.
+   * @private
+   */
   private readonly emailTransporterConfig: AuthConfigure['emailTransporter'];
+
+  /**
+   * Nodemailer transporter used to send emails.
+   * @private
+   */
   private transporter: nodemailer.Transporter;
 
+  /**
+   * Creates an instance of the SecureAuthService.
+   *
+   * @constructor
+   * @param {PrismaService} prisma - Instance of the PrismaService to interact with the database.
+   * @param {ConfigService<AuthConfigure>} configService - Instance of the ConfigService to access the authentication configuration.
+   * @param {JwtService} jwtService - Instance of the JwtService to sign and verify JWT tokens.
+   * @param {MailService} mailService - Instance of the MailService to send emails.
+   */
   constructor( 
     private prisma: PrismaService, 
     private readonly configService: ConfigService<AuthConfigure>, 
@@ -45,10 +74,16 @@ export class SecureAuthService {
 
   }
 
+  /**
+ * Validates the payload of a JWT token and retrieves the associated user from the database.
+ *
+ * @async
+ * @param {TokenPayload} payload - The decoded payload of the JWT token.
+ * @returns {Promise<User>} - The user associated with the payload if valid.
+ * @throws {UnauthorizedException} - If the token is invalid or the user is not found.
+ */
 
-  async validateTokenPayload(payload: TokenPayload): Promise<{}> {
-    // Implement your logic to validate and retrieve the user based on the payload
-    // This could involve querying a user repository or data source.
+  async validateTokenPayload(payload: TokenPayload): Promise<User> {
     
     const user = await this.prisma.user.findUnique({where: {id: payload.sub}});
     if (!user) {
@@ -58,21 +93,36 @@ export class SecureAuthService {
     return user;
   }
 
-  async findOrCreateUserFromOAuthProfile(profile: OAuthProfile) {
+/**
+ * Finds or creates a user based on the provided OAuth profile.
+ *
+ * @async
+ * @param {OAuthProfile} profile - The OAuth profile of the user.
+ * @returns {Promise<User>} - The existing or newly created user.
+ * @throws {NotFoundException} - If the user is not found based on the OAuth profile.
+ */
+  // Change the type of the argument to `OAuthProfile`
+async findOrCreateUserFromOAuthProfile(profile: OAuthProfile): Promise<User> {
+  const existingUser = await this.prisma.user.findUnique({
+    where: { id: profile.id }, // Assuming `id` is the primary key of the `User` model
+  });
 
-    // Find the user by the unique identifier (e.g., 'id') in the database
-    const existingUser = await this.prisma.user.findUnique({
-      where: { id: profile.id },
-    });
-
-    if (!existingUser) {
-      // If the user is not found, deny access
-      throw new NotFoundException('User not found');
-    }
-
-    return existingUser;
+  if (!existingUser) {
+    throw new NotFoundException('User not found');
   }
 
+  return existingUser;
+}
+
+/**
+ * Authenticates a user based on their email and password and returns an access token upon successful authentication.
+ *
+ * @async
+ * @param {string} email - The email of the user.
+ * @param {string} password - The password of the user.
+ * @returns {Promise<{ access_token: string }>} - An object containing the access token.
+ * @throws {UnauthorizedException} - If the email or password is invalid.
+ */
   async login( email: string, password: string): Promise<{ access_token: string }> {
     const user = await this.prisma.user.findFirst({ where: { email: email, deletedAt: null } });
   
@@ -84,14 +134,22 @@ export class SecureAuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid email or password');
     }
-  
+    // console.log(this.configService.get('jwt').secret)
     const payload = { email: user.email, sub: user.id };
-    const access_token = this.jwtService.sign(payload);
+    const access_token = this.jwtService.sign(payload, {secret: this.configService.get('jwt').secret});
   
     return { access_token};
   }
   
-
+  /**
+ * Registers a new user with the provided email and password.
+ *
+ * @async
+ * @param {string} email - The email of the new user.
+ * @param {string} password - The password of the new user.
+ * @returns {Promise<User>} - The newly created user.
+ * @throws {UnauthorizedException} - If the email is already associated with an existing user.
+ */
   async signup(email: string, password: string): Promise<User> {
     const existingUser = await this.prisma.user.findFirst({ where: { email, deletedAt: null } });
 
@@ -105,18 +163,32 @@ export class SecureAuthService {
       data: {
         email: email,
         password: hashedPassword,
-        // roles: ['user'], 
       }
     });
 
     return newUser;
   }
 
-  async resetPassword(email: string, newPassword: string): Promise<User> {
-    const user = await this.prisma.user.findFirst({ where: { email, deletedAt: null } });
-
+  /**
+ * Resets the password of a user based on the provided email and a new password.
+ *
+ * @async
+ * @param {string} oldPassword - The email of the user.
+ * @param {string} newPassword - The new password for the user.
+ * @returns {Promise<User>} - The updated user object.
+ * @throws {UnauthorizedException} - If the user is not found.
+ */
+  async resetPassword(userId: number, oldPassword: string, newPassword: string): Promise<User> {
+    const user = await this.prisma.user.findFirst({ where: { id: userId, deletedAt: null } });
+    
+    
     if (!user) {
       throw new UnauthorizedException('User not found');
+    }
+    const verifyPassword = await bcrypt.compare(oldPassword, user.password);
+    
+    if(!verifyPassword) {
+      throw new UnauthorizedException('Invalid password');
     }
 
     const saltRounds = 10; 
@@ -130,6 +202,14 @@ export class SecureAuthService {
     return updatedUser;
   }
 
+/**
+ * Initiates the "Forgot Password" flow for a user based on the provided email.
+ *
+ * @async
+ * @param {string} email - The email of the user.
+ * @returns {Promise<void>} - A promise that resolves once the reset password email is sent.
+ * @throws {HttpException} - If an error occurs while sending the reset password email.
+ */
   async forgotPassword(email: string): Promise<void> {
     // Generate a unique reset token
     const resetToken = this.generateRandomString(32);
@@ -140,22 +220,29 @@ export class SecureAuthService {
 
     // Compose the reset URL with the reset token and expiration time
     const resetUrl = `${this.forgotPasswordConfig.resetPasswordUrl}?token=${resetToken}`;
-    console.log(resetUrl);
+
     // Send the password reset email to the user with the reset URL
     await this.sendResetPasswordEmail(email, resetUrl)
     .catch(error => {throw new HttpException(error.message, 500)});
   }
 
+  /**
+ * Stores the reset token and its expiration time in the user's database record.
+ *
+ * @async
+ * @param {string} email - The email of the user.
+ * @param {string} resetToken - The reset token to store.
+ * @param {number} expiration - The expiration time of the reset token.
+ * @returns {Promise<void>} - A promise that resolves once the token is stored.
+ */
   async storeResetToken(email: string, resetToken: string, expiration: number): Promise<void> {
-    // Store the reset token and expiration in your database or temporary storage
-    // Example code using a database query or an ORM (e.g., Prisma):
     await this.prisma.user.update({
       where: { email: email },
       data: { resetToken, resetTokenExpiration: new Date(expiration) },
     });
   }
 
-  private generateRandomString(length: number): string {
+  public generateRandomString(length: number): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < length; i++) {
@@ -164,6 +251,15 @@ export class SecureAuthService {
     return result;
   }
 
+  /**
+ * Sends a reset password email to the user with a reset URL.
+ *
+ * @async
+ * @param {string} email - The email of the user.
+ * @param {string} resetUrl - The URL where the user can reset their password.
+ * @returns {Promise<void>} - A promise that resolves once the email is sent.
+ * @throws {HttpException} - If an error occurs while sending the email.
+ */
   async sendResetPasswordEmail(email: string, resetUrl: string): Promise<void> {
     const { sender } = this.emailTransporterConfig;
     const subject = 'Password Reset';
@@ -178,21 +274,14 @@ export class SecureAuthService {
     await this.mailService.sendEmail(email, subject, temp, context);
   }
 
-  // private getEmailService(provider: string): EmailService {
-  //   // Implement logic to get the appropriate email service based on the provider
-  //   // This could involve using conditional statements or a factory pattern
 
-  //   // Example: Using Nodemailer as the email service
-  //   if (provider === 'nodemailer') {
-  //     return new NodemailerEmailService();
-  //   }
-
-  //   // Add other email service providers as needed
-
-  //   throw new Error(`Unsupported email service provider: ${provider}`);
-  // }
-
-  private isPasswordStrong(password: string): boolean {
+  /**
+ * Checks if a password meets the required strength criteria.
+ *
+ * @param {string} password - The password to check.
+ * @returns {boolean} - `true` if the password is strong; otherwise, `false`.
+ */
+  public isPasswordStrong(password: string): boolean {
     // Password strength requirements
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
