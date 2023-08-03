@@ -1,6 +1,6 @@
 # Authentication and Authorization Library for NestJS
 
-[![npm version](https://badge.fury.io/js/authentication-authorization-library.svg)](https://badge.fury.io/js/authentication-authorization-library)
+[![npm version](https://badge.fury.io/js/securegates.svg)](https://badge.fury.io/js/securegates)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # Secure Gates - NestJS Library
 
