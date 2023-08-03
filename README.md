@@ -219,9 +219,10 @@ export class UserController {
 
 Check out the [full documentation](documentation/index.html) for detailed information about the Auth module, services, and more.
 
-## Contribution
+## Documentation
 
-Contributions to the Secure Gates library are welcome! If you find any issues or have suggestions for improvement, feel free to open a pull request or create an issue on the repository.
+Check out our documentation at [docs.securegates.com](https://docs.securegates.com).
+
 
 ## License
 
