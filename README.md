@@ -14,6 +14,25 @@ The **Secure Gates** library is a comprehensive and secure collection of reusabl
 - **PrismaService**: Extends PrismaClient to connect to the database securely.
 - **MailService**: Sends emails, including password reset emails, to users.
 
+## Table of Contents
+- [Installation](#installation)
+- [Authentication Module](#authentication-module)
+  - [Usage](#usage)
+  - [API Reference](#api-reference)
+- [RBAC Module](#rbac-module)
+  - [Usage](#usage-1)
+  - [API Reference](#api-reference-1)
+- [User Module](#user-module)
+  - [Usage](#usage-2)
+  - [API Reference](#api-reference-2)
+- [Documentation](#documentation)
+- [License](#license)
+- [Support](#Support)
+- [Author](#Authors)
+- [Acknowledgments](#Acknowledgments)
+
+
+
 ## Installation
 
 To use the Secure Gates library in your NestJS application, follow these steps:
@@ -30,190 +49,210 @@ yarn add securegates
 
 2. Import the required modules and services into your application's main module:
 
+In the user's `app.module`, you would need to import and configure the modules provided by the SecureGates library. Let's assume that the SecureGates library is installed as a dependency and you have access to the modules exported by the library. Here's how the user's `app.module.ts` would look like:
+
 ```typescript
 import { Module } from '@nestjs/common';
-import { SecureAuthService, SecureRbacService, SecureUserService, PrismaService, MailService } from 'securegates';
+import { SecureAuthModule, DatabaseModule, MailModule, SecureGateModule } from 'securegates';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [...], // Other modules
-  providers: [SecureAuthService, SecureRbacService, SecureUserService, PrismaService, MailService],
-  controllers: [...], // Your application's controllers
+  imports: [
+    // Import the SecureAuthModule to enable authentication functionalities
+    SecureAuthModule.forRoot({
+      jwt: {
+        secret: process.env.JWT_SECRET,
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      },
+      // Other authentication configuration options if needed
+    }),
+    // Import the DatabaseModule to enable database connectivity
+    DatabaseModule.forRoot({
+      // PrismaClient options for the database connection
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+      // Add your user-defined Prisma models here if needed
+      // models: {
+      //   User: {
+      //     // Model configuration
+      //   },
+      // },
+    }),
+    // Import other user-defined modules if needed
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
+  controllers: [], // Add your controllers here
+  providers: [], // Add your providers here
 })
 export class AppModule {}
 ```
 
+Explanation:
+
+1. We import the necessary modules from the SecureGates library: `SecureAuthModule`, and `DatabaseModule`.
+
+2. We configure each module using the `.forRoot()` method and provide the required options based on our application's needs. For example, we configure the `SecureAuthModule` with JWT secret and expiration, the `DatabaseModule` with the database URL etc.
+
+3. We import other user-defined modules as needed. In this example, we import the `ConfigModule` from NestJS to handle configuration options.
+
+4. We add any user-defined controllers and providers if needed.
+
+By importing and configuring these modules in the `app.module.ts`, the user's application will have access to the authentication functionalities provided by the `SecureAuthModule`, and database connectivity via the `PrismaService` from the `DatabaseModule`,. This ensures that the SecureGates library seamlessly integrates into the user's NestJS application, providing all the necessary features for secure authentication and user management.
+
 ## Usage
 
-### Authentication (SecureAuthService)
+## Authentication Module
 
-The SecureAuthService provides the following authentication functionalities:
+The Authentication Module handles user authentication and JWT token generation. It provides endpoints for login, signup, password reset, and token validation.
 
-1. **Login**: Authenticate a user based on their email and password and return an access token upon successful authentication.
+### Usage
+
+To use the Authentication Module in your NestJS application, follow these steps:
+
+1. Import the `SecureAuthModule` in your application's root module:
 
 ```typescript
-import { Controller, Post, Body } from '@nestjs/common';
-import { SecureAuthService } from 'securegates';
+import { Module } from '@nestjs/common';
+import { SecureAuthModule } from 'securegates';
 
-@Controller('auth')
-export class AuthController {
-  constructor(private readonly authService: SecureAuthService) {}
+@Module({
+  imports: [SecureAuthModule.forRoot({
+    // Configure your JWT options here
+    jwt: {
+      secret: 'your-secret-key',
+      expiresIn: '1d',
+    },
+    // Other configuration options
+  })],
+})
+export class AppModule {}
+```
 
-  @Post('login')
-  async login(@Body() loginDto: LoginDto) {
-    const { email, password } = loginDto;
-    return this.authService.login(email, password);
+2. Add the authentication guards to your controllers or routes that require authentication:
+
+```typescript
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'securegates';
+
+@Controller('private')
+export class PrivateController {
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  getPrivateData() {
+    return { message: 'This is private data!' };
   }
 }
 ```
 
-2. **Signup**: Register a new user with the provided email and password.
+### API Reference
+
+The Authentication Module provides the following endpoints:
+
+- `/auth/login` - POST: Authenticate a user and generate a JWT token.
+- `/auth/signup` - POST: Register a new user with an email and password.
+- `/auth/forgot-password` - POST: Initiate the password reset process for a user.
+- `/auth/reset-password/:token` - POST: Reset the password for a user using a token received via email.
+
+## RBAC Module
+
+The RBAC (Role-Based Access Control) Module allows you to manage user roles and permissions. It provides endpoints for creating and assigning roles, managing permissions, and checking user access.
+
+### Usage
+
+To use the RBAC Module in your NestJS application, follow these steps:
+
+1. Import the `SecureRbacModule` in your application's root module:
 
 ```typescript
-import { Controller, Post, Body } from '@nestjs/common';
-import { SecureAuthService } from 'securegates';
+import { Module } from '@nestjs/common';
+import { SecureRbacModule } from 'securegates';
 
-@Controller('auth')
-export class AuthController {
-  constructor(private readonly authService: SecureAuthService) {}
+@Module({
+  imports: [SecureRbacModule],
+})
+export class AppModule {}
+```
 
-  @Post('signup')
-  async signup(@Body() signupDto: SignupDto) {
-    const { email, password } = signupDto;
-    return this.authService.signup(email, password);
+2. Use the provided decorators in your controllers or services to enforce role-based access control:
+
+```typescript
+import { Controller, Get } from '@nestjs/common';
+import {  Permissions, Roles } from 'securegates';
+
+@Controller('private')
+@Roles('admin')
+export class PrivateController {
+  @Get()
+  @Permissions('read')
+  getPrivateData() {
+    return { message: 'This is private data!' };
   }
 }
 ```
 
-3. **Password Reset**: Initiate the "Forgot Password" flow for a user based on the provided email.
+### API Reference
+
+The RBAC Module provides the following decorators:
+
+- `@Roles('role')`: Specifies the roles required to access the endpoint. You can specify multiple roles as arguments.
+- `@Permissions('permission')`: Specifies the permissions required to access the endpoint. You can specify multiple permissions as arguments.
+
+## User Module
+
+The User Module provides user management functionalities, such as creating, updating, and deleting users.
+
+### Usage
+
+To use the User Module in your NestJS application, follow these steps:
+
+1. Import the `SecureUserModule` in your application's root module:
 
 ```typescript
-import { Controller, Post, Body } from '@nestjs/common';
-import { SecureAuthService } from 'securegates';
+import { Module } from '@nestjs/common';
+import { SecureUserModule } from 'securegates';
 
-@Controller('auth')
-export class AuthController {
-  constructor(private readonly authService: SecureAuthService) {}
-
-  @Post('forgot-password')
-  async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-    const { email } = forgotPasswordDto;
-    return this.authService.forgotPassword(email);
-  }
-}
+@Module({
+  imports: [SecureUserModule],
+})
+export class AppModule {}
 ```
 
-### Role-Based Access Control (SecureRbacService)
-
-The SecureRbacService provides Role-Based Access Control (RBAC) functionalities to manage user roles and permissions.
-
-1. **Create Role**: Create a new role.
-
-```typescript
-import { Controller, Post, Body } from '@nestjs/common';
-import { SecureRbacService } from 'securegates';
-
-@Controller('rbac')
-export class RbacController {
-  constructor(private readonly rbacService: SecureRbacService) {}
-
-  @Post('create-role')
-  async createRole(@Body() createRoleDto: CreateRoleDto) {
-    const { name, description } = createRoleDto;
-    return this.rbacService.createRole(name, description);
-  }
-}
-```
-
-2. **Create Permission**: Create a new permission.
-
-```typescript
-import { Controller, Post, Body } from '@nestjs/common';
-import { SecureRbacService } from 'securegates';
-
-@Controller('rbac')
-export class RbacController {
-  constructor(private readonly rbacService: SecureRbacService) {}
-
-  @Post('create-permission')
-  async createPermission(@Body() createPermissionDto: CreatePermissionDto) {
-    const { name, description } = createPermissionDto;
-    return this.rbacService.createPermission(name, description);
-  }
-}
-```
-
-3. **Assign Role to User**: Assign a role to a user.
-
-```typescript
-import { Controller, Post, Body } from '@nestjs/common';
-import { SecureRbacService } from 'securegates';
-
-@Controller('rbac')
-export class RbacController {
-  constructor(private readonly rbacService: SecureRbacService) {}
-
-  @Post('assign-role-to-user')
-  async assignRoleToUser(@Body() assignRoleToUserDto: AssignRoleToUserDto) {
-    const { userId, roleId } = assignRoleToUserDto;
-    return this.rbacService.assignRoleToUser(userId, roleId);
-  }
-}
-```
-
-### User Management (SecureUserService)
-
-The SecureUserService handles user management operations.
-
-1. **Get Users**: Get all users from the database.
+2. Use the provided service to manage users in your controllers or services:
 
 ```typescript
 import { Controller, Get } from '@nestjs/common';
 import { SecureUserService } from 'securegates';
 
 @Controller('users')
-export class UserController {
+export class UsersController {
   constructor(private readonly userService: SecureUserService) {}
 
   @Get()
   async getUsers() {
-    return this.userService.getUsers();
+    const users = await this.userService.getUsers();
+    return users;
   }
 }
 ```
 
-2. **Update User**: Update a user's email or password.
+### API Reference
 
-```typescript
-import { Controller, Patch, Param, Body } from '@nestjs/common';
-import { SecureUserService, UpdateUserDto } from 'securegates';
+The User Module provides the `SecureUserService` service with methods to interact with user data:
 
-@Controller('users')
-export class UserController {
-  constructor(private readonly userService: SecureUserService) {}
+- `getUsers()`: Get a list of all users.
+- `findUserByEmail(email: string)`: Find a user by their email.
+- `getUserById(id: number)`: Find a user by their ID.
+- `createUser(createUserDto: CreateUserDto)`: Create a new user.
+- `updateUser(id: number, updateUserDto: UpdateUserDto)`: Update an existing user.
+- `deleteUser(id: number)`: Delete a user by their ID.
+- `deactivateUser(id: number)`: Deactivate a user by their ID.
+- `reactivateUser(id: number)`: Reactivate a deactivated user by their ID.
 
-  @Patch(':id')
-  async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.updateUser(id, updateUserDto);
-  }
-}
-```
-
-3. **Delete User**: Delete a user.
-
-```typescript
-import { Controller, Delete, Param } from '@nestjs/common';
-import { SecureUserService } from 'securegates';
-
-@Controller('users')
-export class UserController {
-  constructor(private readonly userService: SecureUserService) {}
-
-  @Delete(':id')
-  async deleteUser(@Param('id') id: number) {
-    return this.userService.deleteUser(id);
-  }
-}
-```
 
 ## Documentation
 

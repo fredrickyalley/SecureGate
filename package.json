@@ -1,6 +1,6 @@
 {
   "name": "securegates",
-  "version": "0.2.8",
+  "version": "0.3.2",
   "description": "An authentication and authorization mechanism for secure gateway authentication and authorization for applications",
   "author": "Fredrick Yalley",
   "private": false,
@@ -9,7 +9,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist/",
-    "docs"
+    "LICENSE.txt"
     ],
   "scripts": {
     "build": "nest build",
