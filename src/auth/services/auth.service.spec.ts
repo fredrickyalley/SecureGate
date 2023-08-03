@@ -141,7 +141,7 @@ describe('SecureAuthService', () => {
     prismaServiceMock.user.update.mockResolvedValue(updatedUser);
 
     // Act
-    const result = await service.resetPassword(email, newPassword);
+    const result = await service.resetPassword(user.id, user.password, newPassword);
 
     // Assert
     expect(result).toEqual(updatedUser);
@@ -320,7 +320,7 @@ it('should find or create a user from OAuth profile', async () => {
     prismaServiceMock.user.update.mockResolvedValue(updatedUser);
 
     // Act
-    const result = await service.resetPassword(email, newPassword);
+    const result = await service.resetPassword(user.id,user.password, newPassword);
 
     // Assert
     expect(result).toEqual(updatedUser);
@@ -335,11 +335,13 @@ it('should find or create a user from OAuth profile', async () => {
   it('should throw UnauthorizedException if user is not found on password reset', async () => {
     // Arrange
     const email = 'user@example.com';
+
+    const user = { id: 1, email: email, password: 'hashed_password' };
     const newPassword = 'NewPassword123!';
     prismaServiceMock.user.findFirst.mockResolvedValue(null);
 
     // Act & Assert
-    await expect(service.resetPassword(email, newPassword)).rejects.toThrow(UnauthorizedException);
+    await expect(service.resetPassword(user.id, user.password, newPassword)).rejects.toThrow(UnauthorizedException);
     expect(prismaServiceMock.user.findFirst).toHaveBeenCalledWith({ where: { email, deletedAt: null } });
     // Should not call prismaServiceMock.user.update since the user is not found
     expect(prismaServiceMock.user.update).not.toHaveBeenCalled();
