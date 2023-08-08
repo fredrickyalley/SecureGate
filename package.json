@@ -10,7 +10,7 @@
   "files": [
     "dist/",
     "LICENSE.txt"
-    ],
+  ],
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -37,6 +37,7 @@
     "@prisma/client": "^5.0.0",
     "@types/nodemailer": "^6.4.8",
     "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "handlebars": "^4.7.7",
     "nodemailer": "^6.9.4",
@@ -45,7 +46,8 @@
     "passport-oauth2": "^1.7.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

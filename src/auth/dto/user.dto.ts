@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {z} from 'zod'
+
+
+export const signUpSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6)
+})
 
 /**
  * Data Transfer Object (DTO) for user signup.
@@ -10,8 +17,6 @@ export class SignupDto {
     description: 'The email of the user',
     example: 'johndoe@gmail.com',
   })
-  @IsNotEmpty()
-  @IsString()
   email: string;
 
   /** The password of the user */
@@ -19,8 +24,6 @@ export class SignupDto {
     description: 'The password of the user',
     example: 'password123',
   })
-  @IsNotEmpty()
-  @IsString()
   password: string;
 }
 

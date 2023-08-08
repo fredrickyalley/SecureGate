@@ -12,9 +12,10 @@ import {
   Query,
   Delete,
   Put,
+  UsePipes
 } from '@nestjs/common';
 import { SecureAuthService } from '../services/auth.service';
-import { LoginDto, ResetPasswordDto, ForgotPasswordDto } from '../dto/user.dto';
+import { LoginDto, ResetPasswordDto, ForgotPasswordDto, signUpSchema, SignupDto } from '../dto/user.dto';
 import { Auth } from '../decorators/auth.decorator';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../guards/jwt.guard';
@@ -25,6 +26,7 @@ import { SecureUserService } from 'user/service/user.service';
 import { SecureRbacService } from 'rbac/service/rbac.service';
 import { CreateUserDto, UpdateUserDto } from 'user/dto/user.dto';
 import { CreateRoleDto, CreatePermissionDto, UpdatePermissionDto, UpdateRoleDto, AssignRoleToUserDto, RevokeRoleOfUserDto } from 'rbac/dto/permission-role.dto';
+import { ZodValidationPipe } from 'auth/common/zod-validation-pipe';
 
 
 @ApiTags('Authentication')
@@ -55,9 +57,10 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto) {
+  @UsePipes(new ZodValidationPipe(signUpSchema))
+  async signup(@Body() signUpDto: SignupDto) {
     try {
-      const { email, password } = createUserDto;
+      const { email, password } = signUpDto;
       return this.authService.signup(email, password);
     } catch (error) {
       throw new HttpException(error.message, 500);
