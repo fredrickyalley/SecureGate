@@ -1,11 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, min } from 'class-validator';
 import {z} from 'zod'
 
 
-export const signUpSchema = z.object({
+export const userAuthSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6)
+  password: z.coerce.string().min(6)
+})
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+})
+
+export const resetPasswordSchema = z.object({
+  userId: z.number().positive(),
+  oldPassword: z.coerce.string().min(6),
+  newPassword: z.coerce.string().min(6)
 })
 
 /**
@@ -17,6 +27,8 @@ export class SignupDto {
     description: 'The email of the user',
     example: 'johndoe@gmail.com',
   })
+  @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   /** The password of the user */
@@ -24,6 +36,9 @@ export class SignupDto {
     description: 'The password of the user',
     example: 'password123',
   })
+  @IsNotEmpty()
+  @IsString()
+  @Length(6)
   password: string;
 }
 
@@ -37,7 +52,7 @@ export class ForgotPasswordDto {
     example: 'johndoe@gmail.com',
   })
   @IsNotEmpty()
-  @IsString()
+  @IsEmail()
   email: string;
 }
 
@@ -51,7 +66,7 @@ export class LoginDto {
     example: 'johndoe@gmail.com',
   })
   @IsNotEmpty()
-  @IsString()
+  @IsEmail()
   email: string;
 
   /** The password of the user */
@@ -61,6 +76,7 @@ export class LoginDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Length(6)
   password: string;
 }
 
@@ -84,6 +100,7 @@ export class ResetPasswordDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Length(6)
   oldPassword: string;
 
   /** The new password for the user */
@@ -93,6 +110,7 @@ export class ResetPasswordDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Length(6)
   newPassword: string;
 
 

@@ -11,7 +11,7 @@ export class ZodValidationPipe implements PipeTransform {
       return value;
     } catch (error) {
       if (error instanceof ZodError) {
-        throw new BadRequestException('Validation failed');
+        throw new BadRequestException(`Validation failed, message: ${error.issues[0].message}`);
       }
       throw error;
     }

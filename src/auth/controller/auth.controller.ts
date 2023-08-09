@@ -15,7 +15,7 @@ import {
   UsePipes
 } from '@nestjs/common';
 import { SecureAuthService } from '../services/auth.service';
-import { LoginDto, ResetPasswordDto, ForgotPasswordDto, signUpSchema, SignupDto } from '../dto/user.dto';
+import { LoginDto, ResetPasswordDto, ForgotPasswordDto, SignupDto, userAuthSchema, forgotPasswordSchema, resetPasswordSchema } from '../dto/user.dto';
 import { Auth } from '../decorators/auth.decorator';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../guards/jwt.guard';
@@ -27,6 +27,7 @@ import { SecureRbacService } from 'rbac/service/rbac.service';
 import { CreateUserDto, UpdateUserDto } from 'user/dto/user.dto';
 import { CreateRoleDto, CreatePermissionDto, UpdatePermissionDto, UpdateRoleDto, AssignRoleToUserDto, RevokeRoleOfUserDto } from 'rbac/dto/permission-role.dto';
 import { ZodValidationPipe } from 'auth/common/zod-validation-pipe';
+import { User } from '@prisma/client';
 
 
 @ApiTags('Authentication')
@@ -39,6 +40,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @UsePipes(new ZodValidationPipe(userAuthSchema))
   async login(@Body() loginDto: LoginDto) {
     try {
       const { email, password } = loginDto;
@@ -57,13 +59,13 @@ export class AuthController {
   }
 
   @Post('signup')
-  @UsePipes(new ZodValidationPipe(signUpSchema))
-  async signup(@Body() signUpDto: SignupDto) {
+  @UsePipes(new ZodValidationPipe(userAuthSchema))
+  signup(@Body() signUpDto: SignupDto): Promise<User> {
+    const { email, password } = signUpDto;
     try {
-      const { email, password } = signUpDto;
       return this.authService.signup(email, password);
-    } catch (error) {
-      throw new HttpException(error.message, 500);
+    }catch(error) {
+      throw new HttpException(error.message, 500)
     }
   }
 
@@ -71,6 +73,7 @@ export class AuthController {
   @Auth('user', 'admin')
   @UseGuards(JwtAuthGuard)
   @Patch('reset-password')
+  @UsePipes(new ZodValidationPipe(resetPasswordSchema))
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     try {
       const { userId, oldPassword, newPassword } = resetPasswordDto;
@@ -81,6 +84,7 @@ export class AuthController {
   }
 
   @Post('forgot-password')
+  @UsePipes(new ZodValidationPipe(forgotPasswordSchema))
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     try {
       const { email } = forgotPasswordDto;

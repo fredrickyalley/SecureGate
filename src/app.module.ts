@@ -59,6 +59,6 @@ export class SecureGateModule {
         { path: 'auth/forgot-password', method: RequestMethod.POST },
 
       )
-      // .forRoutes({ path: '*', method: RequestMethod.ALL }); // Apply the middleware to all other routes
+      .forRoutes({ path: '*', method: RequestMethod.ALL }); // Apply the middleware to all other routes
   }
 }
