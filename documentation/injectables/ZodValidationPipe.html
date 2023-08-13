@@ -131,7 +131,7 @@
                                     <a href="../injectables/PrismaService.html" >PrismaService</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../injectables/RbacAuthGuard.html"  class="active" >RbacAuthGuard</a>
+                                    <a href="../injectables/RbacAuthGuard.html" >RbacAuthGuard</a>
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/SecureAuthService.html" >SecureAuthService</a>
@@ -143,7 +143,7 @@
                                     <a href="../injectables/SecureUserService.html" >SecureUserService</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../injectables/ZodValidationPipe.html" >ZodValidationPipe</a>
+                                    <a href="../injectables/ZodValidationPipe.html"  class="active" >ZodValidationPipe</a>
                                 </li>
                         </ul>
                     </li>
@@ -320,7 +320,7 @@
                                            <a href="../injectables/PrismaService.html" >PrismaService</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../injectables/RbacAuthGuard.html"  class="active" >RbacAuthGuard</a>
+                                           <a href="../injectables/RbacAuthGuard.html" >RbacAuthGuard</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/SecureAuthService.html" >SecureAuthService</a>
@@ -332,7 +332,7 @@
                                            <a href="../injectables/SecureUserService.html" >SecureUserService</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../injectables/ZodValidationPipe.html" >ZodValidationPipe</a>
+                                           <a href="../injectables/ZodValidationPipe.html"  class="active" >ZodValidationPipe</a>
                                        </li>
                                </ul>
                            </li>
@@ -400,7 +400,7 @@
 
 <ol class="breadcrumb">
   <li>Injectables</li>
-  <li>RbacAuthGuard</li>
+  <li>ZodValidationPipe</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -418,16 +418,9 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/rbac/guard/rbac.guard.ts</code>
+            <code>src/auth/common/zod-validation-pipe.ts</code>
         </p>
 
-            <p class="comment">
-                <h3>Description</h3>
-            </p>
-            <p class="comment">
-                <p>Custom RBAC (Role-Based Access Control) AuthGuard that extends the JwtAuthGuard.<br>This guard checks if the authenticated user has the required roles and permissions to access a specific route.</p>
-
-            </p>
 
             <section>
                 <h3 id="constructor">Constructor</h3>
@@ -435,47 +428,10 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(rbacService: <a href="../injectables/SecureRbacService.html" >SecureRbacService</a>, reflector: Reflector)</code>
+                                    <code>constructor(schema: any)</code>
                                 </td>
                             </tr>
             
-                            <tr>
-                                <td class="col-md-4">
-                                        <div class="io-description"><p>Creates an instance of RbacAuthGuard.</p>
-            </div>
-                                        <div class="io-description">
-                                                <b>Parameters :</b>
-                                                <ul class="jsdoc-params">
-                                                        <li>
-                                                            <div>
-                                                                <b>rbacService</b>
-                                                                    :     <code><a href="../injectables/SecureRbacService.html" target="_self" >SecureRbacService</a></code>
-            
-                                                            </div>
-                                                            <div>
-                                                                <ul>
-            <li>The RBAC service to check user roles and permissions.</li>
-            </ul>
-            
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>reflector</b>
-                                                                    :     <code>Reflector</code>
-            
-                                                            </div>
-                                                            <div>
-                                                                <ul>
-            <li>The NestJS reflector used to get metadata from the route handlers.</li>
-            </ul>
-            
-                                                            </div>
-                                                        </li>
-                                                </ul>
-                                        </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -486,49 +442,22 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier"></span> canActivate</b>
+                                    <b> transform</b>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play ">
-                                            <span class="fa fa-"></span>
-                                        </span>
-                                    <code>canActivate(context: ExecutionContext)</code>
+            <code>transform(value: any, metadata: ArgumentMetadata)</code>
                                 </td>
                             </tr>
             
                             <tr>
                                 <td class="col-md-4">
-                                        <div class="io-description"><p>Method that checks if the authenticated user has the required roles and permissions to access a specific route.<br>Overrides the <code>canActivate</code> method of the parent class.</p>
-            </div>
                                         <div class="io-description">
-                                                <b>Parameters :</b>
-                                                <ul class="jsdoc-params">
-                                                        <li>
-                                                            <div>
-                                                                <b>context</b>
-                                                                    :     <code>ExecutionContext</code>
-            
-                                                            </div>
-                                                            <div>
-                                                                <ul>
-            <li>The execution context containing the request and response objects.</li>
-            </ul>
-            
-                                                            </div>
-                                                        </li>
-                                                </ul>
-                                        </div>
-                                        <div class="io-description">
-                                            <b>Returns: </b>    <code>any</code>
+                                            <b>Returns: </b>    <code>void</code>
             
                                         </div>
-                                            <div class="io-description">
-                                                <p>A boolean indicating whether the user is authorized to access the route or not.</p>
-            
-                                            </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -537,70 +466,25 @@
 
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre><code class="hljs javascript">import { Injectable, ExecutionContext, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
-import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
-import { Reflector } from &#x27;@nestjs/core&#x27;;
-import { User } from &#x27;@prisma/client&#x27;;
-import { SecureRbacService } from &#x27;../service/rbac.service&#x27;;
+        <pre><code class="hljs javascript">import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from &#x27;@nestjs/common&#x27;;
+import { ZodSchema, ZodError } from &#x27;zod&#x27;;
 
-/**
- * Custom RBAC (Role-Based Access Control) AuthGuard that extends the JwtAuthGuard.
- * This guard checks if the authenticated user has the required roles and permissions to access a specific route.
- *
- * @class
- */
 @Injectable()
-export class RbacAuthGuard extends AuthGuard(&#x27;jwt&#x27;) {
-  /**
-   * Creates an instance of RbacAuthGuard.
-   *
-   * @constructor
-   * @param {SecureRbacService} rbacService - The RBAC service to check user roles and permissions.
-   * @param {Reflector} reflector - The NestJS reflector used to get metadata from the route handlers.
-   */
-  constructor(private readonly rbacService: SecureRbacService, private readonly reflector: Reflector) {
-    super();
-  }
+export class ZodValidationPipe implements PipeTransform {
+  constructor(private schema: ZodSchema&lt;any&gt;) {}
 
-  /**
-   * Method that checks if the authenticated user has the required roles and permissions to access a specific route.
-   * Overrides the &#x60;canActivate&#x60; method of the parent class.
-   *
-   * @async
-   * @method
-   * @param {ExecutionContext} context - The execution context containing the request and response objects.
-   * @returns {Promise&lt;boolean&gt;} A boolean indicating whether the user is authorized to access the route or not.
-   * @throws {UnauthorizedException} If the user does not have the required roles or permissions.
-   */
-  async canActivate(context: ExecutionContext): Promise&lt;boolean&gt; {
-    // Run the JWT authentication using the AuthGuard
-    const canActivate &#x3D; await super.canActivate(context);
-    if (!canActivate) {
-      return false;
+  transform(value: any, metadata: ArgumentMetadata) {
+    try {
+      this.schema.parse(value);
+      return value;
+    } catch (error) {
+      if (error instanceof ZodError) {
+        throw new BadRequestException(&#x60;Validation failed, message: ${error.issues[0].message}&#x60;);
+      }
+      throw error;
     }
-
-    // Get the user object from the request
-    const request &#x3D; context.switchToHttp().getRequest();
-    const user: User &#x3D; request.user;
-
-    // Get the required roles and permissions from the route metadata
-    const requiredRoles &#x3D; this.reflector.get&lt;string[]&gt;(&#x27;roles&#x27;, context.getHandler()) || [];
-    const requiredPermissions &#x3D; this.reflector.get&lt;string[]&gt;(&#x27;permissions&#x27;, context.getHandler()) || [];
-
-    // Check if the user has the required roles
-    const hasRoles &#x3D; await this.rbacService.hasRoles(user.id, requiredRoles);
-
-    // Check if the user has the required permissions
-    const hasPermissions &#x3D; await this.rbacService.hasPermission(user.id, requiredPermissions);
-    
-    if (!hasRoles || !hasPermissions) {
-      throw new UnauthorizedException(&#x27;You do not have permission to access this resource.&#x27;);
-    }
-
-    return true;
   }
 }
-
 </code></pre>
     </div>
 </div>

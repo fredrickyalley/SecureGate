@@ -25,7 +25,7 @@ import { Permissions } from 'rbac/decorator/permission.decorator';
 import { SecureUserService } from 'user/service/user.service';
 import { SecureRbacService } from 'rbac/service/rbac.service';
 import { CreateUserDto, UpdateUserDto } from 'user/dto/user.dto';
-import { CreateRoleDto, CreatePermissionDto, UpdatePermissionDto, UpdateRoleDto, AssignRoleToUserDto, RevokeRoleOfUserDto } from 'rbac/dto/permission-role.dto';
+import { RoleDto, PermissionDto, AssignRoleToUserDto,AssignPermissionToRoleDto, RoleIdDto, roleSchema } from 'rbac/dto/permission-role.dto';
 import { ZodValidationPipe } from 'auth/common/zod-validation-pipe';
 import { User } from '@prisma/client';
 
@@ -190,9 +190,46 @@ export class AuthController {
   @Roles('admin')
   @Permissions('write')
   @UseGuards(RbacAuthGuard)
-  async createRoles(@Body() createRoleDto: CreateRoleDto) {
+  @UsePipes(new ZodValidationPipe(roleSchema))
+  async createRoles(@Body() roleDto: RoleDto) {
     try {
-      return this.rbacService.createRole(createRoleDto);
+      return this.rbacService.createRole(roleDto);
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  @Post('permissions-to-roles')
+  // @Roles('admin')
+  // @Permissions('write')
+  // @UseGuards(RbacAuthGuard)
+  async assignPermissionToRole(@Body() assignPermissionToRoleDto: AssignPermissionToRoleDto) {
+    try {
+      return this.rbacService.asignPermissionToRole(assignPermissionToRoleDto);
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  @Post('update-permissions-to-roles')
+  @Roles('admin')
+  @Permissions('write')
+  @UseGuards(RbacAuthGuard)
+  async updatePermissionToRole(@Body() updatePermissionsToRolesDto: AssignPermissionToRoleDto) {
+    try {
+      return this.rbacService.updatePermissionsToRoles(updatePermissionsToRolesDto);
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  @Post('remove-permissions-to-roles')
+  @Roles('admin')
+  @Permissions('write')
+  @UseGuards(RbacAuthGuard)
+  async RemovePermissionFromRole(@Body() removePermissionFromRoleDto: AssignPermissionToRoleDto) {
+    try {
+      return this.rbacService.removePermissionFromRole(removePermissionFromRoleDto);
     } catch (error) {
       throw new HttpException(error.message, 500);
     }
@@ -202,8 +239,9 @@ export class AuthController {
   @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
+  @UsePipes(new ZodValidationPipe(roleSchema))
   async updateRole(
-    @Body() updateRoleDto: UpdateRoleDto,
+    @Body() updateRoleDto: RoleDto,
     @Param('id', ParseIntPipe) roleId: number,
   ) {
     try {
@@ -225,10 +263,23 @@ export class AuthController {
     }
   }
 
-  @Post('assign-role')
+  @Post('undelete-role')
   @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
+  async undeleteRole(@Body() roleDto: RoleIdDto) {
+    const { roleId} = roleDto
+    try {
+      return this.rbacService.undeleteRole(roleId);
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  @Post('assign-role')
+  // @UseGuards(RbacAuthGuard)
+  // @Roles('admin')
+  // @Permissions('write')
   async assignRoleToUser(@Body() assignRoleToUserDto: AssignRoleToUserDto) {
     try {
       return this.rbacService.assignRoleToUser(assignRoleToUserDto);
@@ -241,7 +292,7 @@ export class AuthController {
   @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
-  async revokeRoleOfUser(@Body() revokeRoleOfUser: RevokeRoleOfUserDto) {
+  async revokeRoleOfUser(@Body() revokeRoleOfUser: AssignRoleToUserDto) {
     try {
       return this.rbacService.revokeRoleOfUser(revokeRoleOfUser);
     } catch (error) {
@@ -249,17 +300,7 @@ export class AuthController {
     }
   }
 
-  @Post('reassign-role')
-  @UseGuards(RbacAuthGuard)
-  @Roles('admin')
-  @Permissions('write')
-  async reassignRoleOfUser(@Body() assignRoleToUserDto: AssignRoleToUserDto) {
-    try {
-      return this.rbacService.reassignRoleOfUser(assignRoleToUserDto);
-    } catch (error) {
-      throw new HttpException(error.message, 500);
-    }
-  }
+  
 
   @Get('roles')
   @UseGuards(RbacAuthGuard)
@@ -317,9 +358,9 @@ export class AuthController {
   @UseGuards(RbacAuthGuard)
   @Roles('admin')
   @Permissions('write')
-  async createPermission(@Body() createPermissionDto: CreatePermissionDto) {
+  async createPermission(@Body() permissionDto: PermissionDto) {
     try {
-      return this.rbacService.createPermission(createPermissionDto);
+      return this.rbacService.createPermission(permissionDto);
     } catch (error) {
       throw new HttpException(error.message, 500);
     }
@@ -330,13 +371,13 @@ export class AuthController {
   @Roles('admin')
   @Permissions('write')
   async updatePermission(
-    @Body() createPermissionDto: CreatePermissionDto,
+    @Body() permissionDto: PermissionDto,
     @Param('id', ParseIntPipe) permissionId: number,
   ) {
     try {
       return this.rbacService.updatePermission(
         permissionId,
-        createPermissionDto,
+        permissionDto,
       );
     } catch (error) {
       throw new HttpException(error.message, 500);

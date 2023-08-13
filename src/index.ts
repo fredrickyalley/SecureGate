@@ -3,7 +3,7 @@ import { TokenPayload } from 'auth/interfaces/auth.interface';
 import { OAuthProfile } from 'auth/interfaces/user.interface';
 import { LoginDto } from './auth/dto/user.dto';
 import * as nodemailer from 'nodemailer'
-import { AssignRoleToUserDto, CreatePermissionDto, CreateRoleDto, RevokeRoleOfUserDto, UpdatePermissionDto, UpdateRoleDto } from './rbac/dto/permission-role.dto';
+import { AssignPermissionToRoleDto, AssignRoleToUserDto, PermissionDto, RoleDto } from './rbac/dto/permission-role.dto';
 import { CreateUserDto, UpdateUserDto } from './user/dto/user.dto';
 
 // Export Services
@@ -32,11 +32,11 @@ class SecureAuthService {
     
     getPermissions(): Promise<Permission[]>;
     
-    createPermission(createPermissionDto: CreatePermissionDto): Promise<Permission>;
+    createPermission(permissionDto: PermissionDto): Promise<Permission>;
     
     getPermissionById(id: number): Promise<Permission>;
     
-    updatePermission(id: number, updatePermissionDto: UpdatePermissionDto): Promise<Permission>;
+    updatePermission(id: number, updatePermissionDto: PermissionDto): Promise<Permission>;
     
     /**
     * ROLES SERVICES
@@ -46,18 +46,24 @@ class SecureAuthService {
     
     getRoleById(roleId: number): Promise<Role>;
     
-    createRole(createRoleDto: CreateRoleDto): Promise<Role>;
+    createRole(roleDto: RoleDto): Promise<Role>;
     
-    updateRole(roleId: number, updateRoleDto: UpdateRoleDto): Promise<Role>;
+    updateRole(roleId: number, updateRoleDto: RoleDto): Promise<Role>;
     
     deleteRole(roleId: number): Promise<void>;
+
+    undeleteRole(roleId: number): Promise<void>
+
+    asignPermissionToRole(assignPermissionToRoleDto: AssignPermissionToRoleDto): Promise<void>
+
+    removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRoleDto): Promise<void>
+
+    updatePermissionsToRoles(updatePermissionToRoleDto: AssignPermissionToRoleDto): Promise<void>
     
     assignRoleToUser(assignRoleToUser: AssignRoleToUserDto): Promise<void>;
     
-    revokeRoleOfUser(revokeRoleOfUser: RevokeRoleOfUserDto): Promise<void>;
-    
-    reassignRoleOfUser(assignRoleToUserDto: AssignRoleToUserDto): Promise<void>;
-    
+    revokeRoleOfUser(revokeRoleOfUser: AssignRoleToUserDto): Promise<void>;
+        
     getPermissionsForUser(userId: number): Promise<Permission[]>;
     
     hasRoles(userId: any, requiredRoles: string[]): Promise<boolean>;
@@ -108,11 +114,8 @@ export { Role } from './rbac/interface/role.-permission.interface';
 // Export DTOs
 export { SignupDto, ForgotPasswordDto, ResetPasswordDto, LoginDto } from './auth/dto/user.dto';
 export {
-  CreateRoleDto,
-  CreatePermissionDto,
+  RoleDto,
+  PermissionDto,
   AssignRoleToUserDto,
-  RevokeRoleOfUserDto,
-  UpdatePermissionDto,
-  UpdateRoleDto,
 } from './rbac/dto/permission-role.dto';
 export { UpdateUserDto, CreateUserDto } from './user/dto/user.dto';

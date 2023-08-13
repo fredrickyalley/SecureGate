@@ -65,13 +65,10 @@
                                 id="xs-classes-links"
                             >
                                 <li class="link">
+                                    <a href="classes/AssignPermissionToRoleDto.html" >AssignPermissionToRoleDto</a>
+                                </li>
+                                <li class="link">
                                     <a href="classes/AssignRoleToUserDto.html" >AssignRoleToUserDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="classes/CreatePermissionDto.html" >CreatePermissionDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="classes/CreateRoleDto.html" >CreateRoleDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="classes/CreateUserDto.html" >CreateUserDto</a>
@@ -83,19 +80,19 @@
                                     <a href="classes/LoginDto.html" >LoginDto</a>
                                 </li>
                                 <li class="link">
+                                    <a href="classes/PermissionDto.html" >PermissionDto</a>
+                                </li>
+                                <li class="link">
                                     <a href="classes/ResetPasswordDto.html" >ResetPasswordDto</a>
                                 </li>
                                 <li class="link">
-                                    <a href="classes/RevokeRoleOfUserDto.html" >RevokeRoleOfUserDto</a>
+                                    <a href="classes/RoleDto.html" >RoleDto</a>
+                                </li>
+                                <li class="link">
+                                    <a href="classes/RoleIdDto.html" >RoleIdDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="classes/SignupDto.html" >SignupDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="classes/UpdatePermissionDto.html" >UpdatePermissionDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="classes/UpdateRoleDto.html" >UpdateRoleDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="classes/UpdateUserDto.html" >UpdateUserDto</a>
@@ -144,6 +141,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="injectables/SecureUserService.html" >SecureUserService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/ZodValidationPipe.html" >ZodValidationPipe</a>
                                 </li>
                         </ul>
                     </li>
@@ -254,13 +254,10 @@
                                        id="classes-links"
                    >
                                        <li class="link">
+                                           <a href="classes/AssignPermissionToRoleDto.html" >AssignPermissionToRoleDto</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="classes/AssignRoleToUserDto.html" >AssignRoleToUserDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="classes/CreatePermissionDto.html" >CreatePermissionDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="classes/CreateRoleDto.html" >CreateRoleDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="classes/CreateUserDto.html" >CreateUserDto</a>
@@ -272,19 +269,19 @@
                                            <a href="classes/LoginDto.html" >LoginDto</a>
                                        </li>
                                        <li class="link">
+                                           <a href="classes/PermissionDto.html" >PermissionDto</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="classes/ResetPasswordDto.html" >ResetPasswordDto</a>
                                        </li>
                                        <li class="link">
-                                           <a href="classes/RevokeRoleOfUserDto.html" >RevokeRoleOfUserDto</a>
+                                           <a href="classes/RoleDto.html" >RoleDto</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="classes/RoleIdDto.html" >RoleIdDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="classes/SignupDto.html" >SignupDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="classes/UpdatePermissionDto.html" >UpdatePermissionDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="classes/UpdateRoleDto.html" >UpdateRoleDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="classes/UpdateUserDto.html" >UpdateUserDto</a>
@@ -333,6 +330,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="injectables/SecureUserService.html" >SecureUserService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="injectables/ZodValidationPipe.html" >ZodValidationPipe</a>
                                        </li>
                                </ul>
                            </li>
@@ -395,7 +395,7 @@
                <div class="content readme">
                    <div class="content-data">
 <h1 id="authentication-and-authorization-library-for-nestjs">Authentication and Authorization Library for NestJS</h1>
-<p><a href="https://badge.fury.io/js/authentication-authorization-library"><img src="https://badge.fury.io/js/authentication-authorization-library.svg" alt="npm version" class="img-responsive"></a><br><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" class="img-responsive"></a></p>
+<p><a href="https://badge.fury.io/js/securegates"><img src="https://badge.fury.io/js/securegates.svg" alt="npm version" class="img-responsive"></a><br><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" class="img-responsive"></a></p>
 <h1 id="secure-gates-nestjs-library">Secure Gates - NestJS Library</h1>
 <p>The <strong>Secure Gates</strong> library is a comprehensive and secure collection of reusable services and modules for authentication, role-based access control (RBAC), and user management in NestJS applications. This library is designed to provide robust security features and simplify the implementation of authentication and access control in your applications.</p>
 <h2 id="features">Features</h2>
@@ -406,6 +406,30 @@
 <li><strong>PrismaService</strong>: Extends PrismaClient to connect to the database securely.</li>
 <li><strong>MailService</strong>: Sends emails, including password reset emails, to users.</li>
 </ul>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#authentication-module">Authentication Module</a><ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#api-reference">API Reference</a></li>
+</ul>
+</li>
+<li><a href="#rbac-module">RBAC Module</a><ul>
+<li><a href="#usage-1">Usage</a></li>
+<li><a href="#api-reference-1">API Reference</a></li>
+</ul>
+</li>
+<li><a href="#user-module">User Module</a><ul>
+<li><a href="#usage-2">Usage</a></li>
+<li><a href="#api-reference-2">API Reference</a></li>
+</ul>
+</li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#Support">Support</a></li>
+<li><a href="#Authors">Author</a></li>
+<li><a href="#Acknowledgments">Acknowledgments</a></li>
+</ul>
 <h2 id="installation">Installation</h2>
 <p>To use the Secure Gates library in your NestJS application, follow these steps:</p>
 <ol>
@@ -414,41 +438,79 @@
 <pre><code class="hljs bash">npm install securegates<br><br><span class="hljs-comment"># or</span><br><br>yarn add securegates</code></pre><ol start="2">
 <li>Import the required modules and services into your application&#39;s main module:</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureAuthService, SecureRbacService, SecureUserService, PrismaService, MailService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Module</span>({<br>  imports: [...], <span class="hljs-comment">// Other modules</span><br>  providers: [SecureAuthService, SecureRbacService, SecureUserService, PrismaService, MailService],<br>  controllers: [...], <span class="hljs-comment">// Your application's controllers</span><br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule {}</code></pre><h2 id="usage">Usage</h2>
-<h3 id="authentication-secureauthservice-">Authentication (SecureAuthService)</h3>
-<p>The SecureAuthService provides the following authentication functionalities:</p>
+<p>In the user&#39;s <code>app.module</code>, you would need to import and configure the modules provided by the SecureGates library. Let&#39;s assume that the SecureGates library is installed as a dependency and you have access to the modules exported by the library. Here&#39;s how the user&#39;s <code>app.module.ts</code> would look like:</p>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureAuthModule, DatabaseModule, MailModule, SecureGateModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><span class="hljs-keyword">import</span> { ConfigModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/config'</span>;<br><br><span class="hljs-meta">@Module</span>({<br>  imports: [<br>    <span class="hljs-comment">// Import the SecureAuthModule to enable authentication functionalities</span><br>    SecureAuthModule.forRoot({<br>      jwt: {<br>        secret: process.env.JWT_SECRET,<br>        expiresIn: process.env.JWT_EXPIRES_IN,<br>      },<br>      <span class="hljs-comment">// Other authentication configuration options if needed</span><br>    }),<br>    <span class="hljs-comment">// Import the DatabaseModule to enable database connectivity</span><br>    DatabaseModule.forRoot({<br>      <span class="hljs-comment">// PrismaClient options for the database connection</span><br>      datasources: {<br>        db: {<br>          url: process.env.DATABASE_URL,<br>        },<br>      },<br>      <span class="hljs-comment">// Add your user-defined Prisma models here if needed</span><br>      <span class="hljs-comment">// models: {</span><br>      <span class="hljs-comment">//   User: {</span><br>      <span class="hljs-comment">//     // Model configuration</span><br>      <span class="hljs-comment">//   },</span><br>      <span class="hljs-comment">// },</span><br>    }),<br>    <span class="hljs-comment">// Import other user-defined modules if needed</span><br>    ConfigModule.forRoot({<br>      isGlobal: <span class="hljs-literal">true</span>,<br>    }),<br>  ],<br>  controllers: [], <span class="hljs-comment">// Add your controllers here</span><br>  providers: [], <span class="hljs-comment">// Add your providers here</span><br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule {}</code></pre><p>Explanation:</p>
 <ol>
-<li><strong>Login</strong>: Authenticate a user based on their email and password and return an access token upon successful authentication.</li>
+<li><p>We import the necessary modules from the SecureGates library: <code>SecureAuthModule</code>, and <code>DatabaseModule</code>.</p>
+</li>
+<li><p>We configure each module using the <code>.forRoot()</code> method and provide the required options based on our application&#39;s needs. For example, we configure the <code>SecureAuthModule</code> with JWT secret and expiration, the <code>DatabaseModule</code> with the database URL etc.</p>
+</li>
+<li><p>We import other user-defined modules as needed. In this example, we import the <code>ConfigModule</code> from NestJS to handle configuration options.</p>
+</li>
+<li><p>We add any user-defined controllers and providers if needed.</p>
+</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Post, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureAuthService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'auth'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AuthController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly authService: SecureAuthService</span>) {}<br><br>  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'login'</span>)<br>  <span class="hljs-keyword">async</span> login(<span class="hljs-meta">@Body</span>() loginDto: LoginDto) {<br>    <span class="hljs-keyword">const</span> { email, password } = loginDto;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.login(email, password);<br>  }<br>}</code></pre><ol start="2">
-<li><strong>Signup</strong>: Register a new user with the provided email and password.</li>
-</ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Post, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureAuthService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'auth'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AuthController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly authService: SecureAuthService</span>) {}<br><br>  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'signup'</span>)<br>  <span class="hljs-keyword">async</span> signup(<span class="hljs-meta">@Body</span>() signupDto: SignupDto) {<br>    <span class="hljs-keyword">const</span> { email, password } = signupDto;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.signup(email, password);<br>  }<br>}</code></pre><ol start="3">
-<li><strong>Password Reset</strong>: Initiate the &quot;Forgot Password&quot; flow for a user based on the provided email.</li>
-</ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Post, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureAuthService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'auth'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AuthController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly authService: SecureAuthService</span>) {}<br><br>  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'forgot-password'</span>)<br>  <span class="hljs-keyword">async</span> forgotPassword(<span class="hljs-meta">@Body</span>() forgotPasswordDto: ForgotPasswordDto) {<br>    <span class="hljs-keyword">const</span> { email } = forgotPasswordDto;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.authService.forgotPassword(email);<br>  }<br>}</code></pre><h3 id="role-based-access-control-securerbacservice-">Role-Based Access Control (SecureRbacService)</h3>
-<p>The SecureRbacService provides Role-Based Access Control (RBAC) functionalities to manage user roles and permissions.</p>
+<p>By importing and configuring these modules in the <code>app.module.ts</code>, the user&#39;s application will have access to the authentication functionalities provided by the <code>SecureAuthModule</code>, and database connectivity via the <code>PrismaService</code> from the <code>DatabaseModule</code>,. This ensures that the SecureGates library seamlessly integrates into the user&#39;s NestJS application, providing all the necessary features for secure authentication and user management.</p>
+<h2 id="usage">Usage</h2>
+<h2 id="authentication-module">Authentication Module</h2>
+<p>The Authentication Module handles user authentication and JWT token generation. It provides endpoints for login, signup, password reset, and token validation.</p>
+<h3 id="usage">Usage</h3>
+<p>To use the Authentication Module in your NestJS application, follow these steps:</p>
 <ol>
-<li><strong>Create Role</strong>: Create a new role.</li>
+<li>Import the <code>SecureAuthModule</code> in your application&#39;s root module:</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Post, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureRbacService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'rbac'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> RbacController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly rbacService: SecureRbacService</span>) {}<br><br>  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'create-role'</span>)<br>  <span class="hljs-keyword">async</span> createRole(<span class="hljs-meta">@Body</span>() createRoleDto: CreateRoleDto) {<br>    <span class="hljs-keyword">const</span> { name, description } = createRoleDto;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.rbacService.createRole(name, description);<br>  }<br>}</code></pre><ol start="2">
-<li><strong>Create Permission</strong>: Create a new permission.</li>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureAuthModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Module</span>({<br>  imports: [SecureAuthModule.forRoot({<br>    <span class="hljs-comment">// Configure your JWT options here</span><br>    jwt: {<br>      secret: <span class="hljs-string">'your-secret-key'</span>,<br>      expiresIn: <span class="hljs-string">'1d'</span>,<br>    },<br>    <span class="hljs-comment">// Other configuration options</span><br>  })],<br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule {}</code></pre><ol start="2">
+<li>Add the authentication guards to your controllers or routes that require authentication:</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Post, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureRbacService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'rbac'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> RbacController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly rbacService: SecureRbacService</span>) {}<br><br>  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'create-permission'</span>)<br>  <span class="hljs-keyword">async</span> createPermission(<span class="hljs-meta">@Body</span>() createPermissionDto: CreatePermissionDto) {<br>    <span class="hljs-keyword">const</span> { name, description } = createPermissionDto;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.rbacService.createPermission(name, description);<br>  }<br>}</code></pre><ol start="3">
-<li><strong>Assign Role to User</strong>: Assign a role to a user.</li>
-</ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Post, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureRbacService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'rbac'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> RbacController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly rbacService: SecureRbacService</span>) {}<br><br>  <span class="hljs-meta">@Post</span>(<span class="hljs-string">'assign-role-to-user'</span>)<br>  <span class="hljs-keyword">async</span> assignRoleToUser(<span class="hljs-meta">@Body</span>() assignRoleToUserDto: AssignRoleToUserDto) {<br>    <span class="hljs-keyword">const</span> { userId, roleId } = assignRoleToUserDto;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.rbacService.assignRoleToUser(userId, roleId);<br>  }<br>}</code></pre><h3 id="user-management-secureuserservice-">User Management (SecureUserService)</h3>
-<p>The SecureUserService handles user management operations.</p>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Get, UseGuards } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { JwtAuthGuard } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'private'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PrivateController {<br>  <span class="hljs-meta">@Get</span>()<br>  <span class="hljs-meta">@UseGuards</span>(JwtAuthGuard)<br>  getPrivateData() {<br>    <span class="hljs-keyword">return</span> { message: <span class="hljs-string">'This is private data!'</span> };<br>  }<br>}</code></pre><h3 id="api-reference">API Reference</h3>
+<p>The Authentication Module provides the following endpoints:</p>
+<ul>
+<li><code>/auth/login</code> - POST: Authenticate a user and generate a JWT token.</li>
+<li><code>/auth/signup</code> - POST: Register a new user with an email and password.</li>
+<li><code>/auth/forgot-password</code> - POST: Initiate the password reset process for a user.</li>
+<li><code>/auth/reset-password/:token</code> - POST: Reset the password for a user using a token received via email.</li>
+</ul>
+<h2 id="rbac-module">RBAC Module</h2>
+<p>The RBAC (Role-Based Access Control) Module allows you to manage user roles and permissions. It provides endpoints for creating and assigning roles, managing permissions, and checking user access.</p>
+<h3 id="usage">Usage</h3>
+<p>To use the RBAC Module in your NestJS application, follow these steps:</p>
 <ol>
-<li><strong>Get Users</strong>: Get all users from the database.</li>
+<li>Import the <code>SecureRbacModule</code> in your application&#39;s root module:</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Get } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureUserService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly userService: SecureUserService</span>) {}<br><br>  <span class="hljs-meta">@Get</span>()<br>  <span class="hljs-keyword">async</span> getUsers() {<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userService.getUsers();<br>  }<br>}</code></pre><ol start="2">
-<li><strong>Update User</strong>: Update a user&#39;s email or password.</li>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureRbacModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Module</span>({<br>  imports: [SecureRbacModule],<br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule {}</code></pre><ol start="2">
+<li>Use the provided decorators in your controllers or services to enforce role-based access control:</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Patch, Param, Body } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureUserService, UpdateUserDto } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly userService: SecureUserService</span>) {}<br><br>  <span class="hljs-meta">@Patch</span>(<span class="hljs-string">':id'</span>)<br>  <span class="hljs-keyword">async</span> updateUser(<span class="hljs-meta">@Param</span>(<span class="hljs-string">'id'</span>) id: <span class="hljs-built_in">number</span>, <span class="hljs-meta">@Body</span>() updateUserDto: UpdateUserDto) {<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userService.updateUser(id, updateUserDto);<br>  }<br>}</code></pre><ol start="3">
-<li><strong>Delete User</strong>: Delete a user.</li>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Get } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> {  Permissions, Roles } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'private'</span>)<br><span class="hljs-meta">@Roles</span>(<span class="hljs-string">'admin'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PrivateController {<br>  <span class="hljs-meta">@Get</span>()<br>  <span class="hljs-meta">@Permissions</span>(<span class="hljs-string">'read'</span>)<br>  getPrivateData() {<br>    <span class="hljs-keyword">return</span> { message: <span class="hljs-string">'This is private data!'</span> };<br>  }<br>}</code></pre><h3 id="api-reference">API Reference</h3>
+<p>The RBAC Module provides the following decorators:</p>
+<ul>
+<li><code>@Roles(&#39;role&#39;)</code>: Specifies the roles required to access the endpoint. You can specify multiple roles as arguments.</li>
+<li><code>@Permissions(&#39;permission&#39;)</code>: Specifies the permissions required to access the endpoint. You can specify multiple permissions as arguments.</li>
+</ul>
+<h2 id="user-module">User Module</h2>
+<p>The User Module provides user management functionalities, such as creating, updating, and deleting users.</p>
+<h3 id="usage">Usage</h3>
+<p>To use the User Module in your NestJS application, follow these steps:</p>
+<ol>
+<li>Import the <code>SecureUserModule</code> in your application&#39;s root module:</li>
 </ol>
-<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Delete, Param } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureUserService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UserController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly userService: SecureUserService</span>) {}<br><br>  <span class="hljs-meta">@Delete</span>(<span class="hljs-string">':id'</span>)<br>  <span class="hljs-keyword">async</span> deleteUser(<span class="hljs-meta">@Param</span>(<span class="hljs-string">'id'</span>) id: <span class="hljs-built_in">number</span>) {<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.userService.deleteUser(id);<br>  }<br>}</code></pre><h2 id="contribution">Contribution</h2>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Module } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureUserModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Module</span>({<br>  imports: [SecureUserModule],<br>})<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule {}</code></pre><ol start="2">
+<li>Use the provided service to manage users in your controllers or services:</li>
+</ol>
+<pre><code class="hljs typescript"><span class="hljs-keyword">import</span> { Controller, Get } <span class="hljs-keyword">from</span> <span class="hljs-string">'@nestjs/common'</span>;<br><span class="hljs-keyword">import</span> { SecureUserService } <span class="hljs-keyword">from</span> <span class="hljs-string">'securegates'</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">'users'</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> UsersController {<br>  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> readonly userService: SecureUserService</span>) {}<br><br>  <span class="hljs-meta">@Get</span>()<br>  <span class="hljs-keyword">async</span> getUsers() {<br>    <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> <span class="hljs-keyword">this</span>.userService.getUsers();<br>    <span class="hljs-keyword">return</span> users;<br>  }<br>}</code></pre><h3 id="api-reference">API Reference</h3>
+<p>The User Module provides the <code>SecureUserService</code> service with methods to interact with user data:</p>
+<ul>
+<li><code>getUsers()</code>: Get a list of all users.</li>
+<li><code>findUserByEmail(email: string)</code>: Find a user by their email.</li>
+<li><code>getUserById(id: number)</code>: Find a user by their ID.</li>
+<li><code>createUser(createUserDto: CreateUserDto)</code>: Create a new user.</li>
+<li><code>updateUser(id: number, updateUserDto: UpdateUserDto)</code>: Update an existing user.</li>
+<li><code>deleteUser(id: number)</code>: Delete a user by their ID.</li>
+<li><code>deactivateUser(id: number)</code>: Deactivate a user by their ID.</li>
+<li><code>reactivateUser(id: number)</code>: Reactivate a deactivated user by their ID.</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>Check out the <a href="https://fredrickyalley.github.io/SecureGate/docs/index.html">full documentation</a> for detailed information about the Auth module, services, and more.</p>
+<h2 id="contribution">Contribution</h2>
 <p>Contributions to the Secure Gates library are welcome! If you find any issues or have suggestions for improvement, feel free to open a pull request or create an issue on the repository.</p>
 <h2 id="license">License</h2>
 <p>The Secure Gates library is open-source software licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>

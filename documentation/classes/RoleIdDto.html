@@ -89,7 +89,7 @@
                                     <a href="../classes/RoleDto.html" >RoleDto</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/RoleIdDto.html" >RoleIdDto</a>
+                                    <a href="../classes/RoleIdDto.html"  class="active" >RoleIdDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/SignupDto.html" >SignupDto</a>
@@ -131,7 +131,7 @@
                                     <a href="../injectables/PrismaService.html" >PrismaService</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../injectables/RbacAuthGuard.html"  class="active" >RbacAuthGuard</a>
+                                    <a href="../injectables/RbacAuthGuard.html" >RbacAuthGuard</a>
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/SecureAuthService.html" >SecureAuthService</a>
@@ -278,7 +278,7 @@
                                            <a href="../classes/RoleDto.html" >RoleDto</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/RoleIdDto.html" >RoleIdDto</a>
+                                           <a href="../classes/RoleIdDto.html"  class="active" >RoleIdDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/SignupDto.html" >SignupDto</a>
@@ -320,7 +320,7 @@
                                            <a href="../injectables/PrismaService.html" >PrismaService</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../injectables/RbacAuthGuard.html"  class="active" >RbacAuthGuard</a>
+                                           <a href="../injectables/RbacAuthGuard.html" >RbacAuthGuard</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/SecureAuthService.html" >SecureAuthService</a>
@@ -392,15 +392,17 @@
                    
                    </nav>
                </div>
-               <div class="content injectable">
+               <div class="content class">
                    <div class="content-data">
 
 
 
 
+
+
 <ol class="breadcrumb">
-  <li>Injectables</li>
-  <li>RbacAuthGuard</li>
+  <li>Classes</li>
+  <li>RoleIdDto</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -418,194 +420,209 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/rbac/guard/rbac.guard.ts</code>
+            <code>src/rbac/dto/permission-role.dto.ts</code>
         </p>
 
             <p class="comment">
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Custom RBAC (Role-Based Access Control) AuthGuard that extends the JwtAuthGuard.<br>This guard checks if the authenticated user has the required roles and permissions to access a specific route.</p>
+                <p>DTO for creating a new role.</p>
 
             </p>
 
+
+
+
             <section>
-                <h3 id="constructor">Constructor</h3>
+                <h3 id="inputs">Properties</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(rbacService: <a href="../injectables/SecureRbacService.html" >SecureRbacService</a>, reflector: Reflector)</code>
+                                    <b> name</b>
                                 </td>
                             </tr>
-            
                             <tr>
                                 <td class="col-md-4">
-                                        <div class="io-description"><p>Creates an instance of RbacAuthGuard.</p>
+                                    <code>name:     <code>string</code>
+            </bcode>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>The name of the role to create.</p>
             </div>
-                                        <div class="io-description">
-                                                <b>Parameters :</b>
-                                                <ul class="jsdoc-params">
-                                                        <li>
-                                                            <div>
-                                                                <b>rbacService</b>
-                                                                    :     <code><a href="../injectables/SecureRbacService.html" target="_self" >SecureRbacService</a></code>
-            
-                                                            </div>
-                                                            <div>
-                                                                <ul>
-            <li>The RBAC service to check user roles and permissions.</li>
-            </ul>
-            
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>reflector</b>
-                                                                    :     <code>Reflector</code>
-            
-                                                            </div>
-                                                            <div>
-                                                                <ul>
-            <li>The NestJS reflector used to get metadata from the route handlers.</li>
-            </ul>
-            
-                                                            </div>
-                                                        </li>
-                                                </ul>
-                                        </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
             </section>
-
-            <section>
-                <h3 id="methods">Methods</h3>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b><span class="modifier"></span> canActivate</b>
-                                </td>
-                            </tr>
-            
-                            <tr>
-                                <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play ">
-                                            <span class="fa fa-"></span>
-                                        </span>
-                                    <code>canActivate(context: ExecutionContext)</code>
-                                </td>
-                            </tr>
-            
-                            <tr>
-                                <td class="col-md-4">
-                                        <div class="io-description"><p>Method that checks if the authenticated user has the required roles and permissions to access a specific route.<br>Overrides the <code>canActivate</code> method of the parent class.</p>
-            </div>
-                                        <div class="io-description">
-                                                <b>Parameters :</b>
-                                                <ul class="jsdoc-params">
-                                                        <li>
-                                                            <div>
-                                                                <b>context</b>
-                                                                    :     <code>ExecutionContext</code>
-            
-                                                            </div>
-                                                            <div>
-                                                                <ul>
-            <li>The execution context containing the request and response objects.</li>
-            </ul>
-            
-                                                            </div>
-                                                        </li>
-                                                </ul>
-                                        </div>
-                                        <div class="io-description">
-                                            <b>Returns: </b>    <code>any</code>
-            
-                                        </div>
-                                            <div class="io-description">
-                                                <p>A boolean indicating whether the user is authorized to access the route or not.</p>
-            
-                                            </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </section>
-
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre><code class="hljs javascript">import { Injectable, ExecutionContext, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
-import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
-import { Reflector } from &#x27;@nestjs/core&#x27;;
-import { User } from &#x27;@prisma/client&#x27;;
-import { SecureRbacService } from &#x27;../service/rbac.service&#x27;;
+        <pre><code class="hljs javascript">import { ApiProperty } from &quot;@nestjs/swagger&quot;;
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from &quot;class-validator&quot;;
+import { PartialType } from &quot;@nestjs/mapped-types&quot;;
+import { z } from &#x27;zod&#x27;
+
+
+export const roleSchema &#x3D;  z.object({
+  name: z.string().toLowerCase(),
+})
+
+export const permissionToRoleSchema &#x3D;  z.object({
+    roleId: z.number(),
+    permissionId: z.array(z.number())
+})
+
+
+export const roleStatusSchema &#x3D;  z.object({
+  userId: z.number(),
+  roleId: z.number()
+})
+
+export const permissionSchema &#x3D;  z.object({
+  name: z.string().toLowerCase(),
+})
+
+export const roleIdSchema &#x3D;  z.object({
+  roleId: z.number(),
+})
 
 /**
- * Custom RBAC (Role-Based Access Control) AuthGuard that extends the JwtAuthGuard.
- * This guard checks if the authenticated user has the required roles and permissions to access a specific route.
+ * DTO for creating a new role.
  *
  * @class
  */
-@Injectable()
-export class RbacAuthGuard extends AuthGuard(&#x27;jwt&#x27;) {
+export class RoleDto {
   /**
-   * Creates an instance of RbacAuthGuard.
+   * The name of the role to create.
    *
-   * @constructor
-   * @param {SecureRbacService} rbacService - The RBAC service to check user roles and permissions.
-   * @param {Reflector} reflector - The NestJS reflector used to get metadata from the route handlers.
+   * @property
+   * @type {string}
+   * @example &#x27;user&#x27;
    */
-  constructor(private readonly rbacService: SecureRbacService, private readonly reflector: Reflector) {
-    super();
-  }
+  @ApiProperty({
+    description: &#x27;The name of the role to create&#x27;,
+    example: &#x27;user&#x27;,
+  })
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+}
+
+export class AssignPermissionToRoleDto {
+  /**
+   * The role id to assign permissions.
+   *
+   * @property
+   * @type {number}
+   * @example 1
+   */
+  @ApiProperty({
+    description: &#x27;The role id to assign permissions&#x27;,
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  roleId: number;
 
   /**
-   * Method that checks if the authenticated user has the required roles and permissions to access a specific route.
-   * Overrides the &#x60;canActivate&#x60; method of the parent class.
+   * The id of the permission to be assigned to the role (optional).
    *
-   * @async
-   * @method
-   * @param {ExecutionContext} context - The execution context containing the request and response objects.
-   * @returns {Promise&lt;boolean&gt;} A boolean indicating whether the user is authorized to access the route or not.
-   * @throws {UnauthorizedException} If the user does not have the required roles or permissions.
+   * @property
+   * @type {number[]}
+   * @example [1,2]
    */
-  async canActivate(context: ExecutionContext): Promise&lt;boolean&gt; {
-    // Run the JWT authentication using the AuthGuard
-    const canActivate &#x3D; await super.canActivate(context);
-    if (!canActivate) {
-      return false;
-    }
+  @ApiProperty({
+    description: &#x27;The id of permission to be assign to role&#x27;,
+    example: [1,2],
+  })
+  @IsNotEmpty()
+  @IsArray()
+  permissionIds: number[];
+}
 
-    // Get the user object from the request
-    const request &#x3D; context.switchToHttp().getRequest();
-    const user: User &#x3D; request.user;
+/**
+ * DTO for assigning a role to a user.
+ *
+ * @class
+ */
+export class AssignRoleToUserDto {
+  /**
+   * The id of the user.
+   *
+   * @property
+   * @type {number}
+   * @example 1
+   */
+  @ApiProperty({
+    description: &#x27;The id of the user&#x27;,
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  userId: number;
 
-    // Get the required roles and permissions from the route metadata
-    const requiredRoles &#x3D; this.reflector.get&lt;string[]&gt;(&#x27;roles&#x27;, context.getHandler()) || [];
-    const requiredPermissions &#x3D; this.reflector.get&lt;string[]&gt;(&#x27;permissions&#x27;, context.getHandler()) || [];
+  /**
+   * The role id of the user.
+   *
+   * @property
+   * @type {number}
+   * @example 1
+   */
+  @ApiProperty({
+    description: &#x27;The role id of the user&#x27;,
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  roleId: number;
+}
 
-    // Check if the user has the required roles
-    const hasRoles &#x3D; await this.rbacService.hasRoles(user.id, requiredRoles);
+/**
+ * DTO for creating a new permission.
+ *
+ * @class
+ */
+export class PermissionDto {
+  /**
+   * The name of the permission to create.
+   *
+   * @property
+   * @type {string}
+   * @example &#x27;write&#x27;
+   */
+  @ApiProperty({
+    description: &#x27;The name of the permission to create&#x27;,
+    example: &#x27;write&#x27;,
+  })
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+}
 
-    // Check if the user has the required permissions
-    const hasPermissions &#x3D; await this.rbacService.hasPermission(user.id, requiredPermissions);
-    
-    if (!hasRoles || !hasPermissions) {
-      throw new UnauthorizedException(&#x27;You do not have permission to access this resource.&#x27;);
-    }
-
-    return true;
-  }
+export class RoleIdDto {
+  /**
+   * The role id of the user.
+   *
+   * @property
+   * @type {number}
+   * @example 1
+   */
+  @ApiProperty({
+    description: &#x27;The role id of the user&#x27;,
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  roleId: number
 }
 
 </code></pre>
     </div>
 </div>
-
-
 
 
 

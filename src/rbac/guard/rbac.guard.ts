@@ -53,7 +53,7 @@ export class RbacAuthGuard extends AuthGuard('jwt') {
 
     // Check if the user has the required permissions
     const hasPermissions = await this.rbacService.hasPermission(user.id, requiredPermissions);
-
+    
     if (!hasRoles || !hasPermissions) {
       throw new UnauthorizedException('You do not have permission to access this resource.');
     }

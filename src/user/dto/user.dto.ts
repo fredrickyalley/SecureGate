@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsEmail, MinLength } from 'class-validator';
+import { IsNotEmpty, IsEmail, MinLength, IsString } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-
+import { z } from 'zod';
 
 
 /**
@@ -21,6 +21,7 @@ export class CreateUserDto {
     example: 'password123',
   })
   @IsNotEmpty()
+  @IsString()
   @MinLength(6)
   password: string;
 }

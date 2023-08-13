@@ -65,13 +65,10 @@
                                 id="xs-classes-links"
                             >
                                 <li class="link">
+                                    <a href="../classes/AssignPermissionToRoleDto.html" >AssignPermissionToRoleDto</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/AssignRoleToUserDto.html"  class="active" >AssignRoleToUserDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/CreatePermissionDto.html" >CreatePermissionDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/CreateRoleDto.html" >CreateRoleDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/CreateUserDto.html" >CreateUserDto</a>
@@ -83,19 +80,19 @@
                                     <a href="../classes/LoginDto.html" >LoginDto</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/PermissionDto.html" >PermissionDto</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/ResetPasswordDto.html" >ResetPasswordDto</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/RevokeRoleOfUserDto.html" >RevokeRoleOfUserDto</a>
+                                    <a href="../classes/RoleDto.html" >RoleDto</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/RoleIdDto.html" >RoleIdDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/SignupDto.html" >SignupDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/UpdatePermissionDto.html" >UpdatePermissionDto</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../classes/UpdateRoleDto.html" >UpdateRoleDto</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/UpdateUserDto.html" >UpdateUserDto</a>
@@ -144,6 +141,9 @@
                                 </li>
                                 <li class="link">
                                     <a href="../injectables/SecureUserService.html" >SecureUserService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../injectables/ZodValidationPipe.html" >ZodValidationPipe</a>
                                 </li>
                         </ul>
                     </li>
@@ -254,13 +254,10 @@
                                        id="classes-links"
                    >
                                        <li class="link">
+                                           <a href="../classes/AssignPermissionToRoleDto.html" >AssignPermissionToRoleDto</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/AssignRoleToUserDto.html"  class="active" >AssignRoleToUserDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/CreatePermissionDto.html" >CreatePermissionDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/CreateRoleDto.html" >CreateRoleDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/CreateUserDto.html" >CreateUserDto</a>
@@ -272,19 +269,19 @@
                                            <a href="../classes/LoginDto.html" >LoginDto</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/PermissionDto.html" >PermissionDto</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/ResetPasswordDto.html" >ResetPasswordDto</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/RevokeRoleOfUserDto.html" >RevokeRoleOfUserDto</a>
+                                           <a href="../classes/RoleDto.html" >RoleDto</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/RoleIdDto.html" >RoleIdDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/SignupDto.html" >SignupDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/UpdatePermissionDto.html" >UpdatePermissionDto</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../classes/UpdateRoleDto.html" >UpdateRoleDto</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/UpdateUserDto.html" >UpdateUserDto</a>
@@ -333,6 +330,9 @@
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/SecureUserService.html" >SecureUserService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/ZodValidationPipe.html" >ZodValidationPipe</a>
                                        </li>
                                </ul>
                            </li>
@@ -457,41 +457,44 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td class="col-md-4">
-                                    <b> permissionId</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <code>permissionId:     <code>number</code>
-            </bcode>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-description"><p>The id of the permission to be assigned to the role (optional).</p>
-            </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
             </section>
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
         <pre><code class="hljs javascript">import { ApiProperty } from &quot;@nestjs/swagger&quot;;
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from &quot;class-validator&quot;;
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from &quot;class-validator&quot;;
 import { PartialType } from &quot;@nestjs/mapped-types&quot;;
+import { z } from &#x27;zod&#x27;
 
+
+export const roleSchema &#x3D;  z.object({
+  name: z.string().toLowerCase(),
+})
+
+export const permissionToRoleSchema &#x3D;  z.object({
+    roleId: z.number(),
+    permissionId: z.array(z.number())
+})
+
+
+export const roleStatusSchema &#x3D;  z.object({
+  userId: z.number(),
+  roleId: z.number()
+})
+
+export const permissionSchema &#x3D;  z.object({
+  name: z.string().toLowerCase(),
+})
+
+export const roleIdSchema &#x3D;  z.object({
+  roleId: z.number(),
+})
 
 /**
  * DTO for creating a new role.
  *
  * @class
  */
-export class CreateRoleDto {
+export class RoleDto {
   /**
    * The name of the role to create.
    *
@@ -507,20 +510,38 @@ export class CreateRoleDto {
   @IsString()
   name: string;
 
+}
+
+export class AssignPermissionToRoleDto {
   /**
-   * The id of the permission to be assigned to the role (optional).
+   * The role id to assign permissions.
    *
    * @property
    * @type {number}
    * @example 1
    */
   @ApiProperty({
-    description: &#x27;The id of permission to be assign to role&#x27;,
+    description: &#x27;The role id to assign permissions&#x27;,
     example: 1,
   })
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
-  permissionId?: number;
+  roleId: number;
+
+  /**
+   * The id of the permission to be assigned to the role (optional).
+   *
+   * @property
+   * @type {number[]}
+   * @example [1,2]
+   */
+  @ApiProperty({
+    description: &#x27;The id of permission to be assign to role&#x27;,
+    example: [1,2],
+  })
+  @IsNotEmpty()
+  @IsArray()
+  permissionIds: number[];
 }
 
 /**
@@ -561,48 +582,11 @@ export class AssignRoleToUserDto {
 }
 
 /**
- * DTO for revoking a role from a user.
- *
- * @class
- */
-export class RevokeRoleOfUserDto {
-  /**
-   * The id of the user.
-   *
-   * @property
-   * @type {number}
-   * @example 1
-   */
-  @ApiProperty({
-    description: &#x27;The id of the user&#x27;,
-    example: 1,
-  })
-  @IsNotEmpty()
-  @IsNumber()
-  userId: number;
-
-  /**
-   * The role id of the user.
-   *
-   * @property
-   * @type {number}
-   * @example 1
-   */
-  @ApiProperty({
-    description: &#x27;The role id of the user&#x27;,
-    example: 1,
-  })
-  @IsNotEmpty()
-  @IsNumber()
-  roleId: number;
-}
-
-/**
  * DTO for creating a new permission.
  *
  * @class
  */
-export class CreatePermissionDto {
+export class PermissionDto {
   /**
    * The name of the permission to create.
    *
@@ -619,19 +603,23 @@ export class CreatePermissionDto {
   name: string;
 }
 
-/**
- * DTO for updating a permission.
- *
- * @class
- */
-export class UpdatePermissionDto extends PartialType(CreatePermissionDto) {}
+export class RoleIdDto {
+  /**
+   * The role id of the user.
+   *
+   * @property
+   * @type {number}
+   * @example 1
+   */
+  @ApiProperty({
+    description: &#x27;The role id of the user&#x27;,
+    example: 1,
+  })
+  @IsNotEmpty()
+  @IsNumber()
+  roleId: number
+}
 
-/**
- * DTO for updating a role.
- *
- * @class
- */
-export class UpdateRoleDto extends PartialType(CreateRoleDto) {}
 </code></pre>
     </div>
 </div>
