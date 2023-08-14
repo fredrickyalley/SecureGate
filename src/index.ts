@@ -114,6 +114,7 @@ export { Role } from './rbac/interface/role.-permission.interface';
 // Export DTOs
 export { SignupDto, ForgotPasswordDto, ResetPasswordDto, LoginDto } from './auth/dto/user.dto';
 export {
+  RoleIdDto,
   RoleDto,
   PermissionDto,
   AssignRoleToUserDto,

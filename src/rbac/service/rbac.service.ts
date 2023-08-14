@@ -1,7 +1,8 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { Role, Permission} from '@prisma/client';
 import { PrismaService } from '../../auth/prismaService/prisma.service';
 import { RoleDto,  AssignRoleToUserDto, PermissionDto, AssignPermissionToRoleDto} from '../dto/permission-role.dto';
+import { isNumber } from 'class-validator';
 
 
 /**
@@ -33,10 +34,13 @@ export class SecureRbacService {
     permissionDto: PermissionDto,
   ): Promise<Permission> {
     const { name } = permissionDto;
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException("Permission can't be a number")
+
     const permission = await this.prisma.permission.findFirst({
       where: { name, deletedAt: null },
     });
-    if (permission) throw new HttpException('Permission already exists', 400);
+    if (permission) throw new BadRequestException('Permission already exists');
 
     return this.prisma.permission.create({ data: { name } });
   }
@@ -68,10 +72,15 @@ export class SecureRbacService {
     id: number,
     updatePermissionDto: PermissionDto,
   ): Promise<Permission> {
+    const {name} = updatePermissionDto
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException("Permission can't be a number")
+
     const permission = await this.prisma.permission.findFirst({
       where: { id, deletedAt: null },
     });
     if (!permission) throw new NotFoundException(`Permission ${id} not found`);
+    if(permission.name === name) throw new BadRequestException(`Permission ${name} can not be the same as old name`)
 
     return this.prisma.permission.update({
       where: { id, deletedAt: null },
@@ -104,6 +113,7 @@ export class SecureRbacService {
   async getRoleById(roleId: number): Promise<Role> {
     const role = await this.prisma.role.findFirst({
       where: { id: roleId, deletedAt: null },
+      include: {permissions: true}
     });
 
     if (!role) throw new NotFoundException(`Role ${roleId} not found`);
@@ -120,13 +130,16 @@ export class SecureRbacService {
    */
   async createRole(roleDto: RoleDto): Promise<Role> {
     const { name } = roleDto;
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException("Role can't be a number")
+
     const role = await this.prisma.role.findUnique({
       where: { name },
       include: {permissions: true}
     });
     if(role !== null) {
-      if(role && role.deletedAt === null) throw new HttpException(`Role ${name} already exists`, 400);
-      if(role.deletedAt !== null) throw new HttpException(`Role ${name} exist already, change it deletedAt to null`, 400)
+      if(role && role.deletedAt === null) throw new BadRequestException(`Role ${name} already exists`);
+      if(role.deletedAt !== null) throw new BadRequestException(`Role ${name} exist already, change it deletedAt to null`)
     }
 
       return await this.prisma.role.create({ data: { name } });
@@ -135,16 +148,74 @@ export class SecureRbacService {
 
   async updateRole(roleId: number, updateRoleDto: RoleDto): Promise<Role> {
     const { name } = updateRoleDto;
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException("Permission can't be a number")
+
     const role = await this.prisma.role.findFirst({
-      where: { name, deletedAt: null },
+      where: { id:roleId, deletedAt: null },
       include: {permissions: true}
     });
 
       if(!role) throw new NotFoundException(`Role ${name} does not exists`);
-      if(role.name === name) throw new HttpException(`Role ${name} can not be same as old name`, 400)
+      if(role.name === name) throw new BadRequestException(`Role ${name} can not be same as old name`)
 
       return await this.prisma.role.update({where: {id: roleId, deletedAt: null}, data: { name } });
 
+  }
+
+    /**
+   * Deactivate a Permission by its ID.
+   *
+   * @param {number} permissionId - The ID of the role to delete.
+   * @returns {Promise<void>} A promise that resolves when the role is deleted successfully.
+   * @throws {NotFoundException} If the role with the specified ID is not found.
+   * @throws {BadRequestException} If the role has already been deleted.
+   */
+    async deactivePermission(permissionId: number): Promise<void> {
+      const role = await this.prisma.permission.findFirst({ where: { id: permissionId, deletedAt: null } });
+      if (!role || role.deletedAt !== null)
+        throw new NotFoundException(`Role ${permissionId} not found`);
+  
+      if (role.deletedAt === null) {
+        await this.prisma.permission.update({
+          where: { id: permissionId, deletedAt: null },
+          data: { deletedAt: new Date(Date.now()) },
+        });
+      } else {
+        throw new BadRequestException('Role already deleted');
+      }
+    }
+  
+    async reactivatePermission(permissionId: number): Promise<void> {
+      const role = await this.prisma.permission.findFirst({
+        where: { id: permissionId, deletedAt: { not: null } },
+      });
+    
+      if (!role) throw new NotFoundException(`Role ${permissionId} not found`);
+  
+    
+      if (role.deletedAt !== null) {
+        await this.prisma.permission.update({
+          where: { id: permissionId },
+          data: { deletedAt: null },
+        });
+      } else {
+        throw new BadRequestException('Role is not deleted');
+      }
+    }
+
+
+  async deletePermission(permissionId: number): Promise<void> {
+    const role = await this.prisma.role.findFirst({
+      where: { id: permissionId },
+    });
+  
+    if (!role) throw new NotFoundException(`Permission ${permissionId} not found`);
+
+
+    await this.prisma.permission.delete({
+      where: { id: permissionId }
+    })
   }
 
   async asignPermissionToRole(assignPermissionToRoleDto: AssignPermissionToRoleDto): Promise<void> {
@@ -165,7 +236,7 @@ export class SecureRbacService {
       const permissionInRole = role.permissions.find((p) => p.id === permissionId);
 
       if (!permissionInRole) {
-        throw new HttpException(`Permission ${permissionId} not associated with Role ${role.name}`, 400);
+        throw new BadRequestException(`Permission ${permissionId} not associated with Role ${role.name}`);
       }
     } 
 
@@ -211,9 +282,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
 
     const permissionInRole = role.permissions.find((p) => p.id === permissionId);
 
-    if (!permissionInRole) {
-      throw new HttpException(`Permission ${permissionId} not associated with Role ${role.name}`, 400);
-    }
+    if (!permissionInRole) throw new BadRequestException(`Permission ${permissionId} not associated with Role ${role.name}`);
   }
 
   const permissionDisconnects = permissionIds.map((permissionId) => ({ id: permissionId }));
@@ -241,7 +310,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
   ): Promise<void> {
     const { roleId, permissionIds } = updatePermissionToRoleDto;
 
-    if (permissionIds.length === 0 || !roleId) throw new HttpException('Invalid role ID or permissions', 400);
+    if (permissionIds.length === 0 || !roleId) throw new BadRequestException('Invalid role ID or permissions');
 
       const role = await this.prisma.role.findFirst({
         where: { id: roleId, deletedAt: null },
@@ -260,8 +329,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
       }
 
       for (const permission of role.permissions) {
-        if (permissionIds.includes(permission.id))
-          throw new HttpException('Permission already exists', 400);
+        if (permissionIds.includes(permission.id)) throw new BadRequestException('Permission already exists');
       }
 
 
@@ -288,9 +356,9 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
    * @param {number} roleId - The ID of the role to delete.
    * @returns {Promise<void>} A promise that resolves when the role is deleted successfully.
    * @throws {NotFoundException} If the role with the specified ID is not found.
-   * @throws {HttpException} If the role has already been deleted.
+   * @throws {BadRequestException} If the role has already been deleted.
    */
-  async deleteRole(roleId: number): Promise<void> {
+  async deactiveRole(roleId: number): Promise<void> {
     const role = await this.prisma.role.findFirst({ where: { id: roleId, deletedAt: null } });
     if (!role || role.deletedAt !== null)
       throw new NotFoundException(`Role ${roleId} not found`);
@@ -301,18 +369,17 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
         data: { deletedAt: new Date(Date.now()) },
       });
     } else {
-      throw new HttpException('Role already deleted', 400);
+      throw new BadRequestException('Role already deleted');
     }
   }
 
-  async undeleteRole(roleId: number): Promise<void> {
+  async reactivateRole(roleId: number): Promise<void> {
     const role = await this.prisma.role.findFirst({
       where: { id: roleId, deletedAt: { not: null } },
     });
   
-    if (!role) {
-      throw new NotFoundException(`Role ${roleId} not found`);
-    }
+    if (!role) throw new NotFoundException(`Role ${roleId} not found`);
+
   
     if (role.deletedAt !== null) {
       await this.prisma.role.update({
@@ -320,8 +387,21 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
         data: { deletedAt: null },
       });
     } else {
-      throw new HttpException('Role is not deleted', 400);
+      throw new BadRequestException('Role is not deleted');
     }
+  }
+
+  async deleteRole(roleId: number): Promise<void> {
+    const role = await this.prisma.role.findFirst({
+      where: { id: roleId },
+    });
+  
+    if (!role) throw new NotFoundException(`Role ${roleId} not found`);
+
+
+    await this.prisma.role.delete({
+      where: { id: roleId }
+    })
   }
   
 
@@ -363,7 +443,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
     if (userRole) throw new HttpException('User already has this role', 400);
 
     await this.prisma.role.update({
-      where: { id: roleId, updatedAt: null },
+      where: { id: roleId, deletedAt: null },
       data: {
         user: {
           connect: {
@@ -386,27 +466,18 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
 async revokeRoleOfUser(revokeRoleOfUserDto: AssignRoleToUserDto): Promise<void> {
   const { userId, roleId } = revokeRoleOfUserDto;
 
-  // Find the user with the provided userId
   const user = await this.prisma.user.findUnique({
     where: { id: userId, deletedAt: null },
   });
 
-  if (!user) {
-      // If the user doesn't exist, throw an error
-      throw new NotFoundException('User not found');
-  }
+  if (!user) throw new NotFoundException('User not found');
 
-  // Check if the user has the specified role
   const role = await this.prisma.role.findFirst({
       where: { id: roleId, user: { some: { id: userId } } }
   });
 
-  if (!role) {
-      // If the role doesn't exist, throw an error
-      throw new NotFoundException('Role not found');
-  }
+  if (!role) throw new NotFoundException('Role not found');
 
-  // Update the user's roles to disconnect the specified role
   await this.prisma.role.update({
       where: { id: roleId, deletedAt: null },
       data: {
@@ -450,17 +521,13 @@ async revokeRoleOfUser(revokeRoleOfUserDto: AssignRoleToUserDto): Promise<void> 
       where: { id: userId, deletedAt: null },
       include: { roles: true },
     });
-    if (user.roles.length === 0) {
-      return false;
-    }
+    if (user.roles.length === 0) return false;
 
     for (const role of user.roles) {
       const roles = await this.prisma.role.findFirst({
         where: { id: role.id, deletedAt: null },
       });
-      if (requiredRoles.includes(roles.name)) {
-        return true;
-      }
+      if (requiredRoles.includes(roles.name)) return true;
     }
 
     return false;
@@ -479,9 +546,7 @@ async revokeRoleOfUser(revokeRoleOfUserDto: AssignRoleToUserDto): Promise<void> 
   ): Promise<boolean> {
     const permissions = await this.getPermissionsForUser(userId);
     for (const permission of permissions) {
-      if (requiredPermissions.includes(permission.name)) {
-        return true;
-      }
+      if (requiredPermissions.includes(permission.name)) return true;
     }
 
     return false;

@@ -3,6 +3,11 @@ import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-valid
 import { z } from 'zod'
 
 
+
+export const roleId = z.string();
+
+export const permissionId = z.string();
+
 export const roleSchema =  z.object({
   name: z.string().toLowerCase(),
 })
@@ -61,8 +66,8 @@ export class AssignPermissionToRoleDto {
     description: 'The role id to assign permissions',
     example: 1,
   })
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   roleId: number;
 
   /**
@@ -76,8 +81,8 @@ export class AssignPermissionToRoleDto {
     description: 'The id of permission to be assign to role',
     example: [1,2],
   })
-  @IsNotEmpty()
-  @IsArray()
+  // @IsNotEmpty()
+  // @IsArray()
   permissionIds: number[];
 }
 
@@ -98,8 +103,8 @@ export class AssignRoleToUserDto {
     description: 'The id of the user',
     example: 1,
   })
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   userId: number;
 
   /**
@@ -113,8 +118,8 @@ export class AssignRoleToUserDto {
     description: 'The role id of the user',
     example: 1,
   })
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   roleId: number;
 }
 
@@ -135,8 +140,8 @@ export class PermissionDto {
     description: 'The name of the permission to create',
     example: 'write',
   })
-  @IsNotEmpty()
-  @IsString()
+  // @IsNotEmpty()
+  // @IsString()
   name: string;
 }
 
@@ -152,8 +157,8 @@ export class RoleIdDto {
     description: 'The role id of the user',
     example: 1,
   })
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   roleId: number
 }
 

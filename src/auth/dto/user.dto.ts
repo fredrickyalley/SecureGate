@@ -27,8 +27,8 @@ export class SignupDto {
     description: 'The email of the user',
     example: 'johndoe@gmail.com',
   })
-  @IsNotEmpty()
-  @IsEmail()
+  // @IsNotEmpty()
+  // @IsEmail()
   email: string;
 
   /** The password of the user */
@@ -36,9 +36,9 @@ export class SignupDto {
     description: 'The password of the user',
     example: 'password123',
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   password: string;
 }
 
@@ -65,8 +65,8 @@ export class LoginDto {
     description: 'The email of the user',
     example: 'johndoe@gmail.com',
   })
-  @IsNotEmpty()
-  @IsEmail()
+  // @IsNotEmpty()
+  // @IsEmail()
   email: string;
 
   /** The password of the user */
@@ -74,9 +74,9 @@ export class LoginDto {
     description: 'The password of the user',
     example: 'password123',
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   password: string;
 }
 
@@ -89,8 +89,8 @@ export class ResetPasswordDto {
     description: 'The id for the user',
     example: 1,
   })
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   userId: number;
 
   /** The email of the user */
@@ -98,9 +98,9 @@ export class ResetPasswordDto {
     description: 'The new password for the user',
     example: 'oldpassword123',
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   oldPassword: string;
 
   /** The new password for the user */
@@ -108,9 +108,9 @@ export class ResetPasswordDto {
     description: 'The new password for the user',
     example: 'newpassword123',
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   newPassword: string;
 
 
