@@ -24,7 +24,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">SecureRbacService</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L13">src/rbac/service/rbac.service.ts:13</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L14">src/rbac/service/rbac.service.ts:14</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -44,6 +44,9 @@
 <a href="SecureRbacService.html#assignRoleToUser" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>assign<wbr/>Role<wbr/>To<wbr/>User</span></a>
 <a href="SecureRbacService.html#createPermission" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Permission</span></a>
 <a href="SecureRbacService.html#createRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Role</span></a>
+<a href="SecureRbacService.html#deactivePermission" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>deactive<wbr/>Permission</span></a>
+<a href="SecureRbacService.html#deactiveRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>deactive<wbr/>Role</span></a>
+<a href="SecureRbacService.html#deletePermission" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Permission</span></a>
 <a href="SecureRbacService.html#deleteRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Role</span></a>
 <a href="SecureRbacService.html#getPermissionById" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Permission<wbr/>By<wbr/>Id</span></a>
 <a href="SecureRbacService.html#getPermissions" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Permissions</span></a>
@@ -52,9 +55,10 @@
 <a href="SecureRbacService.html#getRoles" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Roles</span></a>
 <a href="SecureRbacService.html#hasPermission" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>has<wbr/>Permission</span></a>
 <a href="SecureRbacService.html#hasRoles" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>has<wbr/>Roles</span></a>
+<a href="SecureRbacService.html#reactivatePermission" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>reactivate<wbr/>Permission</span></a>
+<a href="SecureRbacService.html#reactivateRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>reactivate<wbr/>Role</span></a>
 <a href="SecureRbacService.html#removePermissionFromRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove<wbr/>Permission<wbr/>From<wbr/>Role</span></a>
 <a href="SecureRbacService.html#revokeRoleOfUser" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>revoke<wbr/>Role<wbr/>Of<wbr/>User</span></a>
-<a href="SecureRbacService.html#undeleteRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>undelete<wbr/>Role</span></a>
 <a href="SecureRbacService.html#updatePermission" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Permission</span></a>
 <a href="SecureRbacService.html#updatePermissionsToRoles" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Permissions<wbr/>To<wbr/>Roles</span></a>
 <a href="SecureRbacService.html#updateRole" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Role</span></a>
@@ -73,14 +77,14 @@
 <h5><span class="tsd-kind-parameter">prisma</span>: <a href="PrismaService.html" class="tsd-signature-type tsd-kind-class">PrismaService</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="SecureRbacService.html" class="tsd-signature-type tsd-kind-class">SecureRbacService</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L14">src/rbac/service/rbac.service.ts:14</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L15">src/rbac/service/rbac.service.ts:15</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="prisma" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagReadonly">Readonly</code> <span>prisma</span><a href="#prisma" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">prisma</span><span class="tsd-signature-symbol">:</span> <a href="PrismaService.html" class="tsd-signature-type tsd-kind-class">PrismaService</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L14">src/rbac/service/rbac.service.ts:14</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L15">src/rbac/service/rbac.service.ts:15</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="asignPermissionToRole" class="tsd-anchor"></a>
@@ -95,7 +99,7 @@
 <h5><span class="tsd-kind-parameter">assignPermissionToRoleDto</span>: <span class="tsd-signature-type ">AssignPermissionToRoleDto</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L150">src/rbac/service/rbac.service.ts:150</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L221">src/rbac/service/rbac.service.ts:221</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="assignRoleToUser" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>assign<wbr/>Role<wbr/>To<wbr/>User</span><a href="#assignRoleToUser" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -119,7 +123,7 @@
 <h4>Throws</h4><p>If the user already has the specified role.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L336">src/rbac/service/rbac.service.ts:336</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L416">src/rbac/service/rbac.service.ts:416</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="createPermission" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>create<wbr/>Permission</span><a href="#createPermission" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -141,7 +145,7 @@
 <h4>Throws</h4><p>If the permission with the same name already exists.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L32">src/rbac/service/rbac.service.ts:32</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L33">src/rbac/service/rbac.service.ts:33</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="createRole" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>create<wbr/>Role</span><a href="#createRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -163,11 +167,35 @@
 <h4>Throws</h4><p>If the role with the same name already exists.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L121">src/rbac/service/rbac.service.ts:121</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="deleteRole" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>delete<wbr/>Role</span><a href="#deleteRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L131">src/rbac/service/rbac.service.ts:131</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="deactivePermission" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>deactive<wbr/>Permission</span><a href="#deactivePermission" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="deleteRole.deleteRole-1"><span class="tsd-kind-call-signature">delete<wbr/>Role</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">roleId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#deleteRole.deleteRole-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="deactivePermission.deactivePermission-1"><span class="tsd-kind-call-signature">deactive<wbr/>Permission</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">permissionId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#deactivePermission.deactivePermission-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Deactivate a Permission by its ID.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">permissionId</span>: <span class="tsd-signature-type">number</span></h5>
+<div class="tsd-comment tsd-typography"><p>The ID of the role to delete.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><p>A promise that resolves when the role is deleted successfully.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>Throws</h4><p>If the role with the specified ID is not found.</p>
+
+<h4>Throws</h4><p>If the role has already been deleted.</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L174">src/rbac/service/rbac.service.ts:174</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="deactiveRole" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>deactive<wbr/>Role</span><a href="#deactiveRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="deactiveRole.deactiveRole-1"><span class="tsd-kind-call-signature">deactive<wbr/>Role</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">roleId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#deactiveRole.deactiveRole-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Deletes a role by its ID.</p>
 </div>
@@ -187,7 +215,33 @@
 <h4>Throws</h4><p>If the role has already been deleted.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L293">src/rbac/service/rbac.service.ts:293</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L361">src/rbac/service/rbac.service.ts:361</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="deletePermission" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>delete<wbr/>Permission</span><a href="#deletePermission" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="deletePermission.deletePermission-1"><span class="tsd-kind-call-signature">delete<wbr/>Permission</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">permissionId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#deletePermission.deletePermission-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">permissionId</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L208">src/rbac/service/rbac.service.ts:208</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="deleteRole" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>delete<wbr/>Role</span><a href="#deleteRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="deleteRole.deleteRole-1"><span class="tsd-kind-call-signature">delete<wbr/>Role</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">roleId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#deleteRole.deleteRole-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">roleId</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L394">src/rbac/service/rbac.service.ts:394</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getPermissionById" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Permission<wbr/>By<wbr/>Id</span><a href="#getPermissionById" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -209,7 +263,7 @@
 <h4>Throws</h4><p>If the permission with the specified ID is not found.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L51">src/rbac/service/rbac.service.ts:51</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L55">src/rbac/service/rbac.service.ts:55</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getPermissions" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Permissions</span><a href="#getPermissions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -221,7 +275,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L21">src/rbac/service/rbac.service.ts:21</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L22">src/rbac/service/rbac.service.ts:22</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getPermissionsForUser" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Permissions<wbr/>For<wbr/>User</span><a href="#getPermissionsForUser" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -241,7 +295,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L428">src/rbac/service/rbac.service.ts:428</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L499">src/rbac/service/rbac.service.ts:499</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getRoleById" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Role<wbr/>By<wbr/>Id</span><a href="#getRoleById" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -263,7 +317,7 @@
 <h4>Throws</h4><p>If the role with the specified ID is not found.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L104">src/rbac/service/rbac.service.ts:104</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L113">src/rbac/service/rbac.service.ts:113</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="getRoles" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Roles</span><a href="#getRoles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -275,7 +329,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L93">src/rbac/service/rbac.service.ts:93</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L102">src/rbac/service/rbac.service.ts:102</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="hasPermission" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>has<wbr/>Permission</span><a href="#hasPermission" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -300,7 +354,7 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L476">src/rbac/service/rbac.service.ts:476</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L543">src/rbac/service/rbac.service.ts:543</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="hasRoles" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>has<wbr/>Roles</span><a href="#hasRoles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -325,7 +379,33 @@
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L448">src/rbac/service/rbac.service.ts:448</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L519">src/rbac/service/rbac.service.ts:519</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="reactivatePermission" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>reactivate<wbr/>Permission</span><a href="#reactivatePermission" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="reactivatePermission.reactivatePermission-1"><span class="tsd-kind-call-signature">reactivate<wbr/>Permission</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">permissionId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#reactivatePermission.reactivatePermission-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">permissionId</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L189">src/rbac/service/rbac.service.ts:189</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="reactivateRole" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>reactivate<wbr/>Role</span><a href="#reactivateRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="reactivateRole.reactivateRole-1"><span class="tsd-kind-call-signature">reactivate<wbr/>Role</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">roleId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#reactivateRole.reactivateRole-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">roleId</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L376">src/rbac/service/rbac.service.ts:376</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="removePermissionFromRole" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove<wbr/>Permission<wbr/>From<wbr/>Role</span><a href="#removePermissionFromRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -349,7 +429,7 @@
 <h4>Throws</h4><p>If a permission is not associated with the role.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L195">src/rbac/service/rbac.service.ts:195</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L266">src/rbac/service/rbac.service.ts:266</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="revokeRoleOfUser" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>revoke<wbr/>Role<wbr/>Of<wbr/>User</span><a href="#revokeRoleOfUser" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -373,20 +453,7 @@
 <h4>Throws</h4><p>If the user doesn&#39;t have the specified role.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L386">src/rbac/service/rbac.service.ts:386</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="undeleteRole" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>undelete<wbr/>Role</span><a href="#undeleteRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="undeleteRole.undeleteRole-1"><span class="tsd-kind-call-signature">undelete<wbr/>Role</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">roleId</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#undeleteRole.undeleteRole-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5><span class="tsd-kind-parameter">roleId</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L308">src/rbac/service/rbac.service.ts:308</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L466">src/rbac/service/rbac.service.ts:466</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="updatePermission" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Permission</span><a href="#updatePermission" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -413,7 +480,7 @@
 <h4>Throws</h4><p>If the permission with the specified ID is not found.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L67">src/rbac/service/rbac.service.ts:67</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L71">src/rbac/service/rbac.service.ts:71</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="updatePermissionsToRoles" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Permissions<wbr/>To<wbr/>Roles</span><a href="#updatePermissionsToRoles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -434,7 +501,7 @@
 <h4>Throws</h4><p>If the role with the specified ID is not found.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L239">src/rbac/service/rbac.service.ts:239</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L308">src/rbac/service/rbac.service.ts:308</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="updateRole" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Role</span><a href="#updateRole" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -449,7 +516,7 @@
 <h5><span class="tsd-kind-parameter">updateRoleDto</span>: <a href="RoleDto.html" class="tsd-signature-type tsd-kind-class">RoleDto</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">GetResult</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">createdAt</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Date</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">deletedAt</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Date</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">name</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">updatedAt</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Date</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/d497c42/src/rbac/service/rbac.service.ts#L136">src/rbac/service/rbac.service.ts:136</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/fredrickyalley/SecureGate/blob/7bf8a2c/src/rbac/service/rbac.service.ts#L149">src/rbac/service/rbac.service.ts:149</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -475,6 +542,9 @@
 <li><a href="#assignRoleToUser" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>assign<wbr/>Role<wbr/>To<wbr/>User</span></a></li>
 <li><a href="#createPermission" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Permission</span></a></li>
 <li><a href="#createRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>create<wbr/>Role</span></a></li>
+<li><a href="#deactivePermission" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>deactive<wbr/>Permission</span></a></li>
+<li><a href="#deactiveRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>deactive<wbr/>Role</span></a></li>
+<li><a href="#deletePermission" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Permission</span></a></li>
 <li><a href="#deleteRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>delete<wbr/>Role</span></a></li>
 <li><a href="#getPermissionById" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Permission<wbr/>By<wbr/>Id</span></a></li>
 <li><a href="#getPermissions" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Permissions</span></a></li>
@@ -483,9 +553,10 @@
 <li><a href="#getRoles" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>get<wbr/>Roles</span></a></li>
 <li><a href="#hasPermission" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>has<wbr/>Permission</span></a></li>
 <li><a href="#hasRoles" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>has<wbr/>Roles</span></a></li>
+<li><a href="#reactivatePermission" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>reactivate<wbr/>Permission</span></a></li>
+<li><a href="#reactivateRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>reactivate<wbr/>Role</span></a></li>
 <li><a href="#removePermissionFromRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>remove<wbr/>Permission<wbr/>From<wbr/>Role</span></a></li>
 <li><a href="#revokeRoleOfUser" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>revoke<wbr/>Role<wbr/>Of<wbr/>User</span></a></li>
-<li><a href="#undeleteRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>undelete<wbr/>Role</span></a></li>
 <li><a href="#updatePermission" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Permission</span></a></li>
 <li><a href="#updatePermissionsToRoles" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Permissions<wbr/>To<wbr/>Roles</span></a></li>
 <li><a href="#updateRole" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>update<wbr/>Role</span></a></li></ul></div></details></div>
@@ -507,6 +578,7 @@
 <li><a href="RbacAuthGuard.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Rbac<wbr/>Auth<wbr/>Guard</span></a></li>
 <li><a href="ResetPasswordDto.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Reset<wbr/>Password<wbr/>Dto</span></a></li>
 <li><a href="RoleDto.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Role<wbr/>Dto</span></a></li>
+<li><a href="RoleIdDto.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Role<wbr/>Id<wbr/>Dto</span></a></li>
 <li><a href="SecureAuthModule.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Secure<wbr/>Auth<wbr/>Module</span></a></li>
 <li><a href="SecureAuthService.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Secure<wbr/>Auth<wbr/>Service</span></a></li>
 <li><a href="SecureGateModule.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg><span>Secure<wbr/>Gate<wbr/>Module</span></a></li>

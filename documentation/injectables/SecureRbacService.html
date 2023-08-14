@@ -116,6 +116,9 @@
                                     <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                 </li>
                                 <li class="link">
@@ -303,6 +306,9 @@
                    >
                                        <li class="link">
                                            <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
@@ -807,6 +813,109 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <b><span class="modifier"></span> deactivePermission</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play ">
+                                            <span class="fa fa-"></span>
+                                        </span>
+                                    <code>deactivePermission(permissionId: number)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Deactivate a Permission by its ID.</p>
+            </div>
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>permissionId</b>
+                                                            </div>
+                                                            <div>
+                                                                <ul>
+            <li>The ID of the role to delete.</li>
+            </ul>
+            
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>any</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>A promise that resolves when the role is deleted successfully.</p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier"></span> reactivatePermission</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play ">
+                                            <span class="fa fa-"></span>
+                                        </span>
+                                    <code>reactivatePermission(permissionId: number)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>any</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier"></span> deletePermission</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play ">
+                                            <span class="fa fa-"></span>
+                                        </span>
+                                    <code>deletePermission(permissionId: number)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>any</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <b><span class="modifier"></span> asignPermissionToRole</b>
                                 </td>
                             </tr>
@@ -935,7 +1044,7 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier"></span> deleteRole</b>
+                                    <b><span class="modifier"></span> deactiveRole</b>
                                 </td>
                             </tr>
             
@@ -944,7 +1053,7 @@
                                         <span class="modifier-icon method fa fa-play ">
                                             <span class="fa fa-"></span>
                                         </span>
-                                    <code>deleteRole(roleId: number)</code>
+                                    <code>deactiveRole(roleId: number)</code>
                                 </td>
                             </tr>
             
@@ -984,7 +1093,7 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <b><span class="modifier"></span> undeleteRole</b>
+                                    <b><span class="modifier"></span> reactivateRole</b>
                                 </td>
                             </tr>
             
@@ -993,7 +1102,34 @@
                                         <span class="modifier-icon method fa fa-play ">
                                             <span class="fa fa-"></span>
                                         </span>
-                                    <code>undeleteRole(roleId: number)</code>
+                                    <code>reactivateRole(roleId: number)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>any</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier"></span> deleteRole</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play ">
+                                            <span class="fa fa-"></span>
+                                        </span>
+                                    <code>deleteRole(roleId: number)</code>
                                 </td>
                             </tr>
             
@@ -1281,10 +1417,11 @@
 
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre><code class="hljs javascript">import { HttpException, Injectable, NotFoundException } from &#x27;@nestjs/common&#x27;;
+        <pre><code class="hljs javascript">import { BadRequestException, HttpException, Injectable, NotFoundException } from &#x27;@nestjs/common&#x27;;
 import { Role, Permission} from &#x27;@prisma/client&#x27;;
 import { PrismaService } from &#x27;../../auth/prismaService/prisma.service&#x27;;
 import { RoleDto,  AssignRoleToUserDto, PermissionDto, AssignPermissionToRoleDto} from &#x27;../dto/permission-role.dto&#x27;;
+import { isNumber } from &#x27;class-validator&#x27;;
 
 
 /**
@@ -1316,10 +1453,13 @@ export class SecureRbacService {
     permissionDto: PermissionDto,
   ): Promise&lt;Permission&gt; {
     const { name } &#x3D; permissionDto;
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException(&quot;Permission can&#x27;t be a number&quot;)
+
     const permission &#x3D; await this.prisma.permission.findFirst({
       where: { name, deletedAt: null },
     });
-    if (permission) throw new HttpException(&#x27;Permission already exists&#x27;, 400);
+    if (permission) throw new BadRequestException(&#x27;Permission already exists&#x27;);
 
     return this.prisma.permission.create({ data: { name } });
   }
@@ -1351,10 +1491,15 @@ export class SecureRbacService {
     id: number,
     updatePermissionDto: PermissionDto,
   ): Promise&lt;Permission&gt; {
+    const {name} &#x3D; updatePermissionDto
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException(&quot;Permission can&#x27;t be a number&quot;)
+
     const permission &#x3D; await this.prisma.permission.findFirst({
       where: { id, deletedAt: null },
     });
     if (!permission) throw new NotFoundException(&#x60;Permission ${id} not found&#x60;);
+    if(permission.name &#x3D;&#x3D;&#x3D; name) throw new BadRequestException(&#x60;Permission ${name} can not be the same as old name&#x60;)
 
     return this.prisma.permission.update({
       where: { id, deletedAt: null },
@@ -1387,6 +1532,7 @@ export class SecureRbacService {
   async getRoleById(roleId: number): Promise&lt;Role&gt; {
     const role &#x3D; await this.prisma.role.findFirst({
       where: { id: roleId, deletedAt: null },
+      include: {permissions: true}
     });
 
     if (!role) throw new NotFoundException(&#x60;Role ${roleId} not found&#x60;);
@@ -1403,31 +1549,92 @@ export class SecureRbacService {
    */
   async createRole(roleDto: RoleDto): Promise&lt;Role&gt; {
     const { name } &#x3D; roleDto;
-    const role &#x3D; await this.prisma.role.findFirst({
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException(&quot;Role can&#x27;t be a number&quot;)
+
+    const role &#x3D; await this.prisma.role.findUnique({
       where: { name },
       include: {permissions: true}
     });
-
-      if(role &amp;&amp; role.deletedAt &#x3D;&#x3D;&#x3D; null) throw new HttpException(&#x60;Role ${name} already exists&#x60;, 400);
-      if(role.deletedAt !&#x3D;&#x3D; null) throw new HttpException(&#x60;Role ${name} exist already, change it deletedAt to null&#x60;, 400)
+    if(role !&#x3D;&#x3D; null) {
+      if(role &amp;&amp; role.deletedAt &#x3D;&#x3D;&#x3D; null) throw new BadRequestException(&#x60;Role ${name} already exists&#x60;);
+      if(role.deletedAt !&#x3D;&#x3D; null) throw new BadRequestException(&#x60;Role ${name} exist already, change it deletedAt to null&#x60;)
+    }
 
       return await this.prisma.role.create({ data: { name } });
-
   }
 
 
   async updateRole(roleId: number, updateRoleDto: RoleDto): Promise&lt;Role&gt; {
     const { name } &#x3D; updateRoleDto;
+
+    if(isNumber(parseInt(name, 10))) throw new BadRequestException(&quot;Permission can&#x27;t be a number&quot;)
+
     const role &#x3D; await this.prisma.role.findFirst({
-      where: { name, deletedAt: null },
+      where: { id:roleId, deletedAt: null },
       include: {permissions: true}
     });
 
       if(!role) throw new NotFoundException(&#x60;Role ${name} does not exists&#x60;);
-      if(role.name &#x3D;&#x3D;&#x3D; name) throw new HttpException(&#x60;Role ${name} can not be same as old name&#x60;, 400)
+      if(role.name &#x3D;&#x3D;&#x3D; name) throw new BadRequestException(&#x60;Role ${name} can not be same as old name&#x60;)
 
       return await this.prisma.role.update({where: {id: roleId, deletedAt: null}, data: { name } });
 
+  }
+
+    /**
+   * Deactivate a Permission by its ID.
+   *
+   * @param {number} permissionId - The ID of the role to delete.
+   * @returns {Promise&lt;void&gt;} A promise that resolves when the role is deleted successfully.
+   * @throws {NotFoundException} If the role with the specified ID is not found.
+   * @throws {BadRequestException} If the role has already been deleted.
+   */
+    async deactivePermission(permissionId: number): Promise&lt;void&gt; {
+      const role &#x3D; await this.prisma.permission.findFirst({ where: { id: permissionId, deletedAt: null } });
+      if (!role || role.deletedAt !&#x3D;&#x3D; null)
+        throw new NotFoundException(&#x60;Role ${permissionId} not found&#x60;);
+  
+      if (role.deletedAt &#x3D;&#x3D;&#x3D; null) {
+        await this.prisma.permission.update({
+          where: { id: permissionId, deletedAt: null },
+          data: { deletedAt: new Date(Date.now()) },
+        });
+      } else {
+        throw new BadRequestException(&#x27;Role already deleted&#x27;);
+      }
+    }
+  
+    async reactivatePermission(permissionId: number): Promise&lt;void&gt; {
+      const role &#x3D; await this.prisma.permission.findFirst({
+        where: { id: permissionId, deletedAt: { not: null } },
+      });
+    
+      if (!role) throw new NotFoundException(&#x60;Role ${permissionId} not found&#x60;);
+  
+    
+      if (role.deletedAt !&#x3D;&#x3D; null) {
+        await this.prisma.permission.update({
+          where: { id: permissionId },
+          data: { deletedAt: null },
+        });
+      } else {
+        throw new BadRequestException(&#x27;Role is not deleted&#x27;);
+      }
+    }
+
+
+  async deletePermission(permissionId: number): Promise&lt;void&gt; {
+    const role &#x3D; await this.prisma.role.findFirst({
+      where: { id: permissionId },
+    });
+  
+    if (!role) throw new NotFoundException(&#x60;Permission ${permissionId} not found&#x60;);
+
+
+    await this.prisma.permission.delete({
+      where: { id: permissionId }
+    })
   }
 
   async asignPermissionToRole(assignPermissionToRoleDto: AssignPermissionToRoleDto): Promise&lt;void&gt; {
@@ -1448,7 +1655,7 @@ export class SecureRbacService {
       const permissionInRole &#x3D; role.permissions.find((p) &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; permissionId);
 
       if (!permissionInRole) {
-        throw new HttpException(&#x60;Permission ${permissionId} not associated with Role ${role.name}&#x60;, 400);
+        throw new BadRequestException(&#x60;Permission ${permissionId} not associated with Role ${role.name}&#x60;);
       }
     } 
 
@@ -1494,9 +1701,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
 
     const permissionInRole &#x3D; role.permissions.find((p) &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; permissionId);
 
-    if (!permissionInRole) {
-      throw new HttpException(&#x60;Permission ${permissionId} not associated with Role ${role.name}&#x60;, 400);
-    }
+    if (!permissionInRole) throw new BadRequestException(&#x60;Permission ${permissionId} not associated with Role ${role.name}&#x60;);
   }
 
   const permissionDisconnects &#x3D; permissionIds.map((permissionId) &#x3D;&gt; ({ id: permissionId }));
@@ -1524,7 +1729,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
   ): Promise&lt;void&gt; {
     const { roleId, permissionIds } &#x3D; updatePermissionToRoleDto;
 
-    if (permissionIds.length &#x3D;&#x3D;&#x3D; 0 || !roleId) throw new HttpException(&#x27;Invalid role ID or permissions&#x27;, 400);
+    if (permissionIds.length &#x3D;&#x3D;&#x3D; 0 || !roleId) throw new BadRequestException(&#x27;Invalid role ID or permissions&#x27;);
 
       const role &#x3D; await this.prisma.role.findFirst({
         where: { id: roleId, deletedAt: null },
@@ -1543,8 +1748,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
       }
 
       for (const permission of role.permissions) {
-        if (permissionIds.includes(permission.id))
-          throw new HttpException(&#x27;Permission already exists&#x27;, 400);
+        if (permissionIds.includes(permission.id)) throw new BadRequestException(&#x27;Permission already exists&#x27;);
       }
 
 
@@ -1571,9 +1775,9 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
    * @param {number} roleId - The ID of the role to delete.
    * @returns {Promise&lt;void&gt;} A promise that resolves when the role is deleted successfully.
    * @throws {NotFoundException} If the role with the specified ID is not found.
-   * @throws {HttpException} If the role has already been deleted.
+   * @throws {BadRequestException} If the role has already been deleted.
    */
-  async deleteRole(roleId: number): Promise&lt;void&gt; {
+  async deactiveRole(roleId: number): Promise&lt;void&gt; {
     const role &#x3D; await this.prisma.role.findFirst({ where: { id: roleId, deletedAt: null } });
     if (!role || role.deletedAt !&#x3D;&#x3D; null)
       throw new NotFoundException(&#x60;Role ${roleId} not found&#x60;);
@@ -1584,18 +1788,17 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
         data: { deletedAt: new Date(Date.now()) },
       });
     } else {
-      throw new HttpException(&#x27;Role already deleted&#x27;, 400);
+      throw new BadRequestException(&#x27;Role already deleted&#x27;);
     }
   }
 
-  async undeleteRole(roleId: number): Promise&lt;void&gt; {
+  async reactivateRole(roleId: number): Promise&lt;void&gt; {
     const role &#x3D; await this.prisma.role.findFirst({
       where: { id: roleId, deletedAt: { not: null } },
     });
   
-    if (!role) {
-      throw new NotFoundException(&#x60;Role ${roleId} not found&#x60;);
-    }
+    if (!role) throw new NotFoundException(&#x60;Role ${roleId} not found&#x60;);
+
   
     if (role.deletedAt !&#x3D;&#x3D; null) {
       await this.prisma.role.update({
@@ -1603,8 +1806,21 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
         data: { deletedAt: null },
       });
     } else {
-      throw new HttpException(&#x27;Role is not deleted&#x27;, 400);
+      throw new BadRequestException(&#x27;Role is not deleted&#x27;);
     }
+  }
+
+  async deleteRole(roleId: number): Promise&lt;void&gt; {
+    const role &#x3D; await this.prisma.role.findFirst({
+      where: { id: roleId },
+    });
+  
+    if (!role) throw new NotFoundException(&#x60;Role ${roleId} not found&#x60;);
+
+
+    await this.prisma.role.delete({
+      where: { id: roleId }
+    })
   }
   
 
@@ -1646,7 +1862,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
     if (userRole) throw new HttpException(&#x27;User already has this role&#x27;, 400);
 
     await this.prisma.role.update({
-      where: { id: roleId, updatedAt: null },
+      where: { id: roleId, deletedAt: null },
       data: {
         user: {
           connect: {
@@ -1669,27 +1885,18 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
 async revokeRoleOfUser(revokeRoleOfUserDto: AssignRoleToUserDto): Promise&lt;void&gt; {
   const { userId, roleId } &#x3D; revokeRoleOfUserDto;
 
-  // Find the user with the provided userId
   const user &#x3D; await this.prisma.user.findUnique({
     where: { id: userId, deletedAt: null },
   });
 
-  if (!user) {
-      // If the user doesn&#x27;t exist, throw an error
-      throw new NotFoundException(&#x27;User not found&#x27;);
-  }
+  if (!user) throw new NotFoundException(&#x27;User not found&#x27;);
 
-  // Check if the user has the specified role
   const role &#x3D; await this.prisma.role.findFirst({
       where: { id: roleId, user: { some: { id: userId } } }
   });
 
-  if (!role) {
-      // If the role doesn&#x27;t exist, throw an error
-      throw new NotFoundException(&#x27;Role not found&#x27;);
-  }
+  if (!role) throw new NotFoundException(&#x27;Role not found&#x27;);
 
-  // Update the user&#x27;s roles to disconnect the specified role
   await this.prisma.role.update({
       where: { id: roleId, deletedAt: null },
       data: {
@@ -1733,17 +1940,13 @@ async revokeRoleOfUser(revokeRoleOfUserDto: AssignRoleToUserDto): Promise&lt;voi
       where: { id: userId, deletedAt: null },
       include: { roles: true },
     });
-    if (user.roles.length &#x3D;&#x3D;&#x3D; 0) {
-      return false;
-    }
+    if (user.roles.length &#x3D;&#x3D;&#x3D; 0) return false;
 
     for (const role of user.roles) {
       const roles &#x3D; await this.prisma.role.findFirst({
         where: { id: role.id, deletedAt: null },
       });
-      if (requiredRoles.includes(roles.name)) {
-        return true;
-      }
+      if (requiredRoles.includes(roles.name)) return true;
     }
 
     return false;
@@ -1762,9 +1965,7 @@ async revokeRoleOfUser(revokeRoleOfUserDto: AssignRoleToUserDto): Promise&lt;voi
   ): Promise&lt;boolean&gt; {
     const permissions &#x3D; await this.getPermissionsForUser(userId);
     for (const permission of permissions) {
-      if (requiredPermissions.includes(permission.name)) {
-        return true;
-      }
+      if (requiredPermissions.includes(permission.name)) return true;
     }
 
     return false;

@@ -116,6 +116,9 @@
                                     <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                 </li>
                                 <li class="link">
@@ -303,6 +306,9 @@
                    >
                                        <li class="link">
                                            <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
@@ -510,8 +516,8 @@ export class SignupDto {
     description: &#x27;The email of the user&#x27;,
     example: &#x27;johndoe@gmail.com&#x27;,
   })
-  @IsNotEmpty()
-  @IsEmail()
+  // @IsNotEmpty()
+  // @IsEmail()
   email: string;
 
   /** The password of the user */
@@ -519,9 +525,9 @@ export class SignupDto {
     description: &#x27;The password of the user&#x27;,
     example: &#x27;password123&#x27;,
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   password: string;
 }
 
@@ -548,8 +554,8 @@ export class LoginDto {
     description: &#x27;The email of the user&#x27;,
     example: &#x27;johndoe@gmail.com&#x27;,
   })
-  @IsNotEmpty()
-  @IsEmail()
+  // @IsNotEmpty()
+  // @IsEmail()
   email: string;
 
   /** The password of the user */
@@ -557,9 +563,9 @@ export class LoginDto {
     description: &#x27;The password of the user&#x27;,
     example: &#x27;password123&#x27;,
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   password: string;
 }
 
@@ -572,8 +578,8 @@ export class ResetPasswordDto {
     description: &#x27;The id for the user&#x27;,
     example: 1,
   })
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   userId: number;
 
   /** The email of the user */
@@ -581,9 +587,9 @@ export class ResetPasswordDto {
     description: &#x27;The new password for the user&#x27;,
     example: &#x27;oldpassword123&#x27;,
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   oldPassword: string;
 
   /** The new password for the user */
@@ -591,9 +597,9 @@ export class ResetPasswordDto {
     description: &#x27;The new password for the user&#x27;,
     example: &#x27;newpassword123&#x27;,
   })
-  @IsNotEmpty()
-  @IsString()
-  @Length(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(6)
   newPassword: string;
 
 

@@ -37,6 +37,12 @@ class SecureAuthService {
     getPermissionById(id: number): Promise<Permission>;
     
     updatePermission(id: number, updatePermissionDto: PermissionDto): Promise<Permission>;
+
+    deactivePermission(permissionId: number): Promise<void>
+
+    reactivatePermission(permissionId: number): Promise<void>
+
+    deletePermission(permissionId: number): Promise<void>
     
     /**
     * ROLES SERVICES
@@ -52,7 +58,9 @@ class SecureAuthService {
     
     deleteRole(roleId: number): Promise<void>;
 
-    undeleteRole(roleId: number): Promise<void>
+    deactiveRole(roleId: number): Promise<void>;
+
+    reactivateRole(roleId: number): Promise<void>
 
     asignPermissionToRole(assignPermissionToRoleDto: AssignPermissionToRoleDto): Promise<void>
 

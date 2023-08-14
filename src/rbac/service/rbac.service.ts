@@ -88,6 +88,62 @@ export class SecureRbacService {
     });
   }
 
+
+      /**
+   * Deactivate a Permission by its ID.
+   *
+   * @param {number} permissionId - The ID of the role to delete.
+   * @returns {Promise<void>} A promise that resolves when the role is deleted successfully.
+   * @throws {NotFoundException} If the role with the specified ID is not found.
+   * @throws {BadRequestException} If the role has already been deleted.
+   */
+      async deactivePermission(permissionId: number): Promise<void> {
+        const role = await this.prisma.permission.findFirst({ where: { id: permissionId, deletedAt: null } });
+        if (!role || role.deletedAt !== null)
+          throw new NotFoundException(`Role ${permissionId} not found`);
+    
+        if (role.deletedAt === null) {
+          await this.prisma.permission.update({
+            where: { id: permissionId, deletedAt: null },
+            data: { deletedAt: new Date(Date.now()) },
+          });
+        } else {
+          throw new BadRequestException('Role already deleted');
+        }
+      }
+    
+      async reactivatePermission(permissionId: number): Promise<void> {
+        const role = await this.prisma.permission.findFirst({
+          where: { id: permissionId, deletedAt: { not: null } },
+        });
+      
+        if (!role) throw new NotFoundException(`Role ${permissionId} not found`);
+    
+      
+        if (role.deletedAt !== null) {
+          await this.prisma.permission.update({
+            where: { id: permissionId },
+            data: { deletedAt: null },
+          });
+        } else {
+          throw new BadRequestException('Role is not deleted');
+        }
+      }
+  
+  
+    async deletePermission(permissionId: number): Promise<void> {
+      const role = await this.prisma.role.findFirst({
+        where: { id: permissionId },
+      });
+    
+      if (!role) throw new NotFoundException(`Permission ${permissionId} not found`);
+  
+  
+      await this.prisma.permission.delete({
+        where: { id: permissionId }
+      })
+    }
+
   /**
    * ROLES SERVICES
    * @returns
@@ -163,22 +219,23 @@ export class SecureRbacService {
 
   }
 
+
     /**
-   * Deactivate a Permission by its ID.
+   * Deletes a role by its ID.
    *
-   * @param {number} permissionId - The ID of the role to delete.
+   * @param {number} roleId - The ID of the role to delete.
    * @returns {Promise<void>} A promise that resolves when the role is deleted successfully.
    * @throws {NotFoundException} If the role with the specified ID is not found.
    * @throws {BadRequestException} If the role has already been deleted.
    */
-    async deactivePermission(permissionId: number): Promise<void> {
-      const role = await this.prisma.permission.findFirst({ where: { id: permissionId, deletedAt: null } });
+    async deactiveRole(roleId: number): Promise<void> {
+      const role = await this.prisma.role.findFirst({ where: { id: roleId, deletedAt: null } });
       if (!role || role.deletedAt !== null)
-        throw new NotFoundException(`Role ${permissionId} not found`);
+        throw new NotFoundException(`Role ${roleId} not found`);
   
       if (role.deletedAt === null) {
-        await this.prisma.permission.update({
-          where: { id: permissionId, deletedAt: null },
+        await this.prisma.role.update({
+          where: { id: roleId, deletedAt: null },
           data: { deletedAt: new Date(Date.now()) },
         });
       } else {
@@ -186,37 +243,37 @@ export class SecureRbacService {
       }
     }
   
-    async reactivatePermission(permissionId: number): Promise<void> {
-      const role = await this.prisma.permission.findFirst({
-        where: { id: permissionId, deletedAt: { not: null } },
+    async reactivateRole(roleId: number): Promise<void> {
+      const role = await this.prisma.role.findFirst({
+        where: { id: roleId, deletedAt: { not: null } },
       });
     
-      if (!role) throw new NotFoundException(`Role ${permissionId} not found`);
+      if (!role) throw new NotFoundException(`Role ${roleId} not found`);
   
     
       if (role.deletedAt !== null) {
-        await this.prisma.permission.update({
-          where: { id: permissionId },
+        await this.prisma.role.update({
+          where: { id: roleId },
           data: { deletedAt: null },
         });
       } else {
         throw new BadRequestException('Role is not deleted');
       }
     }
-
-
-  async deletePermission(permissionId: number): Promise<void> {
-    const role = await this.prisma.role.findFirst({
-      where: { id: permissionId },
-    });
   
-    if (!role) throw new NotFoundException(`Permission ${permissionId} not found`);
+    async deleteRole(roleId: number): Promise<void> {
+      const role = await this.prisma.role.findFirst({
+        where: { id: roleId },
+      });
+    
+      if (!role) throw new NotFoundException(`Role ${roleId} not found`);
+  
+  
+      await this.prisma.role.delete({
+        where: { id: roleId }
+      })
+    }
 
-
-    await this.prisma.permission.delete({
-      where: { id: permissionId }
-    })
-  }
 
   async asignPermissionToRole(assignPermissionToRoleDto: AssignPermissionToRoleDto): Promise<void> {
     const {roleId, permissionIds} = assignPermissionToRoleDto
@@ -350,59 +407,7 @@ async removePermissionFromRole(removePermissionFromRoleDto: AssignPermissionToRo
 
   }
 
-  /**
-   * Deletes a role by its ID.
-   *
-   * @param {number} roleId - The ID of the role to delete.
-   * @returns {Promise<void>} A promise that resolves when the role is deleted successfully.
-   * @throws {NotFoundException} If the role with the specified ID is not found.
-   * @throws {BadRequestException} If the role has already been deleted.
-   */
-  async deactiveRole(roleId: number): Promise<void> {
-    const role = await this.prisma.role.findFirst({ where: { id: roleId, deletedAt: null } });
-    if (!role || role.deletedAt !== null)
-      throw new NotFoundException(`Role ${roleId} not found`);
 
-    if (role.deletedAt === null) {
-      await this.prisma.role.update({
-        where: { id: roleId, deletedAt: null },
-        data: { deletedAt: new Date(Date.now()) },
-      });
-    } else {
-      throw new BadRequestException('Role already deleted');
-    }
-  }
-
-  async reactivateRole(roleId: number): Promise<void> {
-    const role = await this.prisma.role.findFirst({
-      where: { id: roleId, deletedAt: { not: null } },
-    });
-  
-    if (!role) throw new NotFoundException(`Role ${roleId} not found`);
-
-  
-    if (role.deletedAt !== null) {
-      await this.prisma.role.update({
-        where: { id: roleId },
-        data: { deletedAt: null },
-      });
-    } else {
-      throw new BadRequestException('Role is not deleted');
-    }
-  }
-
-  async deleteRole(roleId: number): Promise<void> {
-    const role = await this.prisma.role.findFirst({
-      where: { id: roleId },
-    });
-  
-    if (!role) throw new NotFoundException(`Role ${roleId} not found`);
-
-
-    await this.prisma.role.delete({
-      where: { id: roleId }
-    })
-  }
   
 
    /**

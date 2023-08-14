@@ -116,6 +116,9 @@
                                     <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                 </li>
                                 <li class="link">
@@ -305,6 +308,9 @@
                                            <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                        </li>
                                        <li class="link">
@@ -483,6 +489,39 @@ export class ZodValidationPipe implements PipeTransform {
       }
       throw error;
     }
+  }
+}
+
+
+
+@Injectable()
+export class CombinedValidationPipe implements PipeTransform {
+  constructor(private paramQuerySchema?: ZodSchema&lt;any&gt;, private bodySchema?: ZodSchema&lt;any&gt;) {}
+
+  transform(value: any, metadata: ArgumentMetadata) {
+    if (this.paramQuerySchema &amp;&amp; (metadata.type &#x3D;&#x3D;&#x3D; &#x27;param&#x27; || metadata.type &#x3D;&#x3D;&#x3D; &#x27;query&#x27;)) {
+      try {
+        this.paramQuerySchema.parse(value);
+      } catch (error) {
+        if (error instanceof ZodError) {
+          throw new BadRequestException(&#x60;Param/Query validation failed, message: ${error.issues[0].message}&#x60;);
+        }
+        throw error;
+      }
+    }
+
+    if (this.bodySchema &amp;&amp; metadata.type &#x3D;&#x3D;&#x3D; &#x27;body&#x27;) {
+      try {
+        this.bodySchema.parse(value);
+      } catch (error) {
+        if (error instanceof ZodError) {
+          throw new BadRequestException(&#x60;Body validation failed, message: ${error.issues[0].message}&#x60;);
+        }
+        throw error;
+      }
+    }
+
+    return value;
   }
 }
 </code></pre>

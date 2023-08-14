@@ -116,6 +116,9 @@
                                     <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                 </li>
                                 <li class="link">
@@ -305,6 +308,9 @@
                                            <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                        </li>
                                        <li class="link">
@@ -474,6 +480,18 @@ import { IsNotEmpty, IsEmail, MinLength, IsString } from &#x27;class-validator&#
 import { PartialType } from &#x27;@nestjs/mapped-types&#x27;;
 import { z } from &#x27;zod&#x27;;
 
+export const userSchema &#x3D; z.object({
+  email: z.string().email(),
+  password: z.coerce.string().min(6)
+})
+
+export const updateUserSchema &#x3D; z.object({
+  email: z.string().email().optional(),
+  password: z.coerce.string().min(6).optional()
+})
+
+export const userIdSchema &#x3D; z.string();
+
 
 /**
  * Data transfer object for creating a new user.
@@ -483,17 +501,17 @@ export class CreateUserDto {
     description: &#x27;The email of user to create&#x27;,
     example: &#x27;user@example.com&#x27;,
   })
-  @IsNotEmpty()
-  @IsEmail()
+  // @IsNotEmpty()
+  // @IsEmail()
   email: string;
 
   @ApiProperty({
     description: &#x27;The password of user to create&#x27;,
     example: &#x27;password123&#x27;,
   })
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(6)
+  // @IsNotEmpty()
+  // @IsString()
+  // @MinLength(6)
   password: string;
 }
 

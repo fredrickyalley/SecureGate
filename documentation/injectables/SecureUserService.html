@@ -116,6 +116,9 @@
                                     <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
+                                </li>
+                                <li class="link">
                                     <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
                                 </li>
                                 <li class="link">
@@ -303,6 +306,9 @@
                    >
                                        <li class="link">
                                            <a href="../injectables/AuthMiddleware.html" >AuthMiddleware</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../injectables/CombinedValidationPipe.html" >CombinedValidationPipe</a>
                                        </li>
                                        <li class="link">
                                            <a href="../injectables/JwtAuthGuard.html" >JwtAuthGuard</a>
@@ -845,11 +851,12 @@
 
     </div>
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre><code class="hljs javascript">import { HttpException, Injectable, NotFoundException } from &#x27;@nestjs/common&#x27;;
+        <pre><code class="hljs javascript">import { BadRequestException, HttpException, Injectable, NotFoundException } from &#x27;@nestjs/common&#x27;;
 import { CreateUserDto, UpdateUserDto} from &#x27;../dto/user.dto&#x27;;
 import { User } from &#x27;@prisma/client&#x27;;
 import * as bcrypt from &#x27;bcrypt&#x27;;
 import { PrismaService } from &#x27;../../auth/prismaService/prisma.service&#x27;;
+import { isNumber } from &#x27;class-validator&#x27;;
 @Injectable()
 export class SecureUserService {
   constructor(private readonly prisma: PrismaService) {}
@@ -866,14 +873,14 @@ export class SecureUserService {
    * Create a new user
    * @param {CreateUserDto} createUserDto - User data to create.
    * @returns {Promise&lt;User&gt;} - The newly created user.
-   * @throws {HttpException} - Invalid email or password, or user already exists.
+   * @throws {BadRequestException} - Invalid email or password, or user already exists.
    */
   async createUser(createUserDto: CreateUserDto): Promise&lt;User&gt; {
     const { email, password } &#x3D; createUserDto;
-    if (!email || !password) throw new HttpException(&#x27;Invalid email or password&#x27;, 400);
+    if (!email || !password) throw new BadRequestException(&#x27;Invalid email or password&#x27;);
     const user &#x3D; await this.prisma.user.findFirst({ where: { email, deletedAt: null } });
 
-    if (user) throw new HttpException(&#x27;User already exists&#x27;, 400);
+    if (user) throw new BadRequestException(&#x27;User already exists&#x27;);
 
     const saltpounds &#x3D; 10;
     const hashPassword &#x3D; await bcrypt.hash(password, saltpounds);
@@ -893,6 +900,8 @@ export class SecureUserService {
    * @throws {NotFoundException} - User not found.
    */
   async findUserByEmail(email: string): Promise&lt;User&gt; {
+    if(isNumber(parseInt(email, 10))) throw new BadRequestException(&#x60;User ${email} can&#x27;t be a number&#x60;);
+
     const user &#x3D; await this.prisma.user.findFirst({ where: { email, deletedAt: null } });
 
     if (!user) throw new NotFoundException(&#x27;User not found&#x27;);
@@ -907,10 +916,9 @@ export class SecureUserService {
    * @throws {NotFoundException} - User not found.
    */
   async getUserById(id: number): Promise&lt;User&gt; {
-    const user &#x3D; await this.prisma.user.findFirst({ where: { id, deletedAt: null } });
-    if (!user) {
-      throw new NotFoundException(&#x27;User not found&#x27;);
-    }
+    const user &#x3D; await this.prisma.user.findFirst({ where: { id, deletedAt: null }, include: {roles: true} });
+    if (!user) throw new NotFoundException(&#x27;User not found&#x27;);
+    
     return user;
   }
 
@@ -919,18 +927,18 @@ export class SecureUserService {
    * @param {number} id - The ID of the user to update.
    * @param {UpdateUserDto} updateUserDto - User data to update.
    * @returns {Promise&lt;User&gt;} - The updated user.
-   * @throws {HttpException} - Invalid email or password, or password is the same as the previous password.
+   * @throws {BadRequestException} - Invalid email or password, or password is the same as the previous password.
    * @throws {NotFoundException} - User not found.
    */
   async updateUser(id: number, updateUserDto: UpdateUserDto): Promise&lt;User&gt; {
     const { email, password } &#x3D; updateUserDto;
 
-    if ((!email &amp;&amp; !password) || !password) throw new HttpException(&#x27;Invalid email or password&#x27;, 400);
+    if ((!email &amp;&amp; !password) || !password) throw new BadRequestException(&#x27;Invalid email or password&#x27;);
     const user &#x3D; await this.getUserById(id);
 
     const verifyPassword &#x3D; await bcrypt.compare(password, user.password);
 
-    if (verifyPassword) throw new HttpException(&#x27;Password is the same as the previous password&#x27;, 400);
+    if (verifyPassword) throw new BadRequestException(&#x27;Password is the same as the previous password&#x27;);
 
     const saltpounds &#x3D; 10;
     const hashPassword &#x3D; await bcrypt.hash(password, saltpounds);
@@ -958,11 +966,11 @@ export class SecureUserService {
   /**
    * Deactivate user by ID
    * @param {number} id - The ID of the user to deactivate.
-   * @throws {HttpException} - User already deactivated.
+   * @throws {BadRequestException} - User already deactivated.
    * @throws {NotFoundException} - User not found.
    */
   async deactivateUser(id: number): Promise&lt;void&gt; {
-    const user &#x3D; await this.prisma.user.findFirst({ where: { id } });
+    const user &#x3D; await this.prisma.user.findUnique({ where: { id } });
     if (!user) throw new NotFoundException(&#x27;User not found&#x27;);
 
     if (user.deletedAt &#x3D;&#x3D;&#x3D; null) {
@@ -971,19 +979,18 @@ export class SecureUserService {
         data: { deletedAt: new Date(Date.now()) },
       });
     } else {
-      throw new HttpException(&#x27;User already deactivated&#x27;, 400);
+      throw new BadRequestException(&#x27;User already deactivated&#x27;);
     }
   }
 
   /**
    * Reactivate user by ID
    * @param {number} id - The ID of the user to reactivate.
-   * @throws {HttpException} - User already activated.
+   * @throws {BadRequestException} - User already activated.
    * @throws {NotFoundException} - User not found.
    */
   async reactivateUser(id: number): Promise&lt;void&gt; {
-    console.log(id);
-    const user &#x3D; await this.prisma.user.findFirst({ where: { id } });
+    const user &#x3D; await this.prisma.user.findUnique({ where: { id } });
     if (!user) throw new NotFoundException(&#x27;User not found&#x27;);
 
     if (user.deletedAt !&#x3D;&#x3D; null) {
@@ -992,7 +999,7 @@ export class SecureUserService {
         data: { deletedAt: null },
       });
     } else {
-      throw new HttpException(&#x27;User already activated&#x27;, 400);
+      throw new BadRequestException(&#x27;User already activated&#x27;);
     }
   }
 }
